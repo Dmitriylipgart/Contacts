@@ -14,6 +14,20 @@ form{
     box-shadow: 2px 2px 2px #2a334d, -2px -2px 2px #2a334d;
 }
 
+.contactPhoto{
+    width: 20%;
+    height: 160px;
+    background-color: #fff;
+    float: left;
+    margin: 40px 0 10px 30px;
+    border-radius: 5px;
+}
+
+.flex.flexColumn{
+    flex-direction: column;
+    width: 60%;
+}
+
 .flex{
     width: 100%;
     display: flex;
@@ -26,9 +40,15 @@ form{
     margin: 0 5px;
 }
 
+.flex .big{
+    flex-basis: 110%;
+}
+.flex .sex{
+    flex-basis: 25%;
+}
 
 label{
-    font-size: 1em;
+    font-size: .9em;
     color: white;
     text-shadow: 1px 1px 1px #2a334d;
 }
@@ -65,12 +85,12 @@ input, label, select{
      float: right;
      box-shadow: inset 0 1px 0 #9ab1ec;
      border: 1px solid rgba(0, 0, 0, .49);
-     background-color: #5466da;
-     background-image: -webkit-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-     background-image: -moz-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-     background-image: -o-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-     background-image: -ms-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
-     background-image: linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+     background-color: #3f8643;
+     background-image: -webkit-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
+     background-image: -moz-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
+     background-image: -o-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
+     background-image: -ms-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
+     background-image: linear-gradient(bottom, #3f8643 0%, #49b866 100%);
  }
 
  .delete{
@@ -83,12 +103,19 @@ input, label, select{
  }
 
 .update{
-    background-color: #3f8643;
-    background-image: -webkit-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
-    background-image: -moz-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
-    background-image: -o-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
-    background-image: -ms-linear-gradient(bottom, #3f8643 0%, #49b866 100%);
-    background-image: linear-gradient(bottom, #3f8643 0%, #49b866 100%);
+    background-color: #5466da;
+    background-image: -webkit-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+    background-image: -moz-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+    background-image: -o-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+    background-image: -ms-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+    background-image: linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+}
+
+input.button{
+    float: none;
+    width: 30%;
+    height: 45px;
+    font-size: 1.1em;
 }
 
 .popup{
@@ -114,11 +141,11 @@ input, label, select{
     z-index: 103;
 }
 
-.small input{  width: 80px;}
-.small label{
-    color: #fff;
-    font-size: 12px;
-}
+/*.small input{  width: 80px;}*/
+/*.small label{*/
+    /*color: #fff;*/
+    /*font-size: 12px;*/
+/*}*/
 
 
 label.popupOverlay {
@@ -129,7 +156,7 @@ label.popupOverlay {
     right: 0;
     bottom: 0;
     display: none;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
     z-index: 102;
 }

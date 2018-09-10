@@ -14,32 +14,31 @@
 </header>
 
 <form action="">
-    <div class="flex">
-        <div>
-            <label for="firstName">Имя</label>
-            <input type="text" name="firstName" id="firstName" required>
-        </div>
+    <div class="contactPhoto"></div>
+    <div class="flex flexColumn">
         <div>
             <label for="lastName">Фамилия</label>
             <input type="text" name="lastName" id="lastName" required>
         </div>
+        <div>
+            <label for="firstName">Имя</label>
+            <input type="text" name="firstName" id="firstName" required>
+        </div>
 
-    </div>
-
-    <div class="flex">
         <div>
             <label for="middleName">Отчество</label>
             <input type="text" name="middleName" id="middleName">
         </div>
-        <div>
-            <label for="birthDate">Дата Рождения</label>
-                <input type="date" id="birthDate" name="birthDate">
-        </div>
+
     </div>
 
     <div class="flex">
-
         <div>
+        <label for="birthDate">Дата Рождения</label>
+        <input type="date" id="birthDate" name="birthDate">
+    </div>
+
+        <div class="sex">
             <label for="sex">Пол</label>
             <select name="sex" id="sex">
                 <option value="1">Мужской</option>
@@ -99,26 +98,35 @@
     <div class="button delete">Удалить </div>
 
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
+
     <div class="popup popupPhone">
+
         <div class="flex">
-            <div class="small">
-                <label>Код страны</label>
-                <input type="text">
+            <div >
+                <label for="countryId">Код страны</label>
+                <input type="text" name="countryId" id="countryId">
             </div>
-            <div class="small">
-                <label>Код оператора<input type="text"></label>
+            <div >
+                <label for="operatorId">Код оператора</label>
+                <input type="text" name="operatorid" id="operatorId">
             </div>
-            <div>
-                <label>Телефон<input type="text"></label>
+            <div class="big">
+                <label for="phoneNumber">Телефон</label>
+                <input type="text" name="phoneNumber" id="phoneNumber">
             </div>
         </div>
         <div class="flex">
-            <select name="phoneDescription">
-                <option value="1">Домашний</option>
-                <option value="0">Мобильный</option>
-            </select>
             <div>
-                <label>Индекс<input type="text"></label>
+                <label for="phoneDescription"></label>
+                <select name="phoneDescription" id="phoneDescription">
+                    <option value="1">Домашний</option>
+                    <option value="0">Мобильный</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="phoneComments">Комментарий</label>
+                <input type="text" name="phoneComments" id="phoneComments">
             </div>
         </div>
         <div class="popupFooter">
@@ -153,24 +161,13 @@
     <label class="popupOverlay popupAttachmentOverlay" for="popupAttachmentOpen"></label>
     <div class="popup popupAttachment">
         <div class="flex">
-            <div class="small">
-                <label>Код страны</label>
-                <input type="text">
-            </div>
-            <div class="small">
-                <label>Код оператора<input type="text"></label>
+            <div>
+                <label for="fileName">Имя файла</label>
+                <input type="text" name="fileName" id="fileName">
             </div>
             <div>
-                <label>Телефон<input type="text"></label>
-            </div>
-        </div>
-        <div class="flex">
-            <select name="phoneDescription">
-                <option value="1">Домашний</option>
-                <option value="0">Мобильный</option>
-            </select>
-            <div>
-                <label>Индекс<input type="text"></label>
+                <label for="fileComment">Комментарий</label>
+                <input type="text" name="fileComment" id="fileComment">
             </div>
         </div>
         <div class="popupFooter">
@@ -183,6 +180,7 @@
         <tr>
             <td></td>
             <th>Файл</th>
+            <th>Дата Загрузки</th>
             <th>Комментарий</th>
         </tr>
         <!--{{#attachments}}-->
@@ -193,8 +191,7 @@
         </tr>
         <!--{{/attachments}}-->
     </table>
-
-
+    <input type="submit" value="Сохранить контакт" class="button">
 </form>
 </body>
 </html>
