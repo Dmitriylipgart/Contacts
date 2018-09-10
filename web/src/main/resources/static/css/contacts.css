@@ -1,6 +1,6 @@
 body {
     background: url(../images/bg1.png) repeat;
-    color: #999;
+    color: #ffffff;
     font: 100%/1.5em sans-serif;
     margin: 0;
     text-align: center;
@@ -10,7 +10,6 @@ header{
     line-height: 48px;
     color: #fff;
     text-shadow: 2px 2px 2px #3E4347;
-
 }
 
 .wrapper {

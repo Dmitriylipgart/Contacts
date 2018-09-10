@@ -7,7 +7,7 @@ body{
 }
 form{
     margin: 10px auto;
-    width: 40%;
+    width: 50%;
     background: #48516d;
     padding: 10px;
     border-radius: 5px;
@@ -21,18 +21,37 @@ form{
     margin: 20px auto;
 }
 
+.flex div{
+    flex-basis: 45%;
+    margin: 0 5px;
+}
+
+
+label{
+    font-size: 1em;
+    color: white;
+    text-shadow: 1px 1px 1px #2a334d;
+}
+
+input{
+    width: 100%
+}
+
 input, label, select{
     display: block;
     margin: 0 auto;
     border-radius: 5px;
     height: 25px;
+
 }
 
  table{
      margin: 20px auto;
      width: 100%;
      box-shadow: 2px 2px 2px #2a334d;
-
+ }
+ th{
+     min-width: 10px;
  }
  h3{
      float: left;
@@ -146,6 +165,6 @@ label.popupOverlay {
 
 @media only screen and (max-width: 1024px) {
     form{
-        width: 80%;
+        width: 90%;
     }
 }
