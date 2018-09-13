@@ -9,7 +9,7 @@
 	<packaging>war</packaging>
 
 	<name>web</name>
-	<description>Demo project for Spring Boot</description>
+
 
 	<parent>
 		<groupId>com.itechart</groupId>
@@ -37,6 +37,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.itechart</groupId>
+			<artifactId>model</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 

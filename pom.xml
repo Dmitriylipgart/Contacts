@@ -6,7 +6,7 @@
 	<groupId>com.itechart</groupId>
 	<artifactId>Contacts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 
 	<name>Contacts</name>
 	<description>Demo project for Spring Boot</description>
@@ -20,7 +20,8 @@
 
 	<modules>
 		<module>web</module>
-	</modules>
+        <module>model</module>
+    </modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
