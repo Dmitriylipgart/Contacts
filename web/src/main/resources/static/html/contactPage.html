@@ -3,17 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Contact</title>
-    <!--<link rel="stylesheet" href="../css/contacts.css">-->
-    <!--<link rel="stylesheet" href="../css/contact.css">-->
-    <link rel="stylesheet" href="/css/contacts.css">
-    <link rel="stylesheet" href="/css/contact.css">
+
+    <link rel="stylesheet" href="../css/contact.css">
+
 </head>
 <body>
 <header>
-    <h2>Заполните данные контакта</h2>
+    <h1>Журнал контактов</h1>
 </header>
 
-<form action="/contact" method="post">
+
+
+<div class="wrapper">
+
+    <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
+
+    <table class="contactsTable">
+        <tr>
+            <td></td>
+            <th>Имя</th>
+            <th>Дата Рождения</th>
+            <th>Адрес</th>
+            <th>Место работы</th>
+        </tr>
+
+        <!--<tr>-->
+            <!--<td><input type="checkbox" id="{{id}}"></td>-->
+            <!--<td>{{name}}</td>-->
+            <!--<td>{{date}}</td>-->
+            <!--<td>{{address}}</td>-->
+            <!--<td>{{job}}</td>-->
+        <!--</tr>-->
+
+    </table>
+
+</div>
+
+<form style="display: none" class="contactForm" name="contactForm">
     <div class="contactPhoto"></div>
     <div class="flex flexColumn">
         <div>
@@ -41,18 +67,18 @@
         <div class="sex">
             <label for="sex">Пол</label>
             <select name="sex" id="sex">
-                <option value="1">Мужской</option>
-                <option value="0">Женский</option>
+                <option value="male">Мужской</option>
+                <option value="female">Женский</option>
             </select>
         </div>
         <div>
-            <label>Гражданство<input type="text"></label>
+            <label>Гражданство<input type="text" name="citizenship"></label>
         </div>
         <div>
             <label> Семейное положение
                 <select name="familyStatus" id="familyStatus">
-                    <option value="1">Состоит в браке</option>
-                    <option value="0">Не состоит в браке</option>
+                    <option value="married">Состоит в браке</option>
+                    <option value="single">Не состоит в браке</option>
                 </select>
             </label>
         </div>
@@ -61,7 +87,7 @@
     <div class="flex">
         <div>
             <label for="url">Сайт</label>
-            <input type="url" name="url" id="url">
+            <input type="url" name="webSite" id="url">
         </div>
         <div>
             <label for="email">E-mail</label>
@@ -87,13 +113,13 @@
         </div>
         <div>
             <label for="index">Индекс</label>
-            <input type="text" name="index" id="index">
+            <input type="text" name="zipCode" id="index">
         </div>
     </div>
 
     <h3>Телефоны</h3>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
-    <label for="popupPhoneOpen" class="button">Добавить </label>
+    <label for="popupPhoneOpen" class="button send">Добавить </label>
     <label for="popupPhoneOpen" class="button update">Редактировать </label>
     <div class="button delete">Удалить </div>
 
@@ -154,7 +180,7 @@
 
     <h3>Приложения</h3>
     <input type="checkbox" style="display: none" id="popupAttachmentOpen" class="popupAttachmentOpen">
-    <label for="popupAttachmentOpen" class="button">Добавить </label>
+    <label for="popupAttachmentOpen" class="button send">Добавить </label>
     <label for="popupAttachmentOpen" class="button update">Редактировать </label>
     <div class="button delete">Удалить </div>
 
@@ -191,7 +217,8 @@
         </tr>
         <!--{{/attachments}}-->
     </table>
-    <input type="submit" value="Сохранить контакт" class="button">
+    <input type="submit" value="Сохранить контакт" class="button" onclick="addContact()">
 </form>
+<script src="../js/contacts.js"></script>
 </body>
 </html>

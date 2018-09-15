@@ -8,18 +8,12 @@ import java.sql.*;
 
 public class DatabaseService {
 
-    private final String URL = "jdbc:mysql://localhost:3306/contactlist?autoReconnect=true&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private final String URL = "jdbc:mysql://localhost:3306/contactlist?useSSL=false";
     private final String USER = "root";
     private final String PASSWORD = "root";
 
 
     public Connection getConnection() {
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)){
             return connection;
@@ -29,9 +23,6 @@ public class DatabaseService {
         return null;
     }
 
-    public void createConnection(){
-
-    }
 
     public void createContact(Contact contact){
 
@@ -41,8 +32,7 @@ public class DatabaseService {
         try {
             Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            System.out.println(statement);
-            System.out.println(connection);
+
             statement.setString(1, contact.getFirstName());
             statement.setString(2, contact.getLastName());
             statement.setString(3, contact.getMiddleName());

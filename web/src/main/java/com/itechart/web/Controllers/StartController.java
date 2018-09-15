@@ -13,16 +13,8 @@ import java.util.Map;
 public class StartController {
 
     @RequestMapping
-    public String getContacts(Model model){
-
-        Map<String, String> contacts = new HashMap<>();
-        contacts.put("id", "1");
-        contacts.put("name", "John Doe");
-        contacts.put("date", "01.01.2001");
-        contacts.put("address", "Gomel");
-        contacts.put("job", "itechart");
-        model.addAttribute("contacts", contacts);
-        return "contacts";
+    public String start(Model model){
+        return "html/contactPage.html";
     }
 
 }
