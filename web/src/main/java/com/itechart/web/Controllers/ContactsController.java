@@ -12,12 +12,12 @@ import java.util.List;
 public class ContactsController {
     DatabaseService ds = new DatabaseService();
 
-    @GetMapping()
+    @GetMapping("/count")
     public int getRecordsCount(){
         return ds.getRecordsCount();
     }
 
-    @GetMapping(value = "/contacts", params = { "page", "size" })
+    @GetMapping(params = {"page", "size" })
     public List<Contact> getContacts(@RequestParam( "page" ) int page,
                                      @RequestParam( "size" ) int size){
 

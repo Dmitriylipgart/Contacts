@@ -23,7 +23,7 @@ header{
 table{
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 14px;
-    width: 80%;
+    width: 100%;
     background: white;
     text-align: center;
     border-collapse: collapse;
@@ -50,26 +50,15 @@ table tr:last-child td{
     border-bottom: none;
 }
 
+table td input{
+    min-width: 15px;
+}
+
 .anchor{
     cursor: pointer;
     margin: 0 5px;
 }
 
-.button{
-    display: inline-block;
-    background: #1dabb8;
-    border-radius: 3px;
-    font-weight: bold;
-    margin: 10px auto;
-    padding: 12px 20px;
-    cursor: pointer;
-    width: 140px;
-    text-decoration: none;
-}
-
-.button:hover {
-    background: #198d98;
-}
 form{
     margin: 10px auto;
     width: 50%;
@@ -131,7 +120,7 @@ input, label, select{
 
  table{
      margin: 20px auto;
-     width: 100%;
+     width: 80%;
      box-shadow: 2px 2px 2px #2a334d;
  }
  th{
@@ -141,21 +130,26 @@ input, label, select{
      float: left;
      margin: 12px;
  }
+ table tr{
+     width: 100%;
+     margin: 50px auto;
+ }
 
 .button{
-    display: inline-block;
+    display: block;
     background: #1dabb8;
     border-radius: 3px;
     font-weight: bold;
+    margin: 10px auto;
     padding: 12px 20px;
     cursor: pointer;
     width: 140px;
     text-decoration: none;
 }
-
 .button:hover {
     background: #198d98;
 }
+
 form .button{
     width: 18%;
     padding: 6px 12px;

@@ -3,6 +3,7 @@ package dao;
 import entity.Contact;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseService {
@@ -63,7 +64,7 @@ public class DatabaseService {
     }
     public List<Contact> getContacts(int page, int size){
         String sql ="SELECT * FROM contacts ORDER BY contact_id LIMIT ?, ?";
-        List <Contact> contacts = null;
+        List <Contact> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(sql))

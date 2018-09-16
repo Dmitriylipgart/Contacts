@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <title>Contact</title>
 
-    <link rel="stylesheet" href="../css/contact.css">
-
+    <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
 <header>
@@ -15,29 +14,16 @@
 
 
 <div class="wrapper">
-
-    <!--<a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>-->
-    <a class="button newContactBtn" onclick="showContactList(10)">Новый контакт</a>
-    <div class="recordListAnchors"></div>
-    <table class="contactsTable">
+    <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
+    <table class="contactsTable" style="display: none">
         <tr>
-            <td></td>
+            <th></th>
             <th>Имя</th>
             <th>Дата Рождения</th>
             <th>Адрес</th>
             <th>Место работы</th>
         </tr>
-
-        <!--<tr>-->
-            <!--<td><input type="checkbox" id="{{id}}"></td>-->
-            <!--<td>{{name}}</td>-->
-            <!--<td>{{date}}</td>-->
-            <!--<td>{{address}}</td>-->
-            <!--<td>{{job}}</td>-->
-        <!--</tr>-->
-
     </table>
-
 </div>
 
 <form style="display: none" class="contactForm" name="contactForm">
@@ -200,7 +186,6 @@
             <label for="popupAttachmentOpen" class="button delete"> Закрыть </label>
         </div>
     </div>
-
     <table>
         <tr>
             <td></td>
@@ -208,16 +193,14 @@
             <th>Дата Загрузки</th>
             <th>Комментарий</th>
         </tr>
-        <!--{{#attachments}}-->
         <tr>
             <td><input type="checkbox" id="{{attachmentId}}"></td>
             <td>{{attachmentName}}</td>
             <td>{{attachmentComment}}</td>
         </tr>
-        <!--{{/attachments}}-->
     </table>
     <div  class="button" onclick="addContact()"> Сохранить контакт</div>
 </form>
-<script src="../js/contacts.js"></script>
+<script src="/js/contacts.js"></script>
 </body>
 </html>
