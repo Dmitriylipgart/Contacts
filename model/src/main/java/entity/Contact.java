@@ -4,6 +4,7 @@ package entity;
 import java.util.List;
 
 public class Contact {
+    private int contactId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -43,6 +44,10 @@ public class Contact {
         this.address = address;
         this.zipCode = zipCode;
     }
+
+    public int getContactId() {return contactId;}
+
+    public void setContactId(int contactId) {this.contactId = contactId;}
 
     public String getFirstName() {
         return firstName;

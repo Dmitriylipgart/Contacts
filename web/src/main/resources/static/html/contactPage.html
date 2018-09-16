@@ -16,8 +16,9 @@
 
 <div class="wrapper">
 
-    <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
-
+    <!--<a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>-->
+    <a class="button newContactBtn" onclick="showContactList(10)">Новый контакт</a>
+    <div class="recordListAnchors"></div>
     <table class="contactsTable">
         <tr>
             <td></td>
@@ -161,21 +162,19 @@
         </div>
     </div>
 
-    <table>
+    <table class="phones">
         <tr>
             <th></th>
             <th>Телефон</th>
             <th>Описание</th>
             <th>Комментарий</th>
         </tr>
-        <!--{{#phones}} -->
         <tr>
             <td><input type="checkbox" id="{{phoneId}}"></td>
             <td>{{phoneNumber}}</td>
             <td>{{phoneDescription}}</td>
             <td>{{phoneComment}}</td>
         </tr>
-        <!--{{/phones}}-->
     </table>
 
     <h3>Приложения</h3>
@@ -217,7 +216,7 @@
         </tr>
         <!--{{/attachments}}-->
     </table>
-    <input type="submit" value="Сохранить контакт" class="button" onclick="addContact()">
+    <div  class="button" onclick="addContact()"> Сохранить контакт</div>
 </form>
 <script src="../js/contacts.js"></script>
 </body>

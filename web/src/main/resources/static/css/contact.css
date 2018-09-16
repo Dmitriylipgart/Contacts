@@ -50,6 +50,11 @@ table tr:last-child td{
     border-bottom: none;
 }
 
+.anchor{
+    cursor: pointer;
+    margin: 0 5px;
+}
+
 .button{
     display: inline-block;
     background: #1dabb8;
