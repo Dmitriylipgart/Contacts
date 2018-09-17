@@ -7,10 +7,12 @@ var newContactBtn = document.querySelector(".newContactBtn");
 var headerMessage = document.querySelector("h1");
 var form = document.forms.contactForm;
 var recordsToShow = 10;
-var page = 1;
+var currentPage = 1;
 
 function init(){
-    showContactList(page);
+    showContactTableHeader();
+    showContactList(currentPage);
+
 }
 
 function status(response) {
@@ -34,33 +36,59 @@ function showContactForm() {
 }
 
 
-function showContactList(page){
-    var recordsCount = 31;
-    var numOfPages;
-    contactForm.setAttribute("style", "display: none");
-    newContactBtn.setAttribute("style", "display: block");
-    headerMessage.innerHTML = "Журнал контактов";
-    fetch('/contacts/count').then(json).then(function (data) {
-        recordsCount = data;
-        console.log(data);
-        if(recordsCount < 1) {
-            showNoRecordsMessage();
-        } else {
-            showContactTable(recordsCount);
-
-        }
-    });
-}
-
 function showNoRecordsMessage() {
     var message = document.createElement("h3");
     message.innerHTML = "Нет Контактов";
     document.querySelector(".wrapper").insertBefore(message, contactsTable);
 }
 
-function showContactTable(recordsCount) {
+function showContactList(page){
+    var recordsCount = 31;
+    var page = page;
+    contactForm.setAttribute("style", "display: none");
+    newContactBtn.setAttribute("style", "display: block");
+    headerMessage.innerHTML = "Журнал контактов";
+    fetch('/contacts/count').then(json).then(function (data) {
+        recordsCount = data;
+        if(recordsCount < 1) {
+            showNoRecordsMessage();
+        } else {
+            showContactTable(recordsCount, page);
+
+        }
+    });
+}
+
+function clearContactTable(){
+    while (contactsTable.childNodes.length > 1){
+        contactsTable.removeChild(contactsTable.lastChild);
+    }
+}
+
+function showContactTableHeader(){
+    var tr = document.createElement("tr");
+    var th1 = document.createElement("th");
+    var th2 = document.createElement("th");
+    var th3 = document.createElement("th");
+    var th4 = document.createElement("th");
+    var th5 = document.createElement("th");
+    th1.innerHTML = "";
+    th2.innerHTML = "Имя";
+    th3.innerHTML = "Дата Рождения";
+    th4.innerHTML = "Место Работы";
+    th5.innerHTML = "Адрес";
+    tr.appendChild(th1);
+    tr.appendChild(th2);
+    tr.appendChild(th3);
+    tr.appendChild(th4);
+    tr.appendChild(th5);
+    contactsTable.appendChild(tr);
+}
+
+function showContactTable(recordsCount, page) {
     contactsTable.setAttribute("style", "display: block");
     showPagination(recordsCount);
+    clearContactTable();
     fetch('/contacts?page=' + page + '&' + 'size=' + recordsToShow).then(json).then(function (data) {
         for(var i = 0; i < data.length; i++){
             var tr = document.createElement("tr");
@@ -75,6 +103,8 @@ function showContactTable(recordsCount) {
             var input = document.createElement("input");
             var td1 = document.createElement("td");
             input.setAttribute("type", "checkbox");
+            input.setAttribute("id", data[i].contactId);
+            input.setAttribute("value", data[i].contactId);
             td1.appendChild(input);
             var td2 = document.createElement("td");
             var td3 = document.createElement("td");
@@ -128,6 +158,7 @@ function addContact(){
     contact.city = form.city.value;
     contact.address = form.address.value;
     contact.zipCode = form.zipCode.value;
+
     var options = {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -135,6 +166,25 @@ function addContact(){
     }
 
     fetch('/contact', options).then(status);
+}
+
+function deleteContacts() {
+    var elements = contactsTable.querySelectorAll("input:checked");
+    var contactIdList = [];
+    elements.forEach(function (elem) {
+        contactIdList.push(elem.value);
+    });
+    // for(var i = 0; i < elements.length; i++){
+    //     contactIdList.push(elements[i]);
+    // }
+    var options = {
+        method: 'delete',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(contactIdList)
+    };
+    fetch('/contacts', options).then(status).then(function () {
+        showContactList(1);
+    });
 }
 
 

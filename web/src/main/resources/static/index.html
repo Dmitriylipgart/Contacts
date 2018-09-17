@@ -15,15 +15,8 @@
 
 <div class="wrapper">
     <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
-    <table class="contactsTable" style="display: none">
-        <tr>
-            <th></th>
-            <th>Имя</th>
-            <th>Дата Рождения</th>
-            <th>Адрес</th>
-            <th>Место работы</th>
-        </tr>
-    </table>
+    <a class="button delete" onclick="deleteContacts()">Удалить</a>
+    <table class="contactsTable" style="display: none"></table>
 </div>
 
 <form style="display: none" class="contactForm" name="contactForm">
@@ -201,6 +194,6 @@
     </table>
     <div  class="button" onclick="addContact()"> Сохранить контакт</div>
 </form>
-<script src="/js/contacts.js"></script>
+<script src="js/contacts.js"></script>
 </body>
 </html>

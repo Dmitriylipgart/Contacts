@@ -136,7 +136,7 @@ input, label, select{
  }
 
 .button{
-    display: block;
+    display: inline-block;
     background: #1dabb8;
     border-radius: 3px;
     font-weight: bold;
@@ -170,11 +170,7 @@ form .button{
 
  .delete{
      background-color: #da4919;
-     /*background-image: -webkit-linear-gradient(bottom, #da4919 0%, #e48371 100%);*/
-     /*background-image: -moz-linear-gradient(bottom, #da4919 0%, #e48371 100%);*/
-     /*background-image: -o-linear-gradient(bottom, #da4919 0%, #e48371 100%);*/
-     /*background-image: -ms-linear-gradient(bottom, #da4919 0%, #e48371 100%);*/
-     /*background-image: linear-gradient(bottom, #da4919 0%, #e48371 100%);*/
+
  }
 
 .update{

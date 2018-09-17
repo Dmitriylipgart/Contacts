@@ -4,6 +4,8 @@ import entity.Contact;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DatabaseService {
@@ -41,7 +43,7 @@ public class DatabaseService {
     }
 
     public int getRecordsCount() {
-        String sql = "SELECT count(*) FROM contacts";
+        String sql = "SELECT count(*) FROM contacts WHERE deleted IS NULL";
         int result = 0;
         ResultSet rs = null;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -63,7 +65,7 @@ public class DatabaseService {
         return result;
     }
     public List<Contact> getContacts(int page, int size){
-        String sql ="SELECT * FROM contacts ORDER BY contact_id LIMIT ?, ?";
+        String sql ="SELECT * FROM contacts WHERE deleted IS NULL ORDER BY contact_id LIMIT ?, ? ";
         List <Contact> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -89,6 +91,31 @@ public class DatabaseService {
             e.printStackTrace();
         }
         return contacts;
+    }
+
+    public void deleteContacts(List<Integer> contactIdList){
+
+        StringBuilder params = new StringBuilder();
+        for (int i = 0; i < contactIdList.size() - 1; i++) {
+            params.append("?,");
+            }
+         params.append("?");
+
+
+
+        String sql = "UPDATE contacts SET deleted = 1 WHERE contact_id IN (" + params.toString() +")";
+
+
+        try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            for (int i = 0; i <= contactIdList.size(); i++) {
+                statement.setInt(i + 1, contactIdList.get(i));
+            }
+            statement.executeQuery();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
 }

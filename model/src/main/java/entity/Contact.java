@@ -26,24 +26,24 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String firstName, String lastName, String middleName, String birthDate, String sex, String citizenship,
-                   String familyStatus, String webSite, String email, String job, String country, String city,
-                   String address, int zipCode) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.middleName = middleName;
-        this.birthDate = birthDate;
-        this.sex = sex;
-        this.citizenship = citizenship;
-        this.familyStatus = familyStatus;
-        this.webSite = webSite;
-        this.email = email;
-        this.job = job;
-        this.country = country;
-        this.city = city;
-        this.address = address;
-        this.zipCode = zipCode;
-    }
+//    public Contact(String firstName, String lastName, String middleName, String birthDate, String sex, String citizenship,
+//                   String familyStatus, String webSite, String email, String job, String country, String city,
+//                   String address, int zipCode) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.middleName = middleName;
+//        this.birthDate = birthDate;
+//        this.sex = sex;
+//        this.citizenship = citizenship;
+//        this.familyStatus = familyStatus;
+//        this.webSite = webSite;
+//        this.email = email;
+//        this.job = job;
+//        this.country = country;
+//        this.city = city;
+//        this.address = address;
+//        this.zipCode = zipCode;
+//    }
 
     public int getContactId() {return contactId;}
 
