@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Contact</title>
-
     <link rel="stylesheet" href="css/contact.css">
 </head>
 <body>
@@ -11,12 +10,18 @@
     <h1>Журнал контактов</h1>
 </header>
 
-
-
 <div class="wrapper">
     <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
-    <a class="button delete" onclick="deleteContacts()">Удалить</a>
-    <table class="contactsTable" style="display: none"></table>
+    <a class="button delete delContactBtn" onclick="deleteContacts()">Удалить</a>
+
+    <div class="radio-group">
+        <input type="radio" id="option-one" value="10" name="selector">
+        <label for="option-one" >10</label>
+        <input type="radio" id="option-two" value="20" name="selector">
+        <label for="option-two" >20</label>
+    </div>
+
+    <table class="contactsTable" style="display: block"></table>
 </div>
 
 <form style="display: none" class="contactForm" name="contactForm">
@@ -99,9 +104,9 @@
 
     <h3>Телефоны</h3>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
-    <label for="popupPhoneOpen" class="button send">Добавить </label>
-    <label for="popupPhoneOpen" class="button update">Редактировать </label>
-    <div class="button delete">Удалить </div>
+    <label for="popupPhoneOpen" class="button send formButton">Добавить </label>
+    <label for="popupPhoneOpen" class="button update formButton">Редактировать </label>
+    <div class="button delete formButton">Удалить </div>
 
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
 
@@ -136,8 +141,8 @@
             </div>
         </div>
         <div class="popupFooter">
-            <div class="button"> Добавить</div>
-            <label for="popupPhoneOpen" class="button delete"> Закрыть </label>
+            <div class="button formButton"> Добавить</div>
+            <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
         </div>
     </div>
 
@@ -158,9 +163,9 @@
 
     <h3>Приложения</h3>
     <input type="checkbox" style="display: none" id="popupAttachmentOpen" class="popupAttachmentOpen">
-    <label for="popupAttachmentOpen" class="button send">Добавить </label>
-    <label for="popupAttachmentOpen" class="button update">Редактировать </label>
-    <div class="button delete">Удалить </div>
+    <label for="popupAttachmentOpen" class="button send formButton">Добавить </label>
+    <label for="popupAttachmentOpen" class="button update formButton">Редактировать </label>
+    <div class="button delete formButton">Удалить </div>
 
     <label class="popupOverlay popupAttachmentOverlay" for="popupAttachmentOpen"></label>
     <div class="popup popupAttachment">
@@ -175,8 +180,8 @@
             </div>
         </div>
         <div class="popupFooter">
-            <div class="button"> Добавить</div>
-            <label for="popupAttachmentOpen" class="button delete"> Закрыть </label>
+            <div class="button formButton"> Добавить</div>
+            <label for="popupAttachmentOpen" class="button delete formButton"> Закрыть </label>
         </div>
     </div>
     <table>
@@ -193,6 +198,7 @@
         </tr>
     </table>
     <div  class="button" onclick="addContact()"> Сохранить контакт</div>
+
 </form>
 <script src="js/contacts.js"></script>
 </body>

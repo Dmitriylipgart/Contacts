@@ -1,11 +1,6 @@
 window.onload = init;
 
-var form = document.forms.contactForm;
 var contactsTable = document.querySelector(".contactsTable");
-var contactForm = document.querySelector(".contactForm");
-var newContactBtn = document.querySelector(".newContactBtn");
-var headerMessage = document.querySelector("h1");
-var form = document.forms.contactForm;
 var recordsToShow = 10;
 var currentPage = 1;
 
@@ -30,9 +25,10 @@ function json(response) {
 function showContactForm() {
     document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
-    contactForm.setAttribute("style", "display: block");
-    newContactBtn.setAttribute("style", "display: none");
-    headerMessage.innerHTML = "Заполните данные контакта";
+    document.querySelector(".contactForm").setAttribute("style", "display: block");
+    document.querySelector(".newContactBtn").setAttribute("style", "display: none");
+    document.querySelector(".delContactBtn").setAttribute("style", "display: none");
+    document.querySelector("h1").innerHTML = "Заполните данные контакта";
 }
 
 
@@ -43,20 +39,22 @@ function showNoRecordsMessage() {
 }
 
 function showContactList(page){
-    var recordsCount = 31;
+    var recordsCount = 0;
     var page = page;
-    contactForm.setAttribute("style", "display: none");
-    newContactBtn.setAttribute("style", "display: block");
-    headerMessage.innerHTML = "Журнал контактов";
+    document.querySelector(".contactForm").setAttribute("style", "display: none");
+    document.querySelector(".newContactBtn").setAttribute("style", "display: inline-block");
+    document.querySelector(".delContactBtn").setAttribute("style", "display: inline-block");
+    document.querySelector("h1").innerHTML = "Журнал контактов";
+
     fetch('/contacts/count').then(json).then(function (data) {
         recordsCount = data;
         if(recordsCount < 1) {
             showNoRecordsMessage();
         } else {
             showContactTable(recordsCount, page);
-
         }
     });
+
 }
 
 function clearContactTable(){
@@ -64,6 +62,23 @@ function clearContactTable(){
         contactsTable.removeChild(contactsTable.lastChild);
     }
 }
+
+function clearAncorsDiv(){
+    var anchorsDiv = document.querySelector(".recordListAnchors");
+    while (anchorsDiv.childNodes.length > 0){
+        anchorsDiv.removeChild(anchorsDiv.firstChild);
+    }
+}
+
+var radio = document.getElementsByName("selector");
+for(var i = 0; i < radio.length; i++){
+    radio[i].onchange = changeRecordsToShow;
+}
+
+ function changeRecordsToShow() {
+     recordsToShow = this.value;
+     showContactList(1);
+ }
 
 function showContactTableHeader(){
     var tr = document.createElement("tr");
@@ -126,23 +141,27 @@ function showContactTable(recordsCount, page) {
 
 function showPagination(recordsCount){
     var  anchorsDiv = document.querySelector(".recordListAnchors");
+    var numOfPages = Math.ceil(recordsCount/recordsToShow);
     if(!anchorsDiv){
-        var numOfPages = Math.ceil(recordsCount/recordsToShow);
         anchorsDiv = document.createElement("div");
         document.querySelector(".wrapper").insertBefore(anchorsDiv, contactsTable);
         anchorsDiv.setAttribute("class", "recordListAnchors");
-        for(var i = 1; i <= numOfPages; i++){
-            var anchor = document.createElement('a');
-            anchor.setAttribute('onclick', 'showContactList(' + i +')');
-            anchor.setAttribute('class', 'anchor');
-            anchor.innerHTML = i;
-            anchorsDiv.appendChild(anchor);
-        }
+    }else{
+        clearAncorsDiv();
     }
+    for(var i = 1; i <= numOfPages; i++){
+        var anchor = document.createElement('a');
+        anchor.setAttribute('onclick', 'showContactList(' + i +')');
+        anchor.setAttribute('class', 'anchor');
+        anchor.innerHTML = i;
+        anchorsDiv.appendChild(anchor);
+    }
+    anchorsDiv.setAttribute("style", "display: block");
 }
 
 
 function addContact(){
+    var form = document.forms.contactForm;
     var contact = {};
     contact.firstName = form.firstName.value;
     contact.lastName = form.lastName.value;
@@ -165,7 +184,10 @@ function addContact(){
         body: JSON.stringify(contact)
     }
 
-    fetch('/contact', options).then(status);
+    fetch('/contact', options).then(status).then(function () {
+        showContactList(1);
+    });
+
 }
 
 function deleteContacts() {
@@ -174,9 +196,6 @@ function deleteContacts() {
     elements.forEach(function (elem) {
         contactIdList.push(elem.value);
     });
-    // for(var i = 0; i < elements.length; i++){
-    //     contactIdList.push(elements[i]);
-    // }
     var options = {
         method: 'delete',
         headers: {'Content-Type': 'application/json'},
@@ -185,6 +204,7 @@ function deleteContacts() {
     fetch('/contacts', options).then(status).then(function () {
         showContactList(1);
     });
+
 }
 
 

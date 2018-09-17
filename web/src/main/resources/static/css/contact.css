@@ -146,11 +146,8 @@ input, label, select{
     width: 140px;
     text-decoration: none;
 }
-.button:hover {
-    background: #198d98;
-}
 
-form .button{
+ .formButton{
     width: 18%;
     padding: 6px 12px;
     margin-left: 3px;
@@ -161,11 +158,6 @@ form .button{
 }
  .send{
      background-color: #3f8643;
-     /*background-image: -webkit-linear-gradient(bottom, #3f8643 0%, #49b866 100%);*/
-     /*background-image: -moz-linear-gradient(bottom, #3f8643 0%, #49b866 100%);*/
-     /*background-image: -o-linear-gradient(bottom, #3f8643 0%, #49b866 100%);*/
-     /*background-image: -ms-linear-gradient(bottom, #3f8643 0%, #49b866 100%);*/
-     /*background-image: linear-gradient(bottom, #3f8643 0%, #49b866 100%);*/
  }
 
  .delete{
@@ -175,20 +167,21 @@ form .button{
 
 .update{
     background-color: #5466da;
-    /*background-image: -webkit-linear-gradient(bottom, #5466da 0%, #768ee4 100%);*/
-    /*background-image: -moz-linear-gradient(bottom, #5466da 0%, #768ee4 100%);*/
-    /*background-image: -o-linear-gradient(bottom, #5466da 0%, #768ee4 100%);*/
-    /*background-image: -ms-linear-gradient(bottom, #5466da 0%, #768ee4 100%);*/
-    /*background-image: linear-gradient(bottom, #5466da 0%, #768ee4 100%);*/
+}
+.button:hover {
+    background: #198d98;
+}
+.send:hover{
+    background-color: #254b25;
+}
+.delete:hover{
+    background-color: #773012;
+}
+.update:hover{
+    background-color: #353d7a;
 }
 
-input.button{
-    color: white;
-    float: none;
-    width: 30%;
-    height: 45px;
-    font-size: 1.1em;
-}
+
 
 .popup{
     position: fixed;
@@ -212,13 +205,6 @@ input.button{
     border-radius: 5px;
     z-index: 103;
 }
-
-/*.small input{  width: 80px;}*/
-/*.small label{*/
-    /*color: #fff;*/
-    /*font-size: 12px;*/
-/*}*/
-
 
 label.popupOverlay {
     position: fixed;
@@ -260,6 +246,43 @@ label.popupOverlay {
     transform: translate(-50%, 0);
     top: 20%;
 }
+
+
+input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+.radio-group label{
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 5px 20px;
+    background: #626d8d;
+
+}
+
+input[type=radio]:checked + label{
+    color: #fff;
+    background: #3a435e;
+}
+
+label + input[type=radio] + label {
+    border-left: solid 3px;
+    border-radius: 3px 0 0 3px;
+}
+.radio-group {
+    width: 120px;
+    left: 10px;
+    border: solid 3px white;
+    display: block;
+    margin: 10px auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 
 @media only screen and (max-width: 1024px) {
     form{

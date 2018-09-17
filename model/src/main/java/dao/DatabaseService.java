@@ -108,10 +108,10 @@ public class DatabaseService {
 
         try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
             PreparedStatement statement = connection.prepareStatement(sql)){
-            for (int i = 0; i <= contactIdList.size(); i++) {
+            for (int i = 0; i < contactIdList.size(); i++) {
                 statement.setInt(i + 1, contactIdList.get(i));
             }
-            statement.executeQuery();
+            statement.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
         }
