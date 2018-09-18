@@ -23,7 +23,9 @@ function json(response) {
 }
 
 function showContactForm() {
-    document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
+    if(document.querySelector(".recordListAnchors")){
+     document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
+    }
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactForm").setAttribute("style", "display: block");
     document.querySelector(".newContactBtn").setAttribute("style", "display: none");
@@ -36,11 +38,16 @@ function showNoRecordsMessage() {
     var message = document.createElement("h3");
     message.innerHTML = "Нет Контактов";
     document.querySelector(".wrapper").insertBefore(message, contactsTable);
+    contactsTable.setAttribute("style", "display: none");
 }
 
 function showContactList(page){
     var recordsCount = 0;
     var page = page;
+    if(document.querySelector("h3")){
+        document.querySelector("h3").setAttribute("style", "display: none");
+    }
+
     document.querySelector(".contactForm").setAttribute("style", "display: none");
     document.querySelector(".newContactBtn").setAttribute("style", "display: inline-block");
     document.querySelector(".delContactBtn").setAttribute("style", "display: inline-block");

@@ -19,6 +19,10 @@ header{
     width: 80%;
     margin: 0 auto;
 }
+ h3{
+    display: block
+    margin: 0 auto;
+ }
 
 table{
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
@@ -126,7 +130,7 @@ input, label, select{
  th{
      min-width: 10px;
  }
- h3{
+ h2{
      float: left;
      margin: 12px;
  }
