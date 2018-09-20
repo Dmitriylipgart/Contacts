@@ -10,6 +10,7 @@ function init(){
 
 }
 
+
 function status(response) {
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response);
@@ -99,6 +100,7 @@ function showContactTableHeader(){
     th3.innerHTML = "Дата Рождения";
     th4.innerHTML = "Место Работы";
     th5.innerHTML = "Адрес";
+    th1.setAttribute("class", "check");
     tr.appendChild(th1);
     tr.appendChild(th2);
     tr.appendChild(th3);
@@ -124,6 +126,7 @@ function showContactTable(recordsCount, page) {
             var address = data[i].address;
             var input = document.createElement("input");
             var td1 = document.createElement("td");
+            td1.setAttribute("class", "check");
             input.setAttribute("type", "checkbox");
             input.setAttribute("id", data[i].contactId);
             input.setAttribute("value", data[i].contactId);

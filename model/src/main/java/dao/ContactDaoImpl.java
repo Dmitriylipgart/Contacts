@@ -1,25 +1,53 @@
 package dao;
-
+import ds.MySqlDS;
 import entity.Contact;
+import entity.Entity;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
-public class DatabaseService {
+public class ContactDaoImpl implements ContactDao{
 
-    private final String URL = "jdbc:mysql://localhost:3306/contact_list?useSSL=false";
-    private final String USER = "root";
-    private final String PASSWORD = "root";
 
-    public void createContact(Contact contact) {
+    DataSource dataSource = new MySqlDS().getDataSource();
+
+    @Override
+    public int countAll() {
+        String sql = "SELECT count(*) FROM contacts WHERE deleted IS NULL";
+        int result = 0;
+        ResultSet rs = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void create(Contact contact) {
+
         String sql = "INSERT INTO contacts (first_name, last_name, middle_name, birth_date, sex, citizenship, family_status, "
                 + "web_site, email, job, country, city, address, zip_code )"
                 + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setString(1, contact.getFirstName());
@@ -42,33 +70,47 @@ public class DatabaseService {
         }
     }
 
-    public int getRecordsCount() {
-        String sql = "SELECT count(*) FROM contacts WHERE deleted IS NULL";
-        int result = 0;
-        ResultSet rs = null;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(sql)
-        ) {
-            rs = statement.executeQuery();
-            while (rs.next()) {
-                result = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
+
+    @Override
+    public Contact getById(int id) {
+        return null;
     }
-    public List<Contact> getContacts(int page, int size){
+
+    @Override
+    public void update(Contact contact) {
+
+    }
+
+
+    @Override
+    public void delete(List<Integer> contactIdList) {
+
+        StringBuilder params = new StringBuilder();
+        for (int i = 0; i < contactIdList.size() - 1; i++) {
+            params.append("?,");
+        }
+        params.append("?");
+
+        String sql = "UPDATE contacts SET deleted = 1 WHERE contact_id IN (" + params.toString() +")";
+
+
+        try(Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            for (int i = 0; i < contactIdList.size(); i++) {
+                statement.setInt(i + 1, contactIdList.get(i));
+            }
+            statement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Contact> readAll(int page, int size) {
         String sql ="SELECT * FROM contacts WHERE deleted IS NULL ORDER BY contact_id LIMIT ?, ? ";
         List <Contact> contacts = new ArrayList<>();
         ResultSet rs = null;
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql))
         {
             statement.setInt(1, (page - 1) * size);
@@ -92,32 +134,4 @@ public class DatabaseService {
         }
         return contacts;
     }
-
-    public void deleteContacts(List<Integer> contactIdList){
-
-        StringBuilder params = new StringBuilder();
-        for (int i = 0; i < contactIdList.size() - 1; i++) {
-            params.append("?,");
-            }
-         params.append("?");
-
-
-
-        String sql = "UPDATE contacts SET deleted = 1 WHERE contact_id IN (" + params.toString() +")";
-
-
-        try(Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            PreparedStatement statement = connection.prepareStatement(sql)){
-            for (int i = 0; i < contactIdList.size(); i++) {
-                statement.setInt(i + 1, contactIdList.get(i));
-            }
-            statement.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
 }
-
-

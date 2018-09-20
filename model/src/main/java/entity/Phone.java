@@ -1,7 +1,7 @@
 package entity;
 
 
-public class Phone {
+public class Phone implements Entity{
     private int countryCode;
     private int operatorCode;
     private int phoneNumber;

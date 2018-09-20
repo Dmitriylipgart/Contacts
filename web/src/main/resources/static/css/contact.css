@@ -3,7 +3,7 @@
 }
 
 body{
-    background: #626d8d;
+    background: #696969;
     text-align: center;
     color: #fff;
 }
@@ -13,6 +13,9 @@ header{
     line-height: 48px;
     color: #fff;
     text-shadow: 2px 2px 2px #3E4347;
+    background: #4f4f4f;
+    height: 65px;
+
 }
 
 .wrapper {
@@ -20,42 +23,55 @@ header{
     margin: 0 auto;
 }
  h3{
-    display: block
+    display: block;
     margin: 0 auto;
  }
 
 table{
     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 14px;
-    width: 100%;
+    font-size: 16px;
+    font-weight: 500;
     background: white;
     text-align: center;
     border-collapse: collapse;
-    color: #3E4347;
     margin: 0 auto;
+    border: solid #c2c2c2 2px;
+    border-radius: 3px;
+    width: 1000px;
+    table-layout: fixed;
+
 }
 
-table th {
-    font-weight: normal;
-    border-bottom: 2px solid #F5E1A6;
-    border-right: 20px solid white;
-    border-left: 20px solid white;
+table th{
+    font-weight: 600;
     padding: 8px 10px;
+    background-color: #595959;
+    height: 45px;
 }
-table td {
-    border-right: 20px solid white;
-    border-left: 20px solid white;
-    border-bottom: solid 1px #7d8988;
-    padding: 12px 10px;
-    color: #8b8e91;
+
+table td:not(.check){
+    width: 24%;
+    padding: 8px 0;
+    color: #fffae5;
+    background-color: #696969;
 }
+table td.check{
+    max-width: 30px;
+    background-color: #696969;
+}
+
+
+table tr{
+    background-color: #49b866;
+}
+
 
 table tr:last-child td{
     border-bottom: none;
 }
 
 table td input{
-    min-width: 15px;
+
 }
 
 .anchor{
@@ -122,22 +138,11 @@ input, label, select{
 
 }
 
- table{
-     margin: 20px auto;
-     width: 80%;
-     box-shadow: 2px 2px 2px #2a334d;
- }
- th{
-     min-width: 10px;
- }
  h2{
      float: left;
      margin: 12px;
  }
- table tr{
-     width: 100%;
-     margin: 50px auto;
- }
+
 
 .button{
     display: inline-block;
@@ -264,13 +269,13 @@ input[type=radio] {
     cursor: pointer;
     font-weight: bold;
     padding: 5px 20px;
-    background: #626d8d;
+    background: #585858;
 
 }
 
 input[type=radio]:checked + label{
     color: #fff;
-    background: #3a435e;
+    background: #363636;
 }
 
 label + input[type=radio] + label {
