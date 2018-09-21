@@ -16,135 +16,139 @@
 
     <div class="radio-group">
         <input type="radio" id="option-one" value="10" name="selector">
-        <label for="option-one" >10</label>
+        <label for="option-one">10</label>
         <input type="radio" id="option-two" value="20" name="selector">
-        <label for="option-two" >20</label>
+        <label for="option-two">20</label>
     </div>
 
     <table class="contactsTable" style="display: block"></table>
 </div>
 
-<form style="display: none" class="contactForm" name="contactForm">
-    <div class="contactPhoto"></div>
-    <div class="flex flexColumn">
-        <div>
-            <label for="lastName">Фамилия</label>
-            <input type="text" name="lastName" id="lastName" required>
-        </div>
-        <div>
-            <label for="firstName">Имя</label>
-            <input type="text" name="firstName" id="firstName" required>
+<div style="display: none" class="contactForm">
+    <form name="contactForm">
+        <div class="contactPhoto"></div>
+        <div class="flex flexColumn">
+            <div>
+                <label for="lastName">Фамилия</label>
+                <input type="text" name="lastName" id="lastName" required>
+            </div>
+            <div>
+                <label for="firstName">Имя</label>
+                <input type="text" name="firstName" id="firstName" required>
+            </div>
+
+            <div>
+                <label for="middleName">Отчество</label>
+                <input type="text" name="middleName" id="middleName">
+            </div>
+
         </div>
 
-        <div>
-            <label for="middleName">Отчество</label>
-            <input type="text" name="middleName" id="middleName">
-        </div>
+        <div class="flex">
+            <div>
+                <label for="birthDate">Дата Рождения</label>
+                <input type="date" id="birthDate" name="birthDate">
+            </div>
 
-    </div>
-
-    <div class="flex">
-        <div>
-        <label for="birthDate">Дата Рождения</label>
-        <input type="date" id="birthDate" name="birthDate">
-    </div>
-
-        <div class="sex">
-            <label for="sex">Пол</label>
-            <select name="sex" id="sex">
-                <option value="male">Мужской</option>
-                <option value="female">Женский</option>
-            </select>
-        </div>
-        <div>
-            <label>Гражданство<input type="text" name="citizenship"></label>
-        </div>
-        <div>
-            <label> Семейное положение
-                <select name="familyStatus" id="familyStatus">
-                    <option value="married">Состоит в браке</option>
-                    <option value="single">Не состоит в браке</option>
+            <div class="sex">
+                <label for="sex">Пол</label>
+                <select name="sex" id="sex">
+                    <option value="male">Мужской</option>
+                    <option value="female">Женский</option>
                 </select>
-            </label>
+            </div>
+            <div>
+                <label>Гражданство<input type="text" name="citizenship"></label>
+            </div>
+            <div>
+                <label> Семейное положение
+                    <select name="familyStatus" id="familyStatus">
+                        <option value="married">Состоит в браке</option>
+                        <option value="single">Не состоит в браке</option>
+                    </select>
+                </label>
+            </div>
         </div>
-    </div>
 
-    <div class="flex">
-        <div>
-            <label for="url">Сайт</label>
-            <input type="url" name="webSite" id="url">
+        <div class="flex">
+            <div>
+                <label for="url">Сайт</label>
+                <input type="url" name="webSite" id="url">
+            </div>
+            <div>
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div>
+                <label for="job">Место работы</label>
+                <input type="text" name="job" id="job">
+            </div>
         </div>
-        <div>
-            <label for="email">E-mail</label>
-            <input type="email" name="email" id="email">
+        <div class="flex">
+            <div>
+                <label for="country">Страна</label>
+                <input type="text" name="country" id="country">
+            </div>
+            <div>
+                <label for="city">Город</label>
+                <input type="text" name="city" id="city">
+            </div>
+            <div>
+                <label for="address">Улица/Дом/Квартира</label>
+                <input type="text" name="address" id="address">
+            </div>
+            <div>
+                <label for="index">Индекс</label>
+                <input type="text" name="zipCode" id="index">
+            </div>
         </div>
-        <div>
-            <label for="job">Место работы</label>
-            <input type="text" name="job" id="job">
-        </div>
-    </div>
-    <div class="flex">
-        <div>
-            <label for="country">Страна</label>
-            <input type="text" name="country" id="country">
-        </div>
-        <div>
-            <label for="city">Город</label>
-            <input type="text" name="city" id="city">
-        </div>
-        <div>
-            <label for="address">Улица/Дом/Квартира</label>
-            <input type="text" name="address" id="address">
-        </div>
-        <div>
-            <label for="index">Индекс</label>
-            <input type="text" name="zipCode" id="index">
-        </div>
-    </div>
+    </form>
 
     <h2>Телефоны</h2>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
     <label for="popupPhoneOpen" class="button send formButton">Добавить </label>
     <label for="popupPhoneOpen" class="button update formButton">Редактировать </label>
-    <div class="button delete formButton">Удалить </div>
+    <div class="button delete formButton">Удалить</div>
 
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
 
-    <div class="popup popupPhone">
 
-        <div class="flex">
-            <div >
-                <label for="countryId">Код страны</label>
-                <input type="text" name="countryId" id="countryId">
+    <form class="popup popupPhone">
+            <div class="flex">
+                <div>
+                    <label for="countryId">Код страны</label>
+                    <input type="text" name="countryId" id="countryId">
+                </div>
+                <div>
+                    <label for="operatorId">Код оператора</label>
+                    <input type="text" name="operatorid" id="operatorId">
+                </div>
+                <div class="big">
+                    <label for="phoneNumber">Телефон</label>
+                    <input type="text" name="phoneNumber" id="phoneNumber">
+                </div>
             </div>
-            <div >
-                <label for="operatorId">Код оператора</label>
-                <input type="text" name="operatorid" id="operatorId">
-            </div>
-            <div class="big">
-                <label for="phoneNumber">Телефон</label>
-                <input type="text" name="phoneNumber" id="phoneNumber">
-            </div>
-        </div>
-        <div class="flex">
-            <div>
-                <label for="phoneDescription"></label>
-                <select name="phoneDescription" id="phoneDescription">
-                    <option value="1">Домашний</option>
-                    <option value="0">Мобильный</option>
-                </select>
+            <div class="flex">
+                <div>
+                    <label for="phoneDescription"></label>
+                    <select name="phoneDescription" id="phoneDescription">
+                        <option value="1">Домашний</option>
+                        <option value="0">Мобильный</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="phoneComments">Комментарий</label>
+                    <input type="text" name="phoneComments" id="phoneComments">
+                </div>
             </div>
 
-            <div>
-                <label for="phoneComments">Комментарий</label>
-                <input type="text" name="phoneComments" id="phoneComments">
+            <div class="popupFooter">
+                <div class="button formButton addButton"> Добавить</div>
+                <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
             </div>
-        </div>
-        <div class="popupFooter">
-            <div class="button formButton"> Добавить</div>
-            <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
-        </div>
-    </div>
+    </form>
+
 
     <table class="phones">
         <tr>
@@ -153,19 +157,13 @@
             <th>Описание</th>
             <th>Комментарий</th>
         </tr>
-        <tr>
-            <td><input type="checkbox" id="{{phoneId}}"></td>
-            <td>{{phoneNumber}}</td>
-            <td>{{phoneDescription}}</td>
-            <td>{{phoneComment}}</td>
-        </tr>
     </table>
 
     <h2>Приложения</h2>
     <input type="checkbox" style="display: none" id="popupAttachmentOpen" class="popupAttachmentOpen">
     <label for="popupAttachmentOpen" class="button send formButton">Добавить </label>
     <label for="popupAttachmentOpen" class="button update formButton">Редактировать </label>
-    <div class="button delete formButton">Удалить </div>
+    <div class="button delete formButton">Удалить</div>
 
     <label class="popupOverlay popupAttachmentOverlay" for="popupAttachmentOpen"></label>
     <div class="popup popupAttachment">
@@ -180,7 +178,7 @@
             </div>
         </div>
         <div class="popupFooter">
-            <div class="button formButton"> Добавить</div>
+            <div class="button formButton addButton"> Добавить</div>
             <label for="popupAttachmentOpen" class="button delete formButton"> Закрыть </label>
         </div>
     </div>
@@ -197,8 +195,9 @@
             <td>{{attachmentComment}}</td>
         </tr>
     </table>
-    <div  class="button" onclick="addContact()"> Сохранить контакт</div>
+    <div class="button" onclick="addContact()"> Сохранить контакт</div>
 
+</div>
 </form>
 <script src="js/contacts.js"></script>
 </body>

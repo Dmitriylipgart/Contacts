@@ -48,7 +48,6 @@ function showContactList(page){
     if(document.querySelector("h3")){
         document.querySelector("h3").setAttribute("style", "display: none");
     }
-
     document.querySelector(".contactForm").setAttribute("style", "display: none");
     document.querySelector(".newContactBtn").setAttribute("style", "display: inline-block");
     document.querySelector(".delContactBtn").setAttribute("style", "display: inline-block");
@@ -158,6 +157,7 @@ function showPagination(recordsCount){
         anchorsDiv.setAttribute("class", "recordListAnchors");
     }else{
         clearAncorsDiv();
+        document.querySelector(".recordListAnchors").setAttribute("style", "display: block");
     }
     for(var i = 1; i <= numOfPages; i++){
         var anchor = document.createElement('a');
