@@ -8,14 +8,12 @@ body{
     color: #fff;
 }
 
-
 header{
     line-height: 48px;
     color: #fff;
     text-shadow: 2px 2px 2px #3E4347;
     background: #4f4f4f;
     height: 65px;
-
 }
 
 .wrapper {
@@ -39,7 +37,6 @@ table{
     border-radius: 3px;
     width: 80%;
     table-layout: fixed;
-
 }
 
 table th{
@@ -60,18 +57,21 @@ table td.check{
     background-color: #696969;
 }
 
-
-table tr{
-    background-color: #49b866;
+/*.contactsTable tr td:nth-child(2){*/
+    /*color: #353d7a;*/
+    /*cursor: pointer;*/
+    /*text-decoration: underline;*/
+/*}*/
+.contactsTable .contactNameAnchor{
+    color: #353d7a;
+    cursor: pointer;
+    text-decoration: underline;
 }
-
-
-table tr:last-child td{
-    border-bottom: none;
+.contactsTable .contactNameAnchor:hover{
+    font-size: 1.05rem;
 }
-
-table td input{
-
+.contactsTable .contactNameAnchor:active{
+    font-size: 1rem;
 }
 
 .anchor{
@@ -135,7 +135,6 @@ input, label, select{
     margin: 0 auto;
     border-radius: 5px;
     height: 25px;
-
 }
 
  h2{

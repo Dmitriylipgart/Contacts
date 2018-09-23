@@ -1,28 +1,25 @@
 package dao;
 import ds.MySqlDS;
+import dto.ContactDto;
 import entity.Contact;
-import entity.Entity;
 import org.apache.tomcat.jdbc.pool.DataSource;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import sql.ContactsSql;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactDaoImpl implements ContactDao{
 
 
-    DataSource dataSource = new MySqlDS().getDataSource();
+    private DataSource dataSource = new MySqlDS().getDataSource();
 
     @Override
     public int countAll() {
-        String sql = "SELECT count(*) FROM contacts WHERE deleted IS NULL";
+
         int result = 0;
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.COUNT_ALL_SQL)
         ) {
             rs = statement.executeQuery();
             while (rs.next()) {
@@ -32,6 +29,7 @@ public class ContactDaoImpl implements ContactDao{
             e.printStackTrace();
         } finally {
             try {
+                if(rs != null)
                 rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -40,15 +38,11 @@ public class ContactDaoImpl implements ContactDao{
         return result;
     }
 
-    @Override
-    public void create(Contact contact) {
-
-        String sql = "INSERT INTO contacts (first_name, last_name, middle_name, birth_date, sex, citizenship, family_status, "
-                + "web_site, email, job, country, city, address, zip_code )"
-                + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
+    public long create(Contact contact) {
+        ResultSet rs;
+        long contactId = 0;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.CREATE_CONTACT_SQL, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.setString(1, contact.getFirstName());
             statement.setString(2, contact.getLastName());
@@ -65,15 +59,53 @@ public class ContactDaoImpl implements ContactDao{
             statement.setString(13, contact.getAddress());
             statement.setInt(14, contact.getZipCode());
             statement.executeUpdate();
+            rs = statement.getGeneratedKeys();
+            while(rs.next()){
+                contactId = rs.getLong(1);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return contactId;
     }
 
 
     @Override
-    public Contact getById(int id) {
-        return null;
+    public Contact getById(long contactId) {
+        Contact contact = new Contact();
+        ResultSet rs = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_CONTACT_BY_ID))
+        {
+            statement.setLong(1, contactId);
+            rs = statement.executeQuery();
+            while (rs.next()){
+                contact.setContactId(rs.getLong(1));
+                contact.setFirstName(rs.getString("first_name"));
+                contact.setLastName(rs.getString("last_name"));
+                contact.setMiddleName(rs.getString("middle_name"));
+                contact.setBirthDate(rs.getString("birth_date"));
+                contact.setSex(rs.getString("sex"));
+                contact.setCitizenship(rs.getString("citizenship"));
+                contact.setFamilyStatus(rs.getString("family_status"));
+                contact.setWebSite(rs.getString("web_site"));
+                contact.setEmail(rs.getString("email"));
+                contact.setJob(rs.getString("job"));
+                contact.setCountry(rs.getString("country"));
+                contact.setCity(rs.getString("city"));
+                contact.setAddress(rs.getString("address"));
+                contact.setZipCode(rs.getInt("zip_code"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if(rs != null) rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return contact;
     }
 
     @Override
@@ -83,7 +115,7 @@ public class ContactDaoImpl implements ContactDao{
 
 
     @Override
-    public void delete(List<Integer> contactIdList) {
+    public void delete(List<Long> contactIdList) {
 
         StringBuilder params = new StringBuilder();
         for (int i = 0; i < contactIdList.size() - 1; i++) {
@@ -91,13 +123,12 @@ public class ContactDaoImpl implements ContactDao{
         }
         params.append("?");
 
-        String sql = "UPDATE contacts SET deleted = 1 WHERE contact_id IN (" + params.toString() +")";
-
+        String sql = ContactsSql.DELETE_CONTACT_BY_ID + "(" + params.toString() +")";
 
         try(Connection connection = dataSource.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
             for (int i = 0; i < contactIdList.size(); i++) {
-                statement.setInt(i + 1, contactIdList.get(i));
+                statement.setLong(i + 1, contactIdList.get(i));
             }
             statement.executeUpdate();
         }catch (Exception e){
@@ -106,18 +137,18 @@ public class ContactDaoImpl implements ContactDao{
     }
 
     @Override
-    public List<Contact> readAll(int page, int size) {
-        String sql ="SELECT * FROM contacts WHERE deleted IS NULL ORDER BY contact_id LIMIT ?, ? ";
-        List <Contact> contacts = new ArrayList<>();
+    public List<ContactDto> readAll(int page, int size) {
+
+        List <ContactDto> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql))
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS))
         {
             statement.setInt(1, (page - 1) * size);
             statement.setInt(2, size);
             rs = statement.executeQuery();
             while (rs.next()){
-                Contact contact = new Contact();
+                ContactDto contact = new ContactDto();
                 contact.setContactId(rs.getInt("contact_id"));
                 contact.setFirstName(rs.getString("first_name"));
                 contact.setLastName(rs.getString("last_name"));
@@ -131,6 +162,12 @@ public class ContactDaoImpl implements ContactDao{
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return contacts;
     }

@@ -3,7 +3,7 @@ package entity;
 
 import java.util.Date;
 
-public class Attachment implements Entity{
+public class Attachment {
     private String fileName;
     private Date fileDate;
     private String comment;

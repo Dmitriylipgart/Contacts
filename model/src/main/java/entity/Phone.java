@@ -1,48 +1,33 @@
 package entity;
 
+public class Phone {
 
-public class Phone implements Entity{
-    private int countryCode;
-    private int operatorCode;
-    private int phoneNumber;
-    private String comment;
+    private String phoneNumber;
+    private String phoneDescription;
+    private String phoneComment;
 
-    public Phone(int countryCode, int operatorCode, int phoneNumber, String comment) {
-        this.countryCode = countryCode;
-        this.operatorCode = operatorCode;
-        this.phoneNumber = phoneNumber;
-        this.comment = comment;
+    public Phone() {
     }
 
-    public int getCountryCode() {
-        return countryCode;
-    }
+    public String getPhoneNumber() {return phoneNumber;}
 
-    public void setCountryCode(int countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public int getOperatorCode() {
-        return operatorCode;
-    }
-
-    public void setOperatorCode(int operatorCode) {
-        this.operatorCode = operatorCode;
-    }
-
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getComment() {
-        return comment;
+    public String getPhoneDescription() {
+        return phoneDescription;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setPhoneDescription(String phoneDescription) {
+        this.phoneDescription = phoneDescription;
+    }
+
+    public String getPhoneComment() {
+        return phoneComment;
+    }
+
+    public void setPhoneComment(String phoneComment) {
+        this.phoneComment = phoneComment;
     }
 }

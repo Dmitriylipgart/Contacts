@@ -3,8 +3,8 @@ package entity;
 
 import java.util.List;
 
-public class Contact implements Entity{
-    private int contactId;
+public class Contact {
+    private long contactId;
     private String firstName;
     private String lastName;
     private String middleName;
@@ -19,7 +19,7 @@ public class Contact implements Entity{
     private String city;
     private String address;
     private int zipCode;
-//    private List<Phone> phones;
+    private List<Phone> phones;
 //    private List<Attachment> attachments;
 
 
@@ -27,9 +27,9 @@ public class Contact implements Entity{
     }
 
 
-    public int getContactId() {return contactId;}
+    public long getContactId() {return contactId;}
 
-    public void setContactId(int contactId) {this.contactId = contactId;}
+    public void setContactId(long contactId) {this.contactId = contactId;}
 
     public String getFirstName() {
         return firstName;
@@ -143,14 +143,14 @@ public class Contact implements Entity{
         this.zipCode = zipCode;
     }
 
-//    public List<Phone> getPhones() {
-//        return phones;
-//    }
-//
-//    public void setPhones(List<Phone> phones) {
-//        this.phones = phones;
-//    }
-//
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
 //    public List<Attachment> getAttachments() {
 //        return attachments;
 //    }

@@ -1,22 +1,23 @@
 package com.itechart.web.Controllers;
 
-
-
-import dao.ContactDaoImpl;
 import entity.Contact;
 import org.springframework.web.bind.annotation.*;
+import services.ContactsService;
 
 @RestController
 @RequestMapping("/contact")
 public class ContactController {
 
-    ContactDaoImpl contactDao = new ContactDaoImpl();
+    ContactsService service = new ContactsService();
 
     @PostMapping()
     public void saveContact(@RequestBody Contact contact){
-        contactDao.create(contact);
+        service.createContact(contact);
     }
 
-
+    @GetMapping("/{contactId}")
+    public Contact getContactById(@PathVariable Long contactId){
+        return service.getContactById(contactId);
+    }
 
 }

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Contact</title>
     <link rel="stylesheet" href="css/contact.css">
+
 </head>
 <body>
 <header>
@@ -107,13 +108,13 @@
     <h2>Телефоны</h2>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
     <label for="popupPhoneOpen" class="button send formButton">Добавить </label>
-    <label for="popupPhoneOpen" class="button update formButton">Редактировать </label>
-    <div class="button delete formButton">Удалить</div>
+    <label for="popupPhoneOpen" class="button update formButton updatePhone">Редактировать </label>
+    <div class="button delete formButton deletePhone">Удалить</div>
 
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
 
 
-    <form class="popup popupPhone">
+    <form class="popup popupPhone" name="phoneForm">
             <div class="flex">
                 <div>
                     <label for="countryId">Код страны</label>
@@ -121,7 +122,7 @@
                 </div>
                 <div>
                     <label for="operatorId">Код оператора</label>
-                    <input type="text" name="operatorid" id="operatorId">
+                    <input type="text" name="operatorId" id="operatorId">
                 </div>
                 <div class="big">
                     <label for="phoneNumber">Телефон</label>
@@ -132,14 +133,14 @@
                 <div>
                     <label for="phoneDescription"></label>
                     <select name="phoneDescription" id="phoneDescription">
-                        <option value="1">Домашний</option>
-                        <option value="0">Мобильный</option>
+                        <option value="Домашний">Домашний</option>
+                        <option value="Мобильный">Мобильный</option>
                     </select>
                 </div>
 
                 <div>
-                    <label for="phoneComments">Комментарий</label>
-                    <input type="text" name="phoneComments" id="phoneComments">
+                    <label for="phoneComment">Комментарий</label>
+                    <input type="text" name="phoneComment" id="phoneComment">
                 </div>
             </div>
 
@@ -200,5 +201,6 @@
 </div>
 </form>
 <script src="js/contacts.js"></script>
+<script src="js/listeners.js"></script>
 </body>
 </html>
