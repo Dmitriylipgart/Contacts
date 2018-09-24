@@ -7,7 +7,6 @@ contactsTable.addEventListener("click", function (event) {
     if(target.className != "contactNameAnchor"){
         return;
     }
-    console.log(target.previousElementSibling.firstChild.value);
     showContact(target.previousElementSibling.firstChild.value);
 });
 

@@ -26,11 +26,12 @@ function showContactForm() {
     if(document.querySelector(".recordListAnchors")){
      document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
+    document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactForm").setAttribute("style", "display: block");
     document.querySelector(".newContactBtn").setAttribute("style", "display: none");
     document.querySelector(".delContactBtn").setAttribute("style", "display: none");
-    document.querySelector("h1").innerHTML = "Заполните данные контакта";
+
 }
 
 
@@ -59,10 +60,10 @@ function showContactList(page){
     if(document.querySelector("h3")){
         document.querySelector("h3").setAttribute("style", "display: none");
     }
+    document.querySelector(".radio-group").setAttribute("style", "display: block");
     document.querySelector(".contactForm").setAttribute("style", "display: none");
-    document.querySelector(".newContactBtn").setAttribute("style", "display: inline-block");
-    document.querySelector(".delContactBtn").setAttribute("style", "display: inline-block");
-    document.querySelector("h1").innerHTML = "Журнал контактов";
+    document.querySelector(".newContactBtn").setAttribute("style", "display: block");
+    document.querySelector(".delContactBtn").setAttribute("style", "display: block");
 
     fetch('/contacts/count').then(json).then(function (data) {
         recordsCount = data;
@@ -174,15 +175,16 @@ function addPhoneToTable(phone) {
     td3.setAttribute("name", "phoneDescription");
     var td4 = document.createElement("td");
     td4.setAttribute("name", "phoneComment");
-    if(phone){
-        td2.innerHTML = phone.phoneNumber;
-        td3.innerHTML = phone.phoneDescription;
-        td4.innerHTML = phone.phoneComment;
-    }else{
+    if(phone instanceof MouseEvent){
         td2.innerHTML = phoneForm.countryId.value + phoneForm.operatorId.value
             + phoneForm.phoneNumber.value;
         td3.innerHTML = phoneForm.phoneDescription.value;
         td4.innerHTML = phoneForm.phoneComment.value;
+    }else{
+        console.log(phone);
+        td2.innerHTML = phone.phoneNumber;
+        td3.innerHTML = phone.phoneDescription;
+        td4.innerHTML = phone.phoneComment;
     }
     tr.appendChild(td2);
     tr.appendChild(td3);
@@ -222,7 +224,6 @@ function addContact(){
     console.log(phoneTableRows);
     for(var i = 1; i < phoneTableRows.length; i++){
         var phone = {};
-        console.log(phoneTableRows[i]);
         phone.phoneNumber = phoneTableRows[i].cells[1].innerHTML;
         phone.phoneDescription = phoneTableRows[i].cells[2].innerHTML;
         phone.phoneComment = phoneTableRows[i].cells[3].innerHTML;
@@ -264,9 +265,7 @@ function fillContactForm(contact){
     contactForm.address.value = contact.address;
     contactForm.zipCode.value = contact.zipCode;
     var phones = contact.phones;
-    console.log(phones);
     for(var i = 0; i < phones.length; i++){
-        console.log(phones[i]);
         addPhoneToTable(phones[i]);
     }
 

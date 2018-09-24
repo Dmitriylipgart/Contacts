@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <title>Contact</title>
     <link rel="stylesheet" href="css/contact.css">
-
+    <link href="https://fonts.googleapis.com/css?family=Caveat|Courgette|Kalam:400,700|Kaushan+Script" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="private">
 </head>
 <body>
 <header>
-    <h1>Журнал контактов</h1>
+    <div class="logo"><h1>Contacts</h1></div>
+    <div class="menu">
+        <div class="button newContactBtn" onclick="showContactForm()">Новый контакт</div>
+        <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
+    </div>
+
 </header>
 
 <div class="wrapper">
-    <a class="button newContactBtn" onclick="showContactForm()">Новый контакт</a>
-    <a class="button delete delContactBtn" onclick="deleteContacts()">Удалить</a>
-
     <div class="radio-group">
-        <input type="radio" id="option-one" value="10" name="selector">
+        <input type="radio" id="option-one" value="10" name="selector" checked>
         <label for="option-one">10</label>
         <input type="radio" id="option-two" value="20" name="selector">
         <label for="option-two">20</label>
@@ -59,15 +63,15 @@
                 </select>
             </div>
             <div>
-                <label>Гражданство<input type="text" name="citizenship"></label>
+                <label>Гражданство</label>
+                    <input type="text" name="citizenship">
             </div>
             <div>
-                <label> Семейное положение
+                <label>Семейное положение</label>
                     <select name="familyStatus" id="familyStatus">
                         <option value="married">Состоит в браке</option>
                         <option value="single">Не состоит в браке</option>
                     </select>
-                </label>
             </div>
         </div>
 
@@ -107,9 +111,16 @@
 
     <h2>Телефоны</h2>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
-    <label for="popupPhoneOpen" class="button send formButton">Добавить </label>
-    <label for="popupPhoneOpen" class="button update formButton updatePhone">Редактировать </label>
-    <div class="button delete formButton deletePhone">Удалить</div>
+    <label for="popupPhoneOpen" class="button send formButton">
+        <span class="circle"></span><span class="text">Добавить</span></label>
+
+    <label for="popupPhoneOpen" class="button update formButton">
+        <span class="circle"></span><span class="text">Редактировать</span></label>
+
+    <label class="button delete formButton deletePhone">
+        <span class="circle"></span><span class="text">Удалить</span></label>
+
+
 
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
 
@@ -162,9 +173,12 @@
 
     <h2>Приложения</h2>
     <input type="checkbox" style="display: none" id="popupAttachmentOpen" class="popupAttachmentOpen">
-    <label for="popupAttachmentOpen" class="button send formButton">Добавить </label>
-    <label for="popupAttachmentOpen" class="button update formButton">Редактировать </label>
-    <div class="button delete formButton">Удалить</div>
+    <label for="popupPhoneOpen" class="button send formButton">
+        <span class="circle"></span><span class="text">Добавить</span></label>
+    <label for="popupPhoneOpen" class="button update formButton">
+        <span class="circle"></span><span class="text">Редактировать</span></label>
+    <label class="button delete formButton deleteAttachment">
+        <span class="circle"></span><span class="text">Редактировать</span></label>
 
     <label class="popupOverlay popupAttachmentOverlay" for="popupAttachmentOpen"></label>
     <div class="popup popupAttachment">
@@ -189,11 +203,6 @@
             <th>Файл</th>
             <th>Дата Загрузки</th>
             <th>Комментарий</th>
-        </tr>
-        <tr>
-            <td><input type="checkbox" id="{{attachmentId}}"></td>
-            <td>{{attachmentName}}</td>
-            <td>{{attachmentComment}}</td>
         </tr>
     </table>
     <div class="button" onclick="addContact()"> Сохранить контакт</div>
