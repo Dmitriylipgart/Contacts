@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/contact.css">
     <link href="https://fonts.googleapis.com/css?family=Caveat|Courgette|Kalam:400,700|Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <meta http-equiv="Cache-Control" content="private">
 </head>
 <body>
@@ -31,7 +32,7 @@
 
 <div style="display: none" class="contactForm">
     <form name="contactForm">
-        <div class="contactPhoto"></div>
+        <div class="contactPhoto"><i class="fas fa-user"></i></div>
         <div class="flex flexColumn">
             <div>
                 <label for="lastName">Фамилия</label>
@@ -205,8 +206,7 @@
             <th>Комментарий</th>
         </tr>
     </table>
-    <div class="button" onclick="addContact()"> Сохранить контакт</div>
-
+    <div class="button newContact">Сохранить</div>
 </div>
 </form>
 <script src="js/contacts.js"></script>

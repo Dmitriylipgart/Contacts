@@ -1,13 +1,43 @@
 window.onload = init;
 
 var contactsTable = document.querySelector(".contactsTable");
-// contactsTable.__proto__ = new Component();
-var recordsToShow = 10;
-var currentPage = 1;
+var Page = {
+    first: 1,
+    currentPage: 1,
+    range: 5,
+    totalPages: 0,
+    recordsToShow: 10,
 
-function init(){
+    doPaging: function (recordsCount) {
+        this.totalPages = Math.ceil(recordsCount/this.recordsToShow);
+        var paging = [];
+        var last;
+        if (this.currentPage < (this.range / 2) + 1) {
+            this.first = 1;
+        } else if (this.currentPage >= (this.totalPages - (this.range / 2) )) {
+            this.first = Math.floor(this.totalPages - this.range + 1);
+
+        } else {
+            this.first = (this.currentPage - Math.floor(this.range / 2));
+        }
+
+        if(this.totalPages < this.range){
+            last = this.totalPages;
+        } else{
+            last = this.first + this.range - 1;
+        }
+        for (var i = this.first; i <= last; i++) {
+            paging.push(i);
+        }
+        console.log(paging);
+        return paging;
+    }
+};
+
+
+function init() {
     showContactTableHeader();
-    showContactList(currentPage);
+    showContactList(Page.currentPage);
 }
 
 function status(response) {
@@ -23,8 +53,8 @@ function json(response) {
 }
 
 function showContactForm() {
-    if(document.querySelector(".recordListAnchors")){
-     document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
+    if (document.querySelector(".recordListAnchors")) {
+        document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
@@ -42,22 +72,23 @@ function showNoRecordsMessage() {
     contactsTable.setAttribute("style", "display: none");
 }
 
-function clearContactTable(){
-    while (contactsTable.childNodes.length > 1){
+function clearContactTable() {
+    while (contactsTable.childNodes.length > 1) {
         contactsTable.removeChild(contactsTable.lastChild);
     }
 }
 
-function clearAncorsDiv(){
+function clearAncorsDiv() {
     var anchorsDiv = document.querySelector(".recordListAnchors");
-    while (anchorsDiv.childNodes.length > 0){
+    while (anchorsDiv.childNodes.length > 0) {
         anchorsDiv.removeChild(anchorsDiv.firstChild);
     }
 }
 
-function showContactList(page){
+function showContactList(page) {
+    Page.currentPage = page;
     var recordsCount = 0;
-    if(document.querySelector("h3")){
+    if (document.querySelector("h3")) {
         document.querySelector("h3").setAttribute("style", "display: none");
     }
     document.querySelector(".radio-group").setAttribute("style", "display: block");
@@ -67,21 +98,21 @@ function showContactList(page){
 
     fetch('/contacts/count').then(json).then(function (data) {
         recordsCount = data;
-        if(recordsCount < 1) {
+        if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
-            showContactTable(recordsCount, page);
+            showContactTable(recordsCount);
         }
     });
 }
 
-function showContactTable(recordsCount, page) {
+function showContactTable(recordsCount) {
 
     contactsTable.setAttribute("style", "display: block");
     showPagination(recordsCount);
     clearContactTable();
-    fetch('/contacts?page=' + page + '&' + 'size=' + recordsToShow).then(json).then(function (data) {
-        for(var i = 0; i < data.length; i++){
+    fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(function (data) {
+        for (var i = 0; i < data.length; i++) {
             var tr = document.createElement("tr");
             var lastName = data[i].lastName;
             var firstName = data[i].firstName;
@@ -117,28 +148,42 @@ function showContactTable(recordsCount, page) {
     });
 }
 
-function showPagination(recordsCount){
-    var  anchorsDiv = document.querySelector(".recordListAnchors");
-    var numOfPages = Math.ceil(recordsCount/recordsToShow);
-    if(!anchorsDiv){
+function showPagination(recordsCount) {
+    var anchorsDiv = document.querySelector(".recordListAnchors");
+    var pagination = Page.doPaging(recordsCount);
+    if (!anchorsDiv) {
         anchorsDiv = document.createElement("div");
         document.querySelector(".wrapper").insertBefore(anchorsDiv, contactsTable);
         anchorsDiv.setAttribute("class", "recordListAnchors");
-    }else{
+    } else {
         clearAncorsDiv();
         document.querySelector(".recordListAnchors").setAttribute("style", "display: block");
     }
-    for(var i = 1; i <= numOfPages; i++){
+    var first = document.createElement('a');
+    first.setAttribute('onclick', 'showContactList(' + Page.first + ')');
+    first.setAttribute('class', 'anchor');
+    var arrowLeft = document.createElement('i');
+    arrowLeft.setAttribute('class', 'fas fa-arrow-circle-left');
+    first.appendChild(arrowLeft);
+    anchorsDiv.appendChild(first);
+    for (var i = 0; i < pagination.length; i++) {
         var anchor = document.createElement('a');
-        anchor.setAttribute('onclick', 'showContactList(' + i +')');
+        anchor.setAttribute('onclick', 'showContactList(' + pagination[i] + ')');
         anchor.setAttribute('class', 'anchor');
-        anchor.innerHTML = i;
+        anchor.innerHTML = pagination[i];
         anchorsDiv.appendChild(anchor);
     }
+    var last = document.createElement('a');
+    last.setAttribute('onclick', 'showContactList(' + Page.totalPages + ')');
+    last.setAttribute('class', 'anchor');
+    var arrowRight = document.createElement('i');
+    arrowRight.setAttribute('class', 'fas fa-arrow-circle-right');
+    last.appendChild(arrowRight);
+    anchorsDiv.appendChild(last);
     anchorsDiv.setAttribute("style", "display: block");
 }
 
-function showContactTableHeader(){
+function showContactTableHeader() {
     var tr = document.createElement("tr");
     var th1 = document.createElement("th");
     var th2 = document.createElement("th");
@@ -175,12 +220,12 @@ function addPhoneToTable(phone) {
     td3.setAttribute("name", "phoneDescription");
     var td4 = document.createElement("td");
     td4.setAttribute("name", "phoneComment");
-    if(phone instanceof MouseEvent){
+    if (phone instanceof MouseEvent) {
         td2.innerHTML = phoneForm.countryId.value + phoneForm.operatorId.value
             + phoneForm.phoneNumber.value;
         td3.innerHTML = phoneForm.phoneDescription.value;
         td4.innerHTML = phoneForm.phoneComment.value;
-    }else{
+    } else {
         console.log(phone);
         td2.innerHTML = phone.phoneNumber;
         td3.innerHTML = phone.phoneDescription;
@@ -193,7 +238,7 @@ function addPhoneToTable(phone) {
     document.querySelector(".popupPhoneOpen").checked = false;
 }
 
-function deletePhoneFromTable(){
+function deletePhoneFromTable() {
     var phoneTable = document.querySelector(".phones tbody");
     var elements = phoneTable.querySelectorAll("input:checked");
     elements.forEach(function (elem) {
@@ -202,7 +247,7 @@ function deletePhoneFromTable(){
 }
 
 
-function addContact(){
+function addContact() {
     var contactForm = document.forms.contactForm;
     var phones = [];
     var contact = {};
@@ -222,7 +267,7 @@ function addContact(){
     contact.zipCode = contactForm.zipCode.value;
     var phoneTableRows = document.querySelector(".phones").rows;
     console.log(phoneTableRows);
-    for(var i = 1; i < phoneTableRows.length; i++){
+    for (var i = 1; i < phoneTableRows.length; i++) {
         var phone = {};
         phone.phoneNumber = phoneTableRows[i].cells[1].innerHTML;
         phone.phoneDescription = phoneTableRows[i].cells[2].innerHTML;
@@ -241,14 +286,14 @@ function addContact(){
     });
 }
 
-function showContact(contactId){
+function showContact(contactId) {
     fetch('/contact/' + contactId).then(json).then(function (data) {
         fillContactForm(data);
     });
     showContactForm();
 }
 
-function fillContactForm(contact){
+function fillContactForm(contact) {
     var contactForm = document.forms.contactForm;
     contactForm.firstName.value = contact.firstName;
     contactForm.lastName.value = contact.lastName;
@@ -265,7 +310,7 @@ function fillContactForm(contact){
     contactForm.address.value = contact.address;
     contactForm.zipCode.value = contact.zipCode;
     var phones = contact.phones;
-    for(var i = 0; i < phones.length; i++){
+    for (var i = 0; i < phones.length; i++) {
         addPhoneToTable(phones[i]);
     }
 
@@ -283,18 +328,19 @@ function deleteContacts() {
         body: JSON.stringify(contactIdList)
     };
     fetch('/contacts', options).then(status).then(function () {
-        showContactList(1);
+        showContactList(Page.currentPage);
     });
 }
 
 var radio = document.getElementsByName("selector");
-for(var i = 0; i < radio.length; i++){
+for (var i = 0; i < radio.length; i++) {
     radio[i].onchange = changeRecordsToShow;
 }
 
 
 function changeRecordsToShow() {
-    recordsToShow = this.value;
+    Page.recordsToShow = this.value;
+    Page.currentPage = 1;
     showContactList(1);
 }
 
