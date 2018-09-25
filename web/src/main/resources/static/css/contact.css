@@ -82,7 +82,7 @@ table{
     border-collapse: collapse;
     margin: 0 auto;
     border-radius: 3px;
-    width: 80%;
+    width: 90%;
     table-layout: fixed;
 }
 
@@ -94,21 +94,24 @@ table th{
     border-bottom: 2px solid #363636;
 }
 
-table tr {
-    min-height: 40px;
-    border-bottom: #363636;
-}
-
 table td:not(.check){
     width: 24%;
-    padding: 8px 0;
-    color: #363636;
-    border-bottom: 1px solid #363636;
-}
-table td.check{
-    max-width: 20px;
+    height: 40px;
 
 }
+table td{
+    border-bottom: solid 1px #363636;
+}
+
+.check{
+    width: 40px;
+}
+.check input{
+    width: 20px;
+    height: 20px;
+   margin: 5px auto;
+}
+
 
 
 .contactsTable .contactNameAnchor{
@@ -172,11 +175,11 @@ label{
 
 }
 
-input{
+.contactForm input{
     width: 100%;
 }
 
-input, label, select{
+.contactForm input, label, select{
     display: block;
     margin: 0 auto;
     border-radius: 3px;
@@ -184,16 +187,16 @@ input, label, select{
 
 }
 
-.contactPhoto, input, select{
+.contactPhoto, .contactForm input, select{
     border: solid 1px #898989;
     background: rgba(255, 255, 255, 0.2);
 }
 
-input:hover, select:hover, .contactPhoto:hover{
+.contactForm input:hover, select:hover, .contactPhoto:hover{
     box-shadow: 2px 2px 8px #595959, -2px -2px 8px #595959;
 }
 
-input:focus, select:focus{
+.contactForm input:focus, select:focus{
     background: rgba(255, 255, 255, 1);
 }
 
