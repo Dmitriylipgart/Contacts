@@ -9,7 +9,6 @@ var Page = {
     totalPages: 0,
     recordsToShow: 10,
 
-
     doPaging: function (recordsCount) {
         this.totalPages = Math.ceil(recordsCount / this.recordsToShow);
         var paging = [];
@@ -31,7 +30,6 @@ var Page = {
     }
 };
 
-
 function init() {
     showContactTableHeader();
     showContactList(Page.currentPage);
@@ -49,7 +47,6 @@ function json(response) {
     return response.json();
 }
 
-
 function showContactForm() {
     if (document.querySelector(".recordListAnchors")) {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
@@ -61,7 +58,6 @@ function showContactForm() {
     document.querySelector(".newContactBtn").setAttribute("style", "display: none");
     document.querySelector(".delContactBtn").setAttribute("style", "display: none");
 }
-
 
 function showNoRecordsMessage() {
     var message = document.createElement("h3");
@@ -210,7 +206,7 @@ function showContactTableHeader() {
 function addPhoneToTable(phone) {
     var phoneTable = document.querySelector(".phones tbody");
 
-    if(phoneTable.querySelectorAll("input:checked").length > 0){
+    if (phoneTable.querySelectorAll("input:checked").length > 0) {
         var tr = phoneTable.querySelector("input:checked").parentNode.parentNode;
         tr.parentNode.removeChild(tr);
         phoneTable.querySelectorAll("input").forEach(function (elem) {
@@ -259,7 +255,6 @@ function fillPhoneForm() {
     phoneForm.phoneDescription.value = tableData[2].innerHTML;
     phoneForm.phoneComment.value = tableData[3].innerHTML;
 }
-
 
 function deletePhoneFromTable() {
     var phoneTable = document.querySelector(".phones tbody");

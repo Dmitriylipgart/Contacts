@@ -22,7 +22,7 @@ public class PhoneDaoImpl implements PhoneDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ContactsSql.CREATE_PHONE_SQL)
         ) {
-            for (Phone phone: phones) {
+            for (Phone phone : phones) {
                 statement.setLong(1, contactId);
                 statement.setString(2, phone.getPhoneNumber());
                 statement.setString(3, phone.getPhoneDescription());
@@ -33,7 +33,6 @@ public class PhoneDaoImpl implements PhoneDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -41,11 +40,10 @@ public class PhoneDaoImpl implements PhoneDao {
         List<Phone> phones = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_PHONES_BY_ID))
-        {
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_PHONES_BY_ID)) {
             statement.setLong(1, contactId);
             rs = statement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 Phone phone = new Phone();
                 phone.setPhoneNumber(rs.getString("phone_number"));
                 phone.setPhoneDescription(rs.getString("phone_description"));
@@ -54,7 +52,7 @@ public class PhoneDaoImpl implements PhoneDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 rs.close();
             } catch (SQLException e) {
@@ -81,15 +79,15 @@ public class PhoneDaoImpl implements PhoneDao {
         }
         params.append("?");
 
-        String sql = ContactsSql.DELETE_PHONE_BY_CONTACT_ID + "(" + params.toString() +")";
+        String sql = ContactsSql.DELETE_PHONE_BY_CONTACT_ID + "(" + params.toString() + ")";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             for (int i = 0; i < contactIdList.size(); i++) {
                 statement.setLong(i + 1, contactIdList.get(i));
             }
             statement.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

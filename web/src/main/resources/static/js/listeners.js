@@ -1,5 +1,3 @@
-
-
 var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
 var saveContactButton = document.querySelector(".saveContact");
 var updateContactButton = document.querySelector(".updateContact");
@@ -30,7 +28,7 @@ phoneAddButton.addEventListener("click", function () {
     document.forms.phoneForm.reset();
     var phoneTable = document.querySelector(".phones tbody");
     var checkedElements = phoneTable.querySelectorAll("input:checked");
-    if(checkedElements.length > 0){
+    if (checkedElements.length > 0) {
         phoneTable.querySelectorAll("input").forEach(function (elem) {
             elem.checked = false;
             elem.disabled = false;
@@ -38,32 +36,31 @@ phoneAddButton.addEventListener("click", function () {
     }
 });
 
-function addCheckEventListener(){
+function addCheckEventListener() {
     var phoneTable = document.querySelector(".phones tbody");
     phoneTable.addEventListener("click", disableCheck)
 }
 
-
 contactsTable.addEventListener("click", function (event) {
     var target = event.target;
-    if(target.className != "contactNameAnchor"){
+    if (target.className != "contactNameAnchor") {
         return;
     }
     showContact(target.previousElementSibling.firstChild.value);
 });
 
 function disableCheck(event) {
-    if(event.target.tagName = "input") {
+    if (event.target.tagName = "input") {
         var phoneTable = document.querySelector(".phones tbody");
         var elements = phoneTable.querySelectorAll("input");
         var checkedElements = phoneTable.querySelectorAll("input:checked");
-        if(checkedElements.length < 1){
+        if (checkedElements.length < 1) {
             elements.forEach(function (elem) {
-                    elem.disabled = false;
+                elem.disabled = false;
             });
-        }else {
+        } else {
             elements.forEach(function (elem) {
-                if(!elem.checked){
+                if (!elem.checked) {
                     elem.disabled = true;
                 }
             });

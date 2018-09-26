@@ -24,7 +24,6 @@ public class ContactsService {
     public void delete(List<Long> contactIdList) {
         contactDao.delete(contactIdList);
         phoneDao.delete(contactIdList);
-
     }
 
     public Contact getContactById(Long contactId) {

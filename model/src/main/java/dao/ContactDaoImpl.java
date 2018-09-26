@@ -1,14 +1,16 @@
 package dao;
+
 import ds.MySqlDS;
 import dto.ContactDto;
 import entity.Contact;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import sql.ContactsSql;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactDaoImpl implements ContactDao{
+public class ContactDaoImpl implements ContactDao {
 
 
     private DataSource dataSource = new MySqlDS().getDataSource();
@@ -29,8 +31,8 @@ public class ContactDaoImpl implements ContactDao{
             e.printStackTrace();
         } finally {
             try {
-                if(rs != null)
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -60,7 +62,7 @@ public class ContactDaoImpl implements ContactDao{
             statement.setInt(14, contact.getZipCode());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
-            while(rs.next()){
+            while (rs.next()) {
                 contactId = rs.getLong(1);
             }
         } catch (Exception e) {
@@ -75,11 +77,10 @@ public class ContactDaoImpl implements ContactDao{
         Contact contact = new Contact();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_CONTACT_BY_ID))
-        {
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_CONTACT_BY_ID)) {
             statement.setLong(1, contactId);
             rs = statement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 contact.setContactId(rs.getLong(1));
                 contact.setFirstName(rs.getString("first_name"));
                 contact.setLastName(rs.getString("last_name"));
@@ -98,9 +99,9 @@ public class ContactDaoImpl implements ContactDao{
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if(rs != null) rs.close();
+                if (rs != null) rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -146,15 +147,15 @@ public class ContactDaoImpl implements ContactDao{
         }
         params.append("?");
 
-        String sql = ContactsSql.DELETE_CONTACT_BY_ID + "(" + params.toString() +")";
+        String sql = ContactsSql.DELETE_CONTACT_BY_ID + "(" + params.toString() + ")";
 
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             for (int i = 0; i < contactIdList.size(); i++) {
                 statement.setLong(i + 1, contactIdList.get(i));
             }
             statement.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -162,15 +163,14 @@ public class ContactDaoImpl implements ContactDao{
     @Override
     public List<ContactDto> readAll(int page, int size) {
 
-        List <ContactDto> contacts = new ArrayList<>();
+        List<ContactDto> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS))
-        {
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS)) {
             statement.setInt(1, (page - 1) * size);
             statement.setInt(2, size);
             rs = statement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 ContactDto contact = new ContactDto();
                 contact.setContactId(rs.getInt("contact_id"));
                 contact.setFirstName(rs.getString("first_name"));
@@ -185,7 +185,7 @@ public class ContactDaoImpl implements ContactDao{
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 rs.close();
             } catch (SQLException e) {
