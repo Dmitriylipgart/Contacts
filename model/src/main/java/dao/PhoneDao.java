@@ -9,7 +9,7 @@ public interface PhoneDao {
 
     void createPhones(List<Phone> phones, long contactId);
     List <Phone> getAllByContactId(long contactId);
-    void update(Phone phone);
+    void update(List<Phone> phones, long contactId);
     void delete(List<Long> id);
 
 }

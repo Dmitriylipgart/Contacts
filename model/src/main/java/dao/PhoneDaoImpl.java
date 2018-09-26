@@ -65,12 +65,16 @@ public class PhoneDaoImpl implements PhoneDao {
     }
 
     @Override
-    public void update(Phone phone) {
-
+    public void update(List<Phone> phones, long contactId) {
+        List<Long> contacts = new ArrayList<>();
+        contacts.add(contactId);
+        delete(contacts);
+        createPhones(phones, contactId);
     }
 
     @Override
     public void delete(List<Long> contactIdList) {
+
         StringBuilder params = new StringBuilder();
         for (int i = 0; i < contactIdList.size() - 1; i++) {
             params.append("?,");

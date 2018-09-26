@@ -111,6 +111,29 @@ public class ContactDaoImpl implements ContactDao{
     @Override
     public void update(Contact contact) {
 
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.UPDATE_CONTACT_SQL)
+        ) {
+            statement.setString(1, contact.getFirstName());
+            statement.setString(2, contact.getLastName());
+            statement.setString(3, contact.getMiddleName());
+            statement.setString(4, contact.getBirthDate());
+            statement.setString(5, contact.getSex());
+            statement.setString(6, contact.getCitizenship());
+            statement.setString(7, contact.getFamilyStatus());
+            statement.setString(8, contact.getWebSite());
+            statement.setString(9, contact.getEmail());
+            statement.setString(10, contact.getJob());
+            statement.setString(11, contact.getCountry());
+            statement.setString(12, contact.getCity());
+            statement.setString(13, contact.getAddress());
+            statement.setInt(14, contact.getZipCode());
+            statement.setLong(15, contact.getContactId());
+            statement.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

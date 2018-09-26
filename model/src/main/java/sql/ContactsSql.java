@@ -8,6 +8,11 @@ public class ContactsSql {
             + "(first_name, last_name, middle_name, birth_date, sex, citizenship, family_status, "
             + "web_site, email, job, country, city, address, zip_code )"
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    public static final String UPDATE_CONTACT_SQL = "UPDATE contacts "
+            + " SET first_name = ?, last_name = ?, middle_name = ?, birth_date = ?, sex = ?, citizenship = ?, family_status = ?, "
+            + "web_site = ?, email = ?, job = ?, country = ?, city = ?, address = ?, zip_code = ?"
+            + " WHERE contact_id = ?";
+
     public static final String READ_ALL_CONTACTS = "SELECT * from contacts WHERE deleted IS NULL ORDER by contact_id LIMIT ?,?;";
     public static final String READ_CONTACT_BY_ID = "SELECT * FROM contacts WHERE contact_id = ? AND deleted IS NULL";
     public static final String DELETE_CONTACT_BY_ID = "UPDATE contacts SET deleted = 1 WHERE contact_id IN";

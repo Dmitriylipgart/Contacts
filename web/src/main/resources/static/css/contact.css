@@ -3,14 +3,11 @@
 }
 
 body {
-    /*background: #88CCF1;*/
     background: url('../images/bigbg3.jpg') center center no-repeat fixed;
     background-size: cover;
     text-align: center;
     color: #363636;
-    /*font-family: 'Open Sans', serif;*/
     font-family: 'Arial', serif;
-
 }
 
 header {
@@ -31,6 +28,13 @@ h1 {
     padding: 10px;
 }
 
+input{
+    font-size: 18px;
+    text-align: justify;
+}
+.logo{
+    cursor: pointer;
+}
 .menu {
     flex-grow: 2;
     font-size: 1.2rem;
@@ -75,19 +79,20 @@ h3 {
     margin: 0 auto;
 }
 
-table {
+.contactsTable {
     font-size: 16px;
     font-weight: 500;
     background: rgba(255, 255, 255, 0.8);
     text-align: center;
     border-collapse: collapse;
-    margin: 0 auto;
+    margin: 5px auto;
     border-radius: 3px;
-    width: 90%;
+    width: 1130px;
     table-layout: fixed;
+
 }
 
-table tr:hover {
+.contactsTable tr:hover {
     background-color: rgba(194, 194, 194, 0.66);
 }
 
@@ -99,18 +104,20 @@ table th {
     border-bottom: 2px solid #363636;
 }
 
-table td:not(.check) {
-    width: 24%;
-    height: 40px;
-
+.contactsTable td:first-child {
+    width: 30px;
 }
-
-table td {
-    border-bottom: solid 1px #363636;
+.contactsTable td:nth-child(2) {
+    width: 300px;
 }
-
-.check {
-    width: 40px;
+.contactsTable td:nth-child(3) {
+    width: 200px;
+}
+.contactsTable td:nth-child(4) {
+    width: 200px;
+}
+.contactsTable td:nth-child(5) {
+    width: 400px;
 }
 
 .check input {
@@ -140,14 +147,28 @@ table td {
     text-decoration: none;
 }
 
-.contactForm {
+.phones, .attachments{
+    position: relative;
+    width: 80%;
+    margin: 90px auto 10px;
+}
+
+.phones, .attachments{
+    background: none;
+
+}
+.phones th, .attachments th{
+    background: none;
+    height: 25px;
+}
+
+.contactFormWrapper {
     margin: 10px auto;
     width: 50%;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.8);
     padding: 10px;
     border-radius: 3px;
     box-shadow: 2px 2px 8px #595959, -2px -2px 8px #595959;
-
 }
 
 .flex.flexColumn {
@@ -167,14 +188,6 @@ table td {
     margin: 0 5px;
 }
 
-.contactPhoto {
-    width: 20%;
-    height: 160px;
-    float: left;
-    margin: 40px 0 10px 30px;
-    border-radius: 3px;
-}
-
 label {
     font-size: 1em;
     text-shadow: 1px 1px 8px #363636;
@@ -182,33 +195,44 @@ label {
 
 }
 
-.contactForm input {
+.contactFormWrapper input {
     width: 100%;
 }
 
-.contactForm input, label, select {
+.contactFormWrapper input, label, select {
     display: block;
     margin: 0 auto;
     border-radius: 3px;
     height: 35px;
 
 }
+.contactPhoto {
+    width: 20%;
+    height: 160px;
+    float: left;
+    margin: 40px 0 10px 30px;
+    border-radius: 3px;
+}
+.contactPhoto:hover i{
+    font-size: 6rem;
+}
 
-.contactPhoto, .contactForm input, select {
+.contactPhoto, .contactFormWrapper input, select,.popup input {
     border: solid 1px #898989;
     background: rgba(255, 255, 255, 0.2);
 }
+
 .contactPhoto i{
-    font-size: 84px;
+    font-size: 5rem;
     text-align: center;
     margin: 30px auto 20px;
 }
 
-.contactForm input:hover, select:hover, .contactPhoto:hover {
+.contactFormWrapper input:not(.check):hover, select:hover, .contactPhoto:hover, .popup input:hover {
     box-shadow: 2px 2px 8px #595959, -2px -2px 8px #595959;
 }
 
-.contactForm input:focus, select:focus {
+.contactFormWrapper input:focus, select:focus {
     background: rgba(255, 255, 255, 1);
 }
 
@@ -277,7 +301,7 @@ h2 {
     background-color: #5466da;
 }
 
-.newContact {
+.saveContact, .updateContact, .popupFooter .button {
     width: 20%;
     height: 40px;
     line-height: 40px;
@@ -287,11 +311,18 @@ h2 {
     border-radius: 3px;
 }
 
-.newContact:hover{
+.saveContact:hover, .updateContact:hover{
     background-color: #08714c;
     color: #fff;
     font-size: 1.3rem;
 }
+.popupFooter .button{
+    width: 25%;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 10px;
+}
+/*.popupFooter .addButton*/
 
 .popup {
     position: fixed;
@@ -310,7 +341,7 @@ h2 {
     -moz-transition: -moz-transform 0.4s ease-out;
     -o-transition: -o-transform 0.4s ease-out;
     transition: transform 0.4s ease-out;
-    background-color: #48516d;
+    background: #878787;
     padding: 10px;
     border-radius: 5px;
     z-index: 103;

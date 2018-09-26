@@ -13,10 +13,9 @@
 <header>
     <div class="logo"><h1>Contacts</h1></div>
     <div class="menu">
-        <div class="button newContactBtn" onclick="showContactForm()">Новый контакт</div>
+        <div class="button newContactBtn">Новый контакт</div>
         <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
     </div>
-
 </header>
 
 <div class="wrapper">
@@ -30,7 +29,7 @@
     <table class="contactsTable" style="display: block"></table>
 </div>
 
-<div style="display: none" class="contactForm">
+<div style="display: none" class="contactFormWrapper">
     <form name="contactForm">
         <div class="contactPhoto"><i class="fas fa-user"></i></div>
         <div class="flex flexColumn">
@@ -112,19 +111,18 @@
 
     <h2>Телефоны</h2>
     <input type="checkbox" style="display: none" id="popupPhoneOpen" class="popupPhoneOpen">
+
     <label for="popupPhoneOpen" class="button send formButton">
         <span class="circle"></span><span class="text">Добавить</span></label>
 
     <label for="popupPhoneOpen" class="button update formButton">
-        <span class="circle"></span><span class="text">Редактировать</span></label>
+        <span class="circle"></span><span class="text">Редактировать</span>
+    </label>
 
     <label class="button delete formButton deletePhone">
         <span class="circle"></span><span class="text">Удалить</span></label>
 
-
-
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
-
 
     <form class="popup popupPhone" name="phoneForm">
             <div class="flex">
@@ -198,17 +196,17 @@
             <label for="popupAttachmentOpen" class="button delete formButton"> Закрыть </label>
         </div>
     </div>
-    <table>
+    <table class="attachments">
         <tr>
-            <td></td>
+            <th></th>
             <th>Файл</th>
             <th>Дата Загрузки</th>
             <th>Комментарий</th>
         </tr>
     </table>
-    <div class="button newContact">Сохранить</div>
+    <div class="button saveContact">Сохранить</div>
+    <div class="button updateContact">Редактировать</div>
 </div>
-</form>
 <script src="js/contacts.js"></script>
 <script src="js/listeners.js"></script>
 </body>

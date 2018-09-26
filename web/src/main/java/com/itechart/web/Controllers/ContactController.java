@@ -20,4 +20,9 @@ public class ContactController {
         return service.getContactById(contactId);
     }
 
+    @PutMapping()
+    public void updateContactById(@RequestBody Contact contact){
+        service.updateContact(contact);
+    }
+
 }

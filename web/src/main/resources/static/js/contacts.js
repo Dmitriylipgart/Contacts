@@ -2,14 +2,16 @@ window.onload = init;
 
 var contactsTable = document.querySelector(".contactsTable");
 var Page = {
+    contactId: 0,
     first: 1,
     currentPage: 1,
     range: 5,
     totalPages: 0,
     recordsToShow: 10,
 
+
     doPaging: function (recordsCount) {
-        this.totalPages = Math.ceil(recordsCount/this.recordsToShow);
+        this.totalPages = Math.ceil(recordsCount / this.recordsToShow);
         var paging = [];
         var last;
         if (this.currentPage < (this.range / 2) + 1) {
@@ -20,16 +22,11 @@ var Page = {
         } else {
             this.first = (this.currentPage - Math.floor(this.range / 2));
         }
+        last = this.totalPages < this.range ? this.totalPages : this.first + this.range - 1;
 
-        if(this.totalPages < this.range){
-            last = this.totalPages;
-        } else{
-            last = this.first + this.range - 1;
-        }
         for (var i = this.first; i <= last; i++) {
             paging.push(i);
         }
-        console.log(paging);
         return paging;
     }
 };
@@ -52,16 +49,17 @@ function json(response) {
     return response.json();
 }
 
+
 function showContactForm() {
     if (document.querySelector(".recordListAnchors")) {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
+    document.forms.contactForm.reset();
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
-    document.querySelector(".contactForm").setAttribute("style", "display: block");
+    document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
     document.querySelector(".newContactBtn").setAttribute("style", "display: none");
     document.querySelector(".delContactBtn").setAttribute("style", "display: none");
-
 }
 
 
@@ -75,6 +73,12 @@ function showNoRecordsMessage() {
 function clearContactTable() {
     while (contactsTable.childNodes.length > 1) {
         contactsTable.removeChild(contactsTable.lastChild);
+    }
+}
+function clearPhonesTable() {
+    var phonesTable = document.querySelector(".phones tbody");
+    while (phonesTable.childNodes.length > 1) {
+        phonesTable.removeChild(phonesTable.lastChild);
     }
 }
 
@@ -92,7 +96,7 @@ function showContactList(page) {
         document.querySelector("h3").setAttribute("style", "display: none");
     }
     document.querySelector(".radio-group").setAttribute("style", "display: block");
-    document.querySelector(".contactForm").setAttribute("style", "display: none");
+    document.querySelector(".contactFormWrapper").setAttribute("style", "display: none");
     document.querySelector(".newContactBtn").setAttribute("style", "display: block");
     document.querySelector(".delContactBtn").setAttribute("style", "display: block");
 
@@ -107,7 +111,6 @@ function showContactList(page) {
 }
 
 function showContactTable(recordsCount) {
-
     contactsTable.setAttribute("style", "display: block");
     showPagination(recordsCount);
     clearContactTable();
@@ -160,7 +163,7 @@ function showPagination(recordsCount) {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: block");
     }
     var first = document.createElement('a');
-    first.setAttribute('onclick', 'showContactList(' + Page.first + ')');
+    first.setAttribute('onclick', 'showContactList(1)');
     first.setAttribute('class', 'anchor');
     var arrowLeft = document.createElement('i');
     arrowLeft.setAttribute('class', 'fas fa-arrow-circle-left');
@@ -205,8 +208,16 @@ function showContactTableHeader() {
 }
 
 function addPhoneToTable(phone) {
-    var phoneForm = document.forms.phoneForm;
     var phoneTable = document.querySelector(".phones tbody");
+
+    if(phoneTable.querySelectorAll("input:checked").length > 0){
+        var tr = phoneTable.querySelector("input:checked").parentNode.parentNode;
+        tr.parentNode.removeChild(tr);
+        phoneTable.querySelectorAll("input").forEach(function (elem) {
+            elem.disabled = false;
+        });
+    }
+    var phoneForm = document.forms.phoneForm;
     var tr = document.createElement("tr");
     var input = document.createElement("input");
     var td1 = document.createElement("td");
@@ -221,12 +232,11 @@ function addPhoneToTable(phone) {
     var td4 = document.createElement("td");
     td4.setAttribute("name", "phoneComment");
     if (phone instanceof MouseEvent) {
-        td2.innerHTML = phoneForm.countryId.value + phoneForm.operatorId.value
-            + phoneForm.phoneNumber.value;
+        td2.innerHTML = phoneForm.countryId.value + "(" + phoneForm.operatorId.value
+            + ")" + phoneForm.phoneNumber.value;
         td3.innerHTML = phoneForm.phoneDescription.value;
         td4.innerHTML = phoneForm.phoneComment.value;
     } else {
-        console.log(phone);
         td2.innerHTML = phone.phoneNumber;
         td3.innerHTML = phone.phoneDescription;
         td4.innerHTML = phone.phoneComment;
@@ -238,6 +248,19 @@ function addPhoneToTable(phone) {
     document.querySelector(".popupPhoneOpen").checked = false;
 }
 
+function fillPhoneForm() {
+    var phoneForm = document.forms.phoneForm;
+    var phoneTable = document.querySelector(".phones tbody");
+    var tableData = phoneTable.querySelector("input:checked").parentNode.parentNode.children;
+    var num = tableData[1].innerHTML;
+    phoneForm.countryId.value = num.substring(0, num.indexOf("("));
+    phoneForm.operatorId.value = num.substring(num.indexOf("(") + 1, num.indexOf(")"));
+    phoneForm.phoneNumber.value = num.substring(num.indexOf(")") + 1);
+    phoneForm.phoneDescription.value = tableData[2].innerHTML;
+    phoneForm.phoneComment.value = tableData[3].innerHTML;
+}
+
+
 function deletePhoneFromTable() {
     var phoneTable = document.querySelector(".phones tbody");
     var elements = phoneTable.querySelectorAll("input:checked");
@@ -246,8 +269,7 @@ function deletePhoneFromTable() {
     });
 }
 
-
-function addContact() {
+function getContactFromForm() {
     var contactForm = document.forms.contactForm;
     var phones = [];
     var contact = {};
@@ -266,7 +288,6 @@ function addContact() {
     contact.address = contactForm.address.value;
     contact.zipCode = contactForm.zipCode.value;
     var phoneTableRows = document.querySelector(".phones").rows;
-    console.log(phoneTableRows);
     for (var i = 1; i < phoneTableRows.length; i++) {
         var phone = {};
         phone.phoneNumber = phoneTableRows[i].cells[1].innerHTML;
@@ -275,7 +296,11 @@ function addContact() {
         phones.push(phone);
     }
     contact.phones = phones;
+    return contact;
+}
+function addContact() {
 
+    var contact = getContactFromForm();
     var options = {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -287,10 +312,15 @@ function addContact() {
 }
 
 function showContact(contactId) {
+    console.log(contactId);
+    Page.contactId = contactId;
     fetch('/contact/' + contactId).then(json).then(function (data) {
         fillContactForm(data);
     });
+    saveContactButton.setAttribute("style", "display: none");
+    updateContactButton.setAttribute("style", "display: block");
     showContactForm();
+    addCheckEventListener();
 }
 
 function fillContactForm(contact) {
@@ -310,10 +340,25 @@ function fillContactForm(contact) {
     contactForm.address.value = contact.address;
     contactForm.zipCode.value = contact.zipCode;
     var phones = contact.phones;
+    clearPhonesTable();
     for (var i = 0; i < phones.length; i++) {
         addPhoneToTable(phones[i]);
     }
+}
 
+
+function updateContact() {
+    var contact = getContactFromForm();
+    contact.contactId = Page.contactId;
+    console.log(contact.contactId);
+    var options = {
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(contact)
+    };
+    fetch('/contact', options).then(status).then(function () {
+        showContactList(Page.currentPage);
+    });
 }
 
 function deleteContacts() {

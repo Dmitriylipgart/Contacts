@@ -15,23 +15,28 @@ public class ContactsService {
     ContactDao contactDao = new ContactDaoImpl();
     PhoneDao phoneDao = new PhoneDaoImpl();
 
-    public void createContact(Contact contact){
+    public void createContact(Contact contact) {
 
         long contactId = contactDao.create(contact);
         phoneDao.createPhones(contact.getPhones(), contactId);
     }
 
-    public void delete(List<Long> contactIdList){
-            contactDao.delete(contactIdList);
-            phoneDao.delete(contactIdList);
+    public void delete(List<Long> contactIdList) {
+        contactDao.delete(contactIdList);
+        phoneDao.delete(contactIdList);
 
     }
 
-    public Contact getContactById(Long contactId){
+    public Contact getContactById(Long contactId) {
         Contact contact = contactDao.getById(contactId);
         List<Phone> phones = phoneDao.getAllByContactId(contactId);
         contact.setPhones(phones);
         return contact;
+    }
+
+    public void updateContact(Contact contact) {
+        contactDao.update(contact);
+        phoneDao.update(contact.getPhones(), contact.getContactId());
     }
 
 }
