@@ -52,6 +52,7 @@ function showContactForm() {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
     document.forms.contactForm.reset();
+    clearPhonesTable();
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
