@@ -1,3 +1,4 @@
+var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
 var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
 var saveContactButton = document.querySelector(".saveContact");
 var updateContactButton = document.querySelector(".updateContact");
@@ -6,9 +7,11 @@ var newContactButton = document.querySelector(".newContactBtn");
 var updatePhoneButton = document.querySelector(".update.formButton");
 var logo = document.querySelector(".logo");
 var phoneAddButton = document.querySelector(".send.formButton");
-
+var searchButton = document.querySelector(".searchForm .simpleButton");
 
 popupPhoneAddButton.addEventListener("click", addPhoneToTable);
+popupAttachmentAddButton.addEventListener("click", addAttachmentToTable);
+
 saveContactButton.addEventListener("click", addContact);
 updateContactButton.addEventListener("click", updateContact);
 deletePhoneFromTableButton.addEventListener("click", deletePhoneFromTable);
@@ -35,6 +38,8 @@ phoneAddButton.addEventListener("click", function () {
         })
     }
 });
+
+searchButton.addEventListener("click", searchByParams);
 
 function addCheckEventListener() {
     var phoneTable = document.querySelector(".phones tbody");

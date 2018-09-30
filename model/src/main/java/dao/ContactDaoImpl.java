@@ -7,8 +7,7 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import sql.ContactsSql;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ContactDaoImpl implements ContactDao {
 
@@ -170,6 +169,70 @@ public class ContactDaoImpl implements ContactDao {
             statement.setInt(1, (page - 1) * size);
             statement.setInt(2, size);
             rs = statement.executeQuery();
+            contacts = fillContactDto(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return contacts;
+    }
+
+    public List<ContactDto> readAllByParams(HashMap<String, String> params){
+        String sql = "Select * from contacts";
+        List<String> paramsList = new ArrayList<>();
+        ResultSet rs = null;
+        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
+
+        while (iterator.hasNext())
+        {
+            Map.Entry<String, String> pair = iterator.next();
+
+            if(!pair.getValue().equals("")){
+                if(pair.getKey().equals("birth_date_start")){
+                    paramsList.add("birth_date > ?");
+                }else if(pair.getKey().equals("birth_date_end")){
+                    paramsList.add("birth_date < ?");
+                }else{
+                    paramsList.add(pair.getKey() + " = ?");
+                }
+            }else{
+                iterator.remove();
+            }
+        }
+
+        if(paramsList.size() > 0){
+            sql += " WHERE " + String.join(" AND ", paramsList);
+        }
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            int i = 1;
+            for(String value: params.values()){
+                statement.setString(i++, value);
+            }
+            rs = statement.executeQuery();
+            return fillContactDto(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public List<ContactDto> fillContactDto(ResultSet rs){
+        List<ContactDto> contacts = new ArrayList<>();
+
+        try {
             while (rs.next()) {
                 ContactDto contact = new ContactDto();
                 contact.setContactId(rs.getInt("contact_id"));
@@ -183,15 +246,11 @@ public class ContactDaoImpl implements ContactDao {
                 contact.setAddress(rs.getString("address"));
                 contacts.add(contact);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
+
         return contacts;
     }
 }
+

@@ -69,6 +69,10 @@ input{
     transform: scale(0.85);
 }
 
+.searchButton{
+    display: none;
+}
+
 .wrapper {
     width: 80%;
     margin: 40px auto 0;
@@ -162,6 +166,20 @@ table th {
     height: 25px;
 }
 
+
+.searchForm{
+    height: 0;
+    background: rgba(255, 255, 255, 0.8);
+    box-sizing: content-box;
+    overflow: hidden;
+    transition: all .3s;
+    margin-top: 20px;
+}
+
+.searchButton:checked ~ .searchForm{
+    height: 210px;
+}
+
 .contactFormWrapper {
     margin: 10px auto;
     width: 50%;
@@ -175,12 +193,16 @@ table th {
     flex-direction: column;
     width: 60%;
 }
+.flex.flexColumn div{
+    width: 100%;
+}
 
 .flex {
     width: 100%;
     display: flex;
     justify-content: space-around;
     margin: 20px auto;
+    align-items: flex-end;
 }
 
 .flex div {
@@ -219,7 +241,7 @@ label {
 
 .contactPhoto, .contactFormWrapper input, select,.popup input {
     border: solid 1px #898989;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(253, 255, 244, 1);
 }
 
 .contactPhoto i{
@@ -243,6 +265,12 @@ h2 {
 
 .button {
     cursor: pointer;
+    border: solid 1px #363636;
+    border-radius: 3px;
+}
+
+.menu .button{
+    border: none;
 }
 
 .formButton {
@@ -257,12 +285,10 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    border: solid 1px #898989;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     text-shadow: none;
-    border-radius: 3px;
 }
 
 .formButton .circle {
@@ -301,17 +327,15 @@ h2 {
     background-color: #5466da;
 }
 
-.saveContact, .updateContact, .popupFooter .button {
+.simpleButton, .popupFooter .button{
     width: 20%;
     height: 40px;
     line-height: 40px;
     font-size: 1.2rem;
-    border: solid 1px #363636;
     margin: 10px auto;
-    border-radius: 3px;
 }
 
-.saveContact:hover, .updateContact:hover{
+.simpleButton:hover{
     background-color: #08714c;
     color: #fff;
     font-size: 1.3rem;
@@ -322,7 +346,17 @@ h2 {
     line-height: 30px;
     margin: 0 10px;
 }
-/*.popupFooter .addButton*/
+
+.popupAttachment .simpleButton{
+    width: 90%;
+    height: 35px;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.attachmentAddButton{
+    background-color: #08714c;
+}
 
 .popup {
     position: fixed;
@@ -384,6 +418,10 @@ label.popupOverlay {
     -o-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
     top: 20%;
+}
+
+.popupAttachment input[type="file"]{
+    /*display: none;*/
 }
 
 input[type=radio] {

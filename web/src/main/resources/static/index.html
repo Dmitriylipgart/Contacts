@@ -6,8 +6,9 @@
     <link rel="stylesheet" href="css/contact.css">
     <link href="https://fonts.googleapis.com/css?family=Caveat|Courgette|Kalam:400,700|Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <meta http-equiv="Cache-Control" content="private">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!--<meta http-equiv="Cache-Control" content="private">-->
 </head>
 <body>
 <header>
@@ -15,8 +16,61 @@
     <div class="menu">
         <div class="button newContactBtn">Новый контакт</div>
         <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
+        <label for="searchButton" class="button"><i class="fas fa-search"></i></label>
     </div>
 </header>
+<input type="checkbox" id="searchButton" class="searchButton">
+<form name="searchForm" class="searchForm">
+    <div class="search flex">
+        <div>
+            <label for="first_name">Имя</label>
+            <input type="text" name="first_name" id="first_name">
+        </div>
+        <div>
+            <label for="last_name">Фамилия</label>
+            <input type="text" name="last_name" id="last_name">
+        </div>
+        <div>
+            <label for="middle_name">Отчество</label>
+            <input type="text" name="middle_name" id="middle_name">
+        </div>
+        <div>
+            <label for="birth_date_start">Дата Рождения от</label>
+            <input type="date" name="birth_date_start" id="birth_date_start">
+        </div>
+        <div>
+            <label for="birth_date_end">Дата Рождения до</label>
+            <input type="date" name="birth_date_end" id="birth_date_end">
+        </div>
+        <div>
+            <label for="sexSearch">Пол</label>
+            <select name="sex" id="sexSearch">
+                <option value="">Все</option>
+                <option value="male">Мужской</option>
+                <option value="female">Женский</option>
+            </select>
+        </div>
+        <div>
+            <label for="familyStatusSearch">Семейное положение</label>
+            <select name="family_status" id="familyStatusSearch">
+                <option value="">Все</option>
+                <option value="married">Состоит в браке</option>
+                <option value="single">Не состоит в браке</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="search flex">
+        <div><label for="citizenshipSearch">Гражданство</label><input type="text" name="citizenship" id="citizenshipSearch"></div>
+        <div><label for="countryIdSearch">Страна</label><input type="text" name="country" id="countryIdSearch"></div>
+        <div><label for="citySearch">Город</label><input type="text" name="city" id="citySearch"></div>
+        <div><label for="addressSearch">Адрес</label><input type="text" name="address" id="addressSearch"></div>
+        <div><label for="zipCodeSearch">Индекс</label><input type="text" name="zip_code" id="zipCodeSearch"></div>
+        <div class="button simpleButton">Поиск</div>
+    </div>
+</form>
+
 
 <div class="wrapper">
     <div class="radio-group">
@@ -63,15 +117,15 @@
                 </select>
             </div>
             <div>
-                <label>Гражданство</label>
-                    <input type="text" name="citizenship">
+                <label for="citizenship">Гражданство</label>
+                <input type="text" name="citizenship" id="citizenship">
             </div>
             <div>
                 <label>Семейное положение</label>
-                    <select name="familyStatus" id="familyStatus">
-                        <option value="married">Состоит в браке</option>
-                        <option value="single">Не состоит в браке</option>
-                    </select>
+                <select name="familyStatus" id="familyStatus">
+                    <option value="married">Состоит в браке</option>
+                    <option value="single">Не состоит в браке</option>
+                </select>
             </div>
         </div>
 
@@ -125,39 +179,39 @@
     <label class="popupOverlay popupPhoneOverlay" for="popupPhoneOpen"></label>
 
     <form class="popup popupPhone" name="phoneForm">
-            <div class="flex">
-                <div>
-                    <label for="countryId">Код страны</label>
-                    <input type="text" name="countryId" id="countryId">
-                </div>
-                <div>
-                    <label for="operatorId">Код оператора</label>
-                    <input type="text" name="operatorId" id="operatorId">
-                </div>
-                <div class="big">
-                    <label for="phoneNumber">Телефон</label>
-                    <input type="text" name="phoneNumber" id="phoneNumber">
-                </div>
+        <div class="flex">
+            <div>
+                <label for="countryId">Код страны</label>
+                <input type="text" name="countryId" id="countryId">
             </div>
-            <div class="flex">
-                <div>
-                    <label for="phoneDescription"></label>
-                    <select name="phoneDescription" id="phoneDescription">
-                        <option value="Домашний">Домашний</option>
-                        <option value="Мобильный">Мобильный</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="phoneComment">Комментарий</label>
-                    <input type="text" name="phoneComment" id="phoneComment">
-                </div>
+            <div>
+                <label for="operatorId">Код оператора</label>
+                <input type="text" name="operatorId" id="operatorId">
+            </div>
+            <div class="big">
+                <label for="phoneNumber">Телефон</label>
+                <input type="text" name="phoneNumber" id="phoneNumber">
+            </div>
+        </div>
+        <div class="flex">
+            <div>
+                <label for="phoneDescription"></label>
+                <select name="phoneDescription" id="phoneDescription">
+                    <option value="Домашний">Домашний</option>
+                    <option value="Мобильный">Мобильный</option>
+                </select>
             </div>
 
-            <div class="popupFooter">
-                <div class="button formButton addButton"> Добавить</div>
-                <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
+            <div>
+                <label for="phoneComment">Комментарий</label>
+                <input type="text" name="phoneComment" id="phoneComment">
             </div>
+        </div>
+
+        <div class="popupFooter">
+            <div class="button formButton addButton"> Добавить</div>
+            <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
+        </div>
     </form>
 
 
@@ -172,30 +226,35 @@
 
     <h2>Приложения</h2>
     <input type="checkbox" style="display: none" id="popupAttachmentOpen" class="popupAttachmentOpen">
-    <label for="popupPhoneOpen" class="button send formButton">
+    <label for="popupAttachmentOpen" class="button send formButton">
         <span class="circle"></span><span class="text">Добавить</span></label>
-    <label for="popupPhoneOpen" class="button update formButton">
+    <label for="popupAttachmentOpen" class="button update formButton">
         <span class="circle"></span><span class="text">Редактировать</span></label>
     <label class="button delete formButton deleteAttachment">
-        <span class="circle"></span><span class="text">Редактировать</span></label>
+        <span class="circle"></span><span class="text">Удалить</span></label>
 
     <label class="popupOverlay popupAttachmentOverlay" for="popupAttachmentOpen"></label>
-    <div class="popup popupAttachment">
+
+    <form class="popup popupAttachment" name="attachmentForm">
         <div class="flex">
             <div>
                 <label for="fileName">Имя файла</label>
-                <input type="text" name="fileName" id="fileName">
+                <input type="text" name="attachmentName" id="fileName">
             </div>
             <div>
-                <label for="fileComment">Комментарий</label>
-                <input type="text" name="fileComment" id="fileComment">
+                <label for="attachmentComment">Комментарий</label>
+                <input type="text" name="attachmentComment" id="attachmentComment">
+            </div>
+            <div>
+                <input type="file" id="file" name="file">
+                <label for="file" class="button simpleButton">Загрузить</label>
             </div>
         </div>
         <div class="popupFooter">
-            <div class="button formButton addButton"> Добавить</div>
+            <div class="button formButton addButton attachmentAddButton">Добавить</div>
             <label for="popupAttachmentOpen" class="button delete formButton"> Закрыть </label>
         </div>
-    </div>
+    </form>
     <table class="attachments">
         <tr>
             <th></th>
@@ -204,8 +263,8 @@
             <th>Комментарий</th>
         </tr>
     </table>
-    <div class="button saveContact">Сохранить</div>
-    <div class="button updateContact">Редактировать</div>
+    <div class="button saveContact simpleButton">Сохранить</div>
+    <div class="button updateContact simpleButton">Редактировать</div>
 </div>
 <script src="js/contacts.js"></script>
 <script src="js/listeners.js"></script>

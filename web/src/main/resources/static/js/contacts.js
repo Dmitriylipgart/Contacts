@@ -102,16 +102,18 @@ function showContactList(page) {
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
-            showContactTable(recordsCount);
+            showPagination(recordsCount);
+            fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(showContactTable);
         }
     });
 }
 
-function showContactTable(recordsCount) {
+function showContactTable(data) {
     contactsTable.setAttribute("style", "display: block");
-    showPagination(recordsCount);
     clearContactTable();
-    fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(function (data) {
+    if(data.length < 1){
+        showNoRecordsMessage();
+    }else{
         for (var i = 0; i < data.length; i++) {
             var tr = document.createElement("tr");
             var lastName = data[i].lastName;
@@ -145,7 +147,8 @@ function showContactTable(recordsCount) {
             tr.appendChild(td5);
             contactsTable.appendChild(tr);
         }
-    });
+    }
+
 }
 
 function showPagination(recordsCount) {
@@ -206,7 +209,6 @@ function showContactTableHeader() {
 
 function addPhoneToTable(phone) {
     var phoneTable = document.querySelector(".phones tbody");
-
     if (phoneTable.querySelectorAll("input:checked").length > 0) {
         var tr = phoneTable.querySelector("input:checked").parentNode.parentNode;
         tr.parentNode.removeChild(tr);
@@ -295,7 +297,6 @@ function getContactFromForm() {
     return contact;
 }
 function addContact() {
-
     var contact = getContactFromForm();
     var options = {
         method: 'post',
@@ -383,5 +384,63 @@ function changeRecordsToShow() {
     Page.recordsToShow = this.value;
     Page.currentPage = 1;
     showContactList(1);
+}
+
+function searchByParams(){
+
+    var params = {};
+    var form = document.forms.searchForm;
+    params.first_name = form.first_name.value;
+    params.last_name = form.last_name.value;
+    params.middle_name = form.middle_name.value;
+    params.birth_date_start = form.birth_date_start.value;
+    params.birth_date_end = form.birth_date_end.value;
+    params.sex = form.sex.value;
+    params.citizenship = form.citizenship.value;
+    params.family_status = form.family_status.value;
+    params.country = form.country.value;
+    params.city = form.city.value;
+    params.address = form.address.value;
+    params.zip_code = form.zip_code.value;
+    console.log(params);
+    var options = {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(params)
+    };
+    fetch('/contacts/search', options).then(json).then(showContactTable);
+}
+
+function addAttachmentToTable(attachment) {
+    var attachmentTable = document.querySelector(".attachments tbody");
+    var attachmentForm = document.forms.attachmentForm;
+    var tr = document.createElement("tr");
+    var input = document.createElement("input");
+    var td1 = document.createElement("td");
+    td1.setAttribute("class", "check");
+    input.setAttribute("type", "checkbox");
+    td1.appendChild(input);
+    tr.appendChild(td1);
+    var td2 = document.createElement("td");
+    td2.setAttribute("name", "attachmentName");
+    var td3 = document.createElement("td");
+    td3.setAttribute("name", "attachmentDate");
+    var td4 = document.createElement("td");
+    td4.setAttribute("name", "attachmentComment");
+    var today = new Date();
+    if (attachment instanceof MouseEvent) {
+        td2.innerHTML = attachmentForm.file.files[0].name;
+        td3.innerHTML = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
+        td4.innerHTML = attachmentForm.attachmentComment.value;
+    } else {
+        td2.innerHTML = attachmentForm.file.files[0].name;
+        td3.innerHTML = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
+        td4.innerHTML = attachmentForm.attachmentComment.value;
+    }
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+    tr.appendChild(td4);
+    attachmentTable.appendChild(tr);
+    document.querySelector(".popupAttachmentOpen").checked = false;
 }
 

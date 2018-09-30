@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import services.ContactsService;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -32,6 +33,11 @@ public class ContactsController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContacts(@RequestBody List<Long> contactIdList){
         service.delete(contactIdList);
+    }
+
+    @PostMapping("/search")
+    public List<ContactDto> searchContacts(@RequestBody HashMap<String, String> params){
+        return contactDao.readAllByParams(params);
     }
 
 }
