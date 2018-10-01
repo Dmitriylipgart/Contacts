@@ -1,17 +1,16 @@
 package entity;
 
 
+import org.springframework.http.codec.multipart.Part;
+
 import java.util.Date;
 
 public class Attachment {
     private String fileName;
-    private Date fileDate;
     private String comment;
+    private Part file;
 
-    public Attachment(String fileName, Date fileDate, String comment) {
-        this.fileName = fileName;
-        this.fileDate = fileDate;
-        this.comment = comment;
+    public Attachment() {
     }
 
     public String getFileName() {
@@ -20,14 +19,6 @@ public class Attachment {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    public Date getFileDate() {
-        return fileDate;
-    }
-
-    public void setFileDate(Date fileDate) {
-        this.fileDate = fileDate;
     }
 
     public String getComment() {

@@ -1,3 +1,4 @@
+var deleteAttachmentFromTableButton = document.querySelector(".deleteAttachment");
 var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
 var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
 var saveContactButton = document.querySelector(".saveContact");
@@ -8,10 +9,14 @@ var updatePhoneButton = document.querySelector(".update.formButton");
 var logo = document.querySelector(".logo");
 var phoneAddButton = document.querySelector(".send.formButton");
 var searchButton = document.querySelector(".searchForm .simpleButton");
+var attachmentInput = document.querySelector(".popupAttachment #file");
 
+
+deleteAttachmentFromTableButton.addEventListener("click", deleteAttachmentFromTable);
+attachmentInput.addEventListener("change", displayFileName);
 popupPhoneAddButton.addEventListener("click", addPhoneToTable);
-popupAttachmentAddButton.addEventListener("click", addAttachmentToTable);
 
+popupAttachmentAddButton.addEventListener("click", addAttachmentToTable);
 saveContactButton.addEventListener("click", addContact);
 updateContactButton.addEventListener("click", updateContact);
 deletePhoneFromTableButton.addEventListener("click", deletePhoneFromTable);
@@ -71,6 +76,12 @@ function disableCheck(event) {
             });
         }
     }
+}
+
+function displayFileName() {
+    var attachmentForm = document.forms.attachmentForm;
+    var fileNameInput = document.querySelector(".popupAttachment #fileName");
+    fileNameInput.value = attachmentForm.file.files[0].name;
 }
 
 

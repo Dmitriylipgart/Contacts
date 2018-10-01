@@ -30,6 +30,9 @@ var Page = {
     }
 };
 
+var attachments = [];
+var attachmentFiles = [];
+
 function init() {
     showContactTableHeader();
     showContactList(Page.currentPage);
@@ -53,6 +56,7 @@ function showContactForm() {
     }
     document.forms.contactForm.reset();
     clearPhonesTable();
+    clearAttachmentsTable();
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
@@ -76,6 +80,13 @@ function clearPhonesTable() {
     var phonesTable = document.querySelector(".phones tbody");
     while (phonesTable.childNodes.length > 1) {
         phonesTable.removeChild(phonesTable.lastChild);
+    }
+}
+
+function clearAttachmentsTable() {
+    var attachmentsTable = document.querySelector(".attachments tbody");
+    while (attachmentsTable.childNodes.length > 1) {
+        attachmentsTable.removeChild(attachmentsTable.lastChild);
     }
 }
 
@@ -297,12 +308,19 @@ function getContactFromForm() {
     return contact;
 }
 function addContact() {
+
     var contact = getContactFromForm();
+    var formdata = new FormData();
+    formdata.append("contact", JSON.stringify(contact));
+    attachmentFiles.forEach(function (file) {
+        formdata.append("files", file);
+    });
+
     var options = {
         method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(contact)
+        body: formdata
     };
+
     fetch('/contact', options).then(status).then(function () {
         showContactList(1);
     });
@@ -338,6 +356,7 @@ function fillContactForm(contact) {
     contactForm.zipCode.value = contact.zipCode;
     var phones = contact.phones;
     clearPhonesTable();
+    clearAttachmentsTable();
     for (var i = 0; i < phones.length; i++) {
         addPhoneToTable(phones[i]);
     }
@@ -414,6 +433,7 @@ function searchByParams(){
 function addAttachmentToTable(attachment) {
     var attachmentTable = document.querySelector(".attachments tbody");
     var attachmentForm = document.forms.attachmentForm;
+    var fileNameInput = document.querySelector(".popupAttachment #fileName");
     var tr = document.createElement("tr");
     var input = document.createElement("input");
     var td1 = document.createElement("td");
@@ -427,9 +447,14 @@ function addAttachmentToTable(attachment) {
     td3.setAttribute("name", "attachmentDate");
     var td4 = document.createElement("td");
     td4.setAttribute("name", "attachmentComment");
+    // var td5 = document.createElement("td");
+    // td5.setAttribute("name", "attachmentFile");
+    // var inputFile = document.createElement("input");
+    // inputFile
+    // td5.appendChild()
     var today = new Date();
     if (attachment instanceof MouseEvent) {
-        td2.innerHTML = attachmentForm.file.files[0].name;
+        td2.innerHTML = fileNameInput.value;
         td3.innerHTML = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
         td4.innerHTML = attachmentForm.attachmentComment.value;
     } else {
@@ -441,6 +466,31 @@ function addAttachmentToTable(attachment) {
     tr.appendChild(td3);
     tr.appendChild(td4);
     attachmentTable.appendChild(tr);
+    var attachment ={};
+    attachment.fileName = fileNameInput.value;
+    attachment.comment = attachmentForm.attachmentComment.value;
+    attachment.date = td3.innerHTML;
+    attachments.push(attachment);
+    attachmentFiles.push(attachmentForm.file.files[0]);
     document.querySelector(".popupAttachmentOpen").checked = false;
+    attachmentForm.reset();
 }
 
+function deleteAttachmentFromTable() {
+    var attachmentTable = document.querySelector(".attachments tbody");
+    var elements = attachmentTable.querySelectorAll("input:checked");
+    elements.forEach(function (element) {
+        var fileName = element.parentNode.parentNode.children[1].innerHTML;
+        attachmentTable.removeChild(element.parentNode.parentNode);
+        attachmentFiles.forEach(function (file) {
+            if(file.name === fileName){
+                attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
+            }
+        });
+        attachments.forEach(function (elem) {
+            if(elem.fileName === fileName){
+                attachments.splice(attachments.indexOf(elem), 1);
+            }
+        })
+    });
+}

@@ -167,6 +167,7 @@ table th {
 }
 
 
+
 .searchForm{
     height: 0;
     background: rgba(255, 255, 255, 0.8);
@@ -360,8 +361,8 @@ h2 {
 
 .popup {
     position: fixed;
-    width: 80%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 700px;
     left: 50%;
     top: -100%;
     -webkit-box-shadow: 0 15px 20px rgba(0, 0, 0, .22), 0 19px 60px rgba(0, 0, 0, .3);
@@ -421,7 +422,11 @@ label.popupOverlay {
 }
 
 .popupAttachment input[type="file"]{
-    /*display: none;*/
+    display: none;
+}
+
+.popupAttachment #fileName{
+    font-size: 1rem;
 }
 
 input[type=radio] {
