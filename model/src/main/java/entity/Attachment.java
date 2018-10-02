@@ -1,14 +1,11 @@
 package entity;
 
 
-import org.springframework.http.codec.multipart.Part;
-
-import java.util.Date;
-
 public class Attachment {
     private String fileName;
     private String comment;
-    private Part file;
+    private String date;
+    private Long contactId;
 
     public Attachment() {
     }
@@ -27,5 +24,21 @@ public class Attachment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
     }
 }

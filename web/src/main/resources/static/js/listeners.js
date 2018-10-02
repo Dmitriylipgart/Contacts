@@ -44,7 +44,7 @@ phoneAddButton.addEventListener("click", function () {
     }
 });
 
-searchButton.addEventListener("click", searchByParams);
+searchButton.addEventListener("click", startSearch);
 
 function addCheckEventListener() {
     var phoneTable = document.querySelector(".phones tbody");

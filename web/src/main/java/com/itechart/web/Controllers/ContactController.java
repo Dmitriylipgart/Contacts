@@ -1,27 +1,14 @@
 package com.itechart.web.Controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Contact;
-import javax.servlet.http.Part;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import services.ContactsService;
-import sun.text.resources.FormatData;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/contact")
@@ -32,7 +19,14 @@ public class ContactController {
 
     @PostMapping
     public void saveFiles(@RequestPart(value = "files") MultipartFile[] files,
-                          @RequestParam(value = "contact") String contact) throws IOException {
+                          @RequestParam(value = "contact") String contactJson) throws IOException {
+
+
+        ObjectMapper mapper = new ObjectMapper();
+        Contact contact = mapper.readValue(contactJson, Contact.class);
+        service.createContact(contact);
+
+
         File uploadDir = new File("D:\\file");
         if(!uploadDir.exists()){
             uploadDir.mkdir();

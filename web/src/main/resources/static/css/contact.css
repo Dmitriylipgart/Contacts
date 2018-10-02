@@ -28,6 +28,11 @@ h1 {
     padding: 10px;
 }
 
+h2 {
+    float: left;
+    margin: 12px;
+}
+
 input{
     font-size: 18px;
     text-align: justify;
@@ -159,14 +164,13 @@ table th {
 
 .phones, .attachments{
     background: none;
+    margin-bottom: 40px;
 
 }
 .phones th, .attachments th{
     background: none;
     height: 25px;
 }
-
-
 
 .searchForm{
     height: 0;
@@ -188,6 +192,10 @@ table th {
     padding: 10px;
     border-radius: 3px;
     box-shadow: 2px 2px 8px #595959, -2px -2px 8px #595959;
+}
+
+.contactForm{
+    margin-bottom: 60px;
 }
 
 .flex.flexColumn {
@@ -257,11 +265,6 @@ label {
 
 .contactFormWrapper input:focus, select:focus {
     background: rgba(255, 255, 255, 1);
-}
-
-h2 {
-    float: left;
-    margin: 12px;
 }
 
 .button {

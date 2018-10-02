@@ -20,11 +20,18 @@ public class ContactsSql {
 
 
 
-    public static final String READ_ALL_PHONES_BY_ID = "SELECT * FROM phones WHERE contact_id = ? AND deleted IS NULL";
+    public static final String READ_ALL_PHONES_BY_CONTACT_ID = "SELECT * FROM phones WHERE contact_id = ? AND deleted IS NULL";
     public static final String CREATE_PHONE_SQL = " INSERT INTO phones "
             + "(contact_id, phone_number, phone_description, phone_comment)"
             + "VALUES (?,?,?,?)";
     public static final String DELETE_PHONE_BY_CONTACT_ID = "UPDATE phones SET deleted = 1 WHERE contact_id IN";
+
+
+    public static final String CREATE_ATTACHMENT_SQL = " INSERT INTO attachments "
+            + "(contact_id, attachment_filename, attachment_comment, attachment_date)"
+            + "VALUES (?,?,?,?)";
+    public static final String DELETE_ATTACHMENT_BY_CONTACT_ID = "UPDATE attachments SET deleted = 1 WHERE contact_id IN";
+    public static final String READ_ALL_ATTACHMENTS_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id = ? AND deleted IS NULL";
 
 
 

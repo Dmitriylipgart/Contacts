@@ -182,12 +182,71 @@ public class ContactDaoImpl implements ContactDao {
         return contacts;
     }
 
-    public List<ContactDto> readAllByParams(HashMap<String, String> params){
-        String sql = "Select * from contacts";
-        List<String> paramsList = new ArrayList<>();
-        ResultSet rs = null;
-        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
 
+
+    public List<ContactDto> readAllByParams(HashMap<String, String> params, int page, int size){
+        String sql = "Select * from contacts WHERE ";
+
+        sql = getSqlForParams(sql, params);
+        ResultSet rs = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            int i = 1;
+            for(String value: params.values()){
+                statement.setString(i++, value);
+            }
+            statement.setInt(i++, (page - 1) * size);
+            statement.setInt(i, size);
+            rs = statement.executeQuery();
+            return fillContactDto(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public int countAllByParams(HashMap<String, String> params) {
+        String sql = "SELECT count(*) FROM contacts WHERE ";
+        sql = getSqlForParams(sql, params);
+        int result = 0;
+        ResultSet rs = null;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)
+        ) {
+            int i = 1;
+            for(String value: params.values()){
+                statement.setString(i++, value);
+            }
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    private String getSqlForParams(String sql, HashMap<String, String> params){
+
+        List<String> paramsList = new ArrayList<>();
+        Iterator<Map.Entry<String, String>> iterator = params.entrySet().iterator();
         while (iterator.hasNext())
         {
             Map.Entry<String, String> pair = iterator.next();
@@ -205,31 +264,27 @@ public class ContactDaoImpl implements ContactDao {
             }
         }
 
-        if(paramsList.size() > 0){
-            sql += " WHERE " + String.join(" AND ", paramsList);
-        }
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            int i = 1;
-            for(String value: params.values()){
-                statement.setString(i++, value);
+        if(sql.equals("Select * from contacts WHERE ")){
+            if(paramsList.size() > 0){
+                sql += String.join(" AND ", paramsList) +
+                        " AND deleted IS NULL ORDER by contact_id LIMIT ?,? ";
+            } else {
+                sql += " deleted IS NULL ORDER by contact_id LIMIT ?,? ";
             }
-            rs = statement.executeQuery();
-            return fillContactDto(rs);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+        } else{
+            if(paramsList.size() > 0){
+                sql += String.join(" AND ", paramsList) +
+                        " AND deleted IS NULL";
+            } else {
+                sql += " deleted IS NULL";
             }
         }
 
-        return null;
+
+        return sql;
     }
 
-    public List<ContactDto> fillContactDto(ResultSet rs){
+    private List<ContactDto> fillContactDto(ResultSet rs){
         List<ContactDto> contacts = new ArrayList<>();
 
         try {
@@ -252,5 +307,7 @@ public class ContactDaoImpl implements ContactDao {
 
         return contacts;
     }
+
+
 }
 

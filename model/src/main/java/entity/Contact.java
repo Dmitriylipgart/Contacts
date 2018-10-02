@@ -20,7 +20,7 @@ public class Contact {
     private String address;
     private int zipCode;
     private List<Phone> phones;
-//    private List<Attachment> attachments;
+    private List<Attachment> attachments;
 
 
     public Contact() {
@@ -151,11 +151,11 @@ public class Contact {
         this.phones = phones;
     }
 
-//    public List<Attachment> getAttachments() {
-//        return attachments;
-//    }
-//
-//    public void setAttachments(List<Attachment> attachments) {
-//        this.attachments = attachments;
-//    }
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 }

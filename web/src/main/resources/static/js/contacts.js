@@ -8,6 +8,7 @@ var Page = {
     range: 5,
     totalPages: 0,
     recordsToShow: 10,
+    search: false,
 
     doPaging: function (recordsCount) {
         this.totalPages = Math.ceil(recordsCount / this.recordsToShow);
@@ -30,7 +31,7 @@ var Page = {
     }
 };
 
-var attachments = [];
+// var attachments = [];
 var attachmentFiles = [];
 
 function init() {
@@ -57,6 +58,7 @@ function showContactForm() {
     document.forms.contactForm.reset();
     clearPhonesTable();
     clearAttachmentsTable();
+    attachmentFiles = [];
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
@@ -97,8 +99,29 @@ function clearAncorsDiv() {
     }
 }
 
+function startSearch() {
+    showContactListByParams(1);
+}
+
+function showContactListByParams(page) {
+    Page.search = true;
+    Page.currentPage = page;
+    console.log(Page.currentPage);
+    var options = getSearchParams();
+    fetch('/contacts/search/count', options).then(json).then(function (data) {
+        var recordsCount = data;
+        if (recordsCount < 1) {
+            showNoRecordsMessage();
+        } else {
+            showPagination(recordsCount, "showContactListByParams");
+            fetch('/contacts/search?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow, options).then(json).then(showContactTable);
+        }
+    });
+}
+
 function showContactList(page) {
     Page.currentPage = page;
+    Page.search = false;
     var recordsCount = 0;
     if (document.querySelector("h3")) {
         document.querySelector("h3").setAttribute("style", "display: none");
@@ -113,7 +136,7 @@ function showContactList(page) {
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
-            showPagination(recordsCount);
+            showPagination(recordsCount, "showContactList");
             fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(showContactTable);
         }
     });
@@ -148,7 +171,7 @@ function showContactTable(data) {
             var td4 = document.createElement("td");
             var td5 = document.createElement("td");
             td2.innerHTML = lastName + " " + firstName + " " + middleName;
-            td3.innerHTML = birthDate;
+            td3.innerHTML = moment(birthDate, 'YYYY-MM-DD').format('DD-MM-YYYY');
             td4.innerHTML = job;
             td5.innerHTML = country + ", " + city + ", " + address;
             tr.appendChild(td1);
@@ -162,7 +185,7 @@ function showContactTable(data) {
 
 }
 
-function showPagination(recordsCount) {
+function showPagination(recordsCount, showFunction) {
     var anchorsDiv = document.querySelector(".recordListAnchors");
     var pagination = Page.doPaging(recordsCount);
     if (!anchorsDiv) {
@@ -174,7 +197,7 @@ function showPagination(recordsCount) {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: block");
     }
     var first = document.createElement('a');
-    first.setAttribute('onclick', 'showContactList(1)');
+    first.setAttribute('onclick', showFunction + '(1)');
     first.setAttribute('class', 'anchor');
     var arrowLeft = document.createElement('i');
     arrowLeft.setAttribute('class', 'fas fa-arrow-circle-left');
@@ -182,13 +205,13 @@ function showPagination(recordsCount) {
     anchorsDiv.appendChild(first);
     for (var i = 0; i < pagination.length; i++) {
         var anchor = document.createElement('a');
-        anchor.setAttribute('onclick', 'showContactList(' + pagination[i] + ')');
+        anchor.setAttribute('onclick', showFunction + '(' + pagination[i] + ')');
         anchor.setAttribute('class', 'anchor');
         anchor.innerHTML = pagination[i];
         anchorsDiv.appendChild(anchor);
     }
     var last = document.createElement('a');
-    last.setAttribute('onclick', 'showContactList(' + Page.totalPages + ')');
+    last.setAttribute('onclick', showFunction + '(' + Page.totalPages + ')');
     last.setAttribute('class', 'anchor');
     var arrowRight = document.createElement('i');
     arrowRight.setAttribute('class', 'fas fa-arrow-circle-right');
@@ -270,6 +293,8 @@ function fillPhoneForm() {
     phoneForm.phoneComment.value = tableData[3].innerHTML;
 }
 
+
+
 function deletePhoneFromTable() {
     var phoneTable = document.querySelector(".phones tbody");
     var elements = phoneTable.querySelectorAll("input:checked");
@@ -281,11 +306,13 @@ function deletePhoneFromTable() {
 function getContactFromForm() {
     var contactForm = document.forms.contactForm;
     var phones = [];
+    var attachments =[];
     var contact = {};
     contact.firstName = contactForm.firstName.value;
     contact.lastName = contactForm.lastName.value;
     contact.middleName = contactForm.middleName.value;
     contact.birthDate = contactForm.birthDate.value;
+    console.log(contact.birthDate);
     contact.sex = contactForm.sex.value;
     contact.citizenship = contactForm.citizenship.value;
     contact.familyStatus = contactForm.familyStatus.value;
@@ -304,7 +331,18 @@ function getContactFromForm() {
         phone.phoneComment = phoneTableRows[i].cells[3].innerHTML;
         phones.push(phone);
     }
+    var attachmentTableRows = document.querySelector(".attachments").rows;
+    for (var i = 1; i < attachmentTableRows.length; i++) {
+        var attachment = {};
+        attachment.fileName = attachmentTableRows[i].cells[1].innerHTML;
+        var date = attachmentTableRows[i].cells[2].innerHTML;
+        attachment.date = moment(date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+        attachment.comment = attachmentTableRows[i].cells[3].innerHTML;
+        attachments.push(attachment);
+    }
+
     contact.phones = phones;
+    contact.attachments = attachments;
     return contact;
 }
 function addContact() {
@@ -355,13 +393,18 @@ function fillContactForm(contact) {
     contactForm.address.value = contact.address;
     contactForm.zipCode.value = contact.zipCode;
     var phones = contact.phones;
+    var attachments = contact.attachments
     clearPhonesTable();
     clearAttachmentsTable();
     for (var i = 0; i < phones.length; i++) {
         addPhoneToTable(phones[i]);
     }
-}
+    for (var i = 0; i < attachments.length; i++) {
+        addAttachmentToTable(attachments[i]);
+        console.log(attachments[i]);
+    }
 
+}
 
 function updateContact() {
     var contact = getContactFromForm();
@@ -402,11 +445,10 @@ for (var i = 0; i < radio.length; i++) {
 function changeRecordsToShow() {
     Page.recordsToShow = this.value;
     Page.currentPage = 1;
-    showContactList(1);
+    Page.search ? showContactListByParams(1): showContactList(1);
 }
 
-function searchByParams(){
-
+function getSearchParams(){
     var params = {};
     var form = document.forms.searchForm;
     params.first_name = form.first_name.value;
@@ -421,13 +463,14 @@ function searchByParams(){
     params.city = form.city.value;
     params.address = form.address.value;
     params.zip_code = form.zip_code.value;
-    console.log(params);
+
     var options = {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(params)
     };
-    fetch('/contacts/search', options).then(json).then(showContactTable);
+
+    return options;
 }
 
 function addAttachmentToTable(attachment) {
@@ -447,30 +490,27 @@ function addAttachmentToTable(attachment) {
     td3.setAttribute("name", "attachmentDate");
     var td4 = document.createElement("td");
     td4.setAttribute("name", "attachmentComment");
-    // var td5 = document.createElement("td");
-    // td5.setAttribute("name", "attachmentFile");
-    // var inputFile = document.createElement("input");
-    // inputFile
-    // td5.appendChild()
-    var today = new Date();
+    var today = moment();
     if (attachment instanceof MouseEvent) {
+        console.log("me");
         td2.innerHTML = fileNameInput.value;
-        td3.innerHTML = today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
+        td3.innerHTML = today.format('DD-MM-YYYY');
         td4.innerHTML = attachmentForm.attachmentComment.value;
     } else {
-        td2.innerHTML = attachmentForm.file.files[0].name;
-        td3.innerHTML = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear();
-        td4.innerHTML = attachmentForm.attachmentComment.value;
+        console.log(attachment);
+        td2.innerHTML = attachment.fileName;
+        td3.innerHTML = moment(attachment.date,'YYYY-MM-DD').format('DD-MM-YYYY');
+        td4.innerHTML = attachment.comment;
     }
     tr.appendChild(td2);
     tr.appendChild(td3);
     tr.appendChild(td4);
     attachmentTable.appendChild(tr);
-    var attachment ={};
-    attachment.fileName = fileNameInput.value;
-    attachment.comment = attachmentForm.attachmentComment.value;
-    attachment.date = td3.innerHTML;
-    attachments.push(attachment);
+    // var attachment ={};
+    // attachment.fileName = fileNameInput.value;
+    // attachment.comment = attachmentForm.attachmentComment.value;
+    // attachment.date = td3.innerHTML;
+    // attachments.push(attachment);
     attachmentFiles.push(attachmentForm.file.files[0]);
     document.querySelector(".popupAttachmentOpen").checked = false;
     attachmentForm.reset();
@@ -487,10 +527,10 @@ function deleteAttachmentFromTable() {
                 attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
             }
         });
-        attachments.forEach(function (elem) {
-            if(elem.fileName === fileName){
-                attachments.splice(attachments.indexOf(elem), 1);
-            }
-        })
+        // attachments.forEach(function (elem) {
+        //     if(elem.fileName === fileName){
+        //         attachments.splice(attachments.indexOf(elem), 1);
+        //     }
+        // })
     });
 }

@@ -22,6 +22,12 @@ public class ContactsController {
         return contactDao.countAll();
     }
 
+
+    @PostMapping("/search/count")
+    public int getRecordsCountByParams(@RequestBody HashMap<String, String> params){
+        return contactDao.countAllByParams(params);
+    }
+
     @GetMapping(params = {"page", "size" })
     public List<ContactDto> getContacts(@RequestParam( "page" ) int page,
                                         @RequestParam( "size" ) int size){
@@ -36,8 +42,11 @@ public class ContactsController {
     }
 
     @PostMapping("/search")
-    public List<ContactDto> searchContacts(@RequestBody HashMap<String, String> params){
-        return contactDao.readAllByParams(params);
+    public List<ContactDto> searchContacts(@RequestBody HashMap<String, String> params,
+                                           @RequestParam( "page" ) int page,
+                                           @RequestParam( "size" ) int size){
+        List<ContactDto> result = contactDao.readAllByParams(params, page, size);
+        return result;
     }
 
 }
