@@ -1,8 +1,10 @@
 package com.itechart.web;
 
+import org.quartz.SchedulerException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.ResourceUtils;
+import scheduler.TestShedule;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,9 +13,12 @@ import java.io.FileNotFoundException;
 @SpringBootApplication
 public class WebApplication {
 
-	public static void main(String[] args)  {
+	public static void main(String[] args) throws SchedulerException {
 
 		SpringApplication.run(WebApplication.class, args);
+
+		TestShedule testShedule = new TestShedule();
+		testShedule.startBirthdayShedule();
 
 //		Path currentRelativePath = Paths.get("");
 //		String s = currentRelativePath.toAbsolutePath().toString();

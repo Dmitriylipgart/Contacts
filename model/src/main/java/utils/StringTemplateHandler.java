@@ -8,10 +8,15 @@ public class StringTemplateHandler {
     private String absoulutePath = this.getClass().getClassLoader().getResource("").getPath();
     private String templateFolder = "static/templates/";
 
-    public String getTemplateByName(String templateName) throws IOException {
+    public String getTemplateByName(String templateName){
 
         String path = absoulutePath + templateFolder + templateName + ".txt";
-        String contents = FileUtils.readFileToString(new File(path), "UTF-8");
-        return contents;
+        String template = null;
+        try {
+            template = FileUtils.readFileToString(new File(path), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return template;
     }
 }

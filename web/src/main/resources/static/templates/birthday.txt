@@ -1,0 +1,2 @@
+Уважаемый <firstName> <middleName> <lastName>!
+Поздравляем Вас с Днем Рождения!

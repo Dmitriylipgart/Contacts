@@ -20,10 +20,19 @@ public class EmailHandler {
     public void sendEmail(EmailDto emailDto){
 
         List<ContactDto> contacts = contactDao.getContactsById(emailDto.getContactIdList());
+        String template = emailDto.getText();
+        String header =emailDto.getHeader();
+        sendEmailToContacts(contacts, template, header);
 
+    }
+    public void sendSheduelEmail(List<ContactDto> contacts, String template, String header){
+            sendEmailToContacts(contacts, template, header);
+    }
+
+    private void sendEmailToContacts(List<ContactDto> contacts, String template, String header){
         for (ContactDto contact: contacts) {
             try {
-                ST message = new ST(emailDto.getText());
+                ST message = new ST(template);
                 message.add("firstName", contact.getFirstName());
                 message.add("lastName", contact.getLastName());
                 message.add("middleName", contact.getMiddleName());
@@ -31,11 +40,10 @@ public class EmailHandler {
                 Email email = new SimpleEmail();
                 email.setHostName("smtp.mail.ru");
                 email.setSmtpPort(465);
-//                email.setAuthenticator(new DefaultAuthenticator("itechertlab@mail.ru", "12345678Itl"));
                 email.setAuthentication("itechertlab@mail.ru", "12345678Itl");
                 email.setSSLOnConnect(true);
                 email.setFrom("itechertlab@mail.ru");
-                email.setSubject(emailDto.getHeader());
+                email.setSubject(header);
                 email.setMsg(emailText);
                 email.addTo(contact.getEmail());
                 email.send();
@@ -44,4 +52,6 @@ public class EmailHandler {
             }
         }
     }
+
+
 }

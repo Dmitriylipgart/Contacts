@@ -168,9 +168,29 @@ public class ContactDaoImpl implements ContactDao {
         List<ContactDto> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS)) {
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS_BY_LIMIT)) {
             statement.setInt(1, (page - 1) * size);
             statement.setInt(2, size);
+            rs = statement.executeQuery();
+            contacts = fillContactDto(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return contacts;
+    }
+
+    public List<ContactDto> readAll() {
+
+        List<ContactDto> contacts = new ArrayList<>();
+        ResultSet rs = null;
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS)) {
             rs = statement.executeQuery();
             contacts = fillContactDto(rs);
         } catch (Exception e) {
