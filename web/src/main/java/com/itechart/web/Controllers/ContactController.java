@@ -11,15 +11,16 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/contact")
+@MultipartConfig
 public class ContactController {
 
     ContactsService service = new ContactsService();
 
 
     @PostMapping
-    public void saveContact(@RequestParam(value = "files") MultipartFile[] files,
+    public void saveContact(@RequestParam(value = "files", required = false) MultipartFile[] files,
                             @RequestParam(value = "contact") String contactJson,
-                            @RequestParam(value = "avatar") MultipartFile avatar) throws IOException {
+                            @RequestParam(value = "avatar", required = false) MultipartFile avatar) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         Contact contact = mapper.readValue(contactJson, Contact.class);
@@ -34,9 +35,9 @@ public class ContactController {
 
 
     @PostMapping("/update")
-    public void updateContactById(@RequestParam(value = "files") MultipartFile[] files,
+    public void updateContactById(@RequestParam(value = "files", required = false) MultipartFile[] files,
                                   @RequestParam(value = "contact") String contactJson,
-                                  @RequestParam(value = "avatar")MultipartFile avatar) throws IOException {
+                                  @RequestParam(value = "avatar", required = false) MultipartFile avatar) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         Contact contact = mapper.readValue(contactJson, Contact.class);

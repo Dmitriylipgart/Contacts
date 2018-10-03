@@ -4,20 +4,19 @@ package dto;
 import java.util.List;
 
 public class EmailDto {
-    private List<String> addressList;
+    private List<Long> contactIdList;
     private String header;
-    private int template;
     private String text;
 
     public EmailDto() {
     }
 
-    public List<String> getAddressList() {
-        return addressList;
+    public List<Long> getContactIdList() {
+        return contactIdList;
     }
 
-    public void setAddressList(List<String> addressList) {
-        this.addressList = addressList;
+    public void setContactIdList(List<Long> contactIdList) {
+        this.contactIdList = contactIdList;
     }
 
     public String getHeader() {
@@ -28,13 +27,6 @@ public class EmailDto {
         this.header = header;
     }
 
-    public int getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(int template) {
-        this.template = template;
-    }
 
     public String getText() {
         return text;

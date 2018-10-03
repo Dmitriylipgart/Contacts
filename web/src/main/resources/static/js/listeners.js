@@ -14,6 +14,9 @@ var attachmentInput = document.querySelector(".popupAttachment #file");
 var closeAvatarForm = document.querySelector(".popupAvatarClose");
 var showEmailButton = document.querySelector(".emailBtn");
 var selectTemplate = document.forms.emailForm.emailTemplate;
+var sendEmailButton = document.querySelector(".popupEmail .addButton");
+
+sendEmailButton.addEventListener("click", sendEmail);
 
 
 selectTemplate.addEventListener("change", fillEmailTextarea);

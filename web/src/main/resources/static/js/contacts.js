@@ -421,7 +421,6 @@ function fillContactForm(contact) {
     }
     for (var i = 0; i < attachments.length; i++) {
         addAttachmentToTable(attachments[i]);
-        console.log(attachments[i]);
     }
     if(contact.avatar){
         Page.avatar = contact.avatar;
@@ -436,6 +435,7 @@ function updateContact() {
     contact.contactId = Page.contactId;
     var formdata = new FormData();
     formdata.append("contact", JSON.stringify(contact));
+
     attachmentFiles.forEach(function (file) {
         formdata.append("files", file);
     });
@@ -447,6 +447,8 @@ function updateContact() {
         method: 'post',
         body: formdata
     };
+
+    console.log(formdata);
 
     fetch('/contact/update', options).then(status).then(function () {
         showContactList(Page.currentPage);
@@ -529,7 +531,6 @@ function addAttachmentToTable(attachment) {
         td3.innerHTML = today.format('DD-MM-YYYY');
         td4.innerHTML = attachmentForm.attachmentComment.value;
     } else {
-        console.log(attachment);
         td2.innerHTML = attachment.fileName;
         td3.innerHTML = moment(attachment.date,'YYYY-MM-DD').format('DD-MM-YYYY');
         td4.innerHTML = attachment.comment;
@@ -568,7 +569,7 @@ function showEmailForm() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(contactIdList)
     };
-    fetch('/email', options).then(status).then(json).then(function (data) {
+    fetch('/email/address', options).then(status).then(json).then(function (data) {
         showEmailAddresses(data);
     });
 }
@@ -590,4 +591,27 @@ function fillEmailTextarea(event) {
             document.forms.emailForm.emailText.value = text;
         });
     });
+}
+
+function sendEmail(){
+    var elements = contactsTable.querySelectorAll("input:checked");
+    var contactIdList = [];
+    elements.forEach(function (elem) {
+        contactIdList.push(elem.value);
+    });
+    var emailForm = document.forms.emailForm;
+    var email ={};
+    email.contactIdList = contactIdList;
+    email.header = emailForm.emailHeader.value;
+    email.text = emailForm.emailText.value;
+
+    var options = {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(email)
+    };
+
+    console.log(email);
+    fetch('/email', options).then(status);
+
 }

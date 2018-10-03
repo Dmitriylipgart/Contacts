@@ -2,6 +2,7 @@ package com.itechart.web.Controllers;
 
 import dao.ContactDaoImpl;
 import dto.ContactDto;
+import dto.EmailDto;
 import org.springframework.web.bind.annotation.*;
 import services.ContactsService;
 import services.EmailService;
@@ -17,14 +18,21 @@ public class EmailController {
     ContactsService service = new ContactsService();
     EmailService emailService = new EmailService();
 
-    @PostMapping
+    @PostMapping("/address")
     public List<ContactDto> deleteContacts(@RequestBody List<Long> contactIdList){
         return service.getContactsById(contactIdList);
     }
+
 
     @GetMapping(params = {"template"})
     @ResponseBody
     public String getContacts(@RequestParam("template") String templateName) throws IOException {
         return emailService.getTemplateText(templateName);
     }
+
+    @PostMapping
+    public void sendEmail(@RequestBody EmailDto email){
+        emailService.send(email);
+    }
+
 }
