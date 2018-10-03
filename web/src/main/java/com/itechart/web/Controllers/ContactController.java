@@ -2,11 +2,10 @@ package com.itechart.web.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.Contact;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import services.ContactsService;
-import java.io.File;
+import javax.servlet.annotation.MultipartConfig;
 import java.io.IOException;
 
 
@@ -14,27 +13,17 @@ import java.io.IOException;
 @RequestMapping("/contact")
 public class ContactController {
 
-
     ContactsService service = new ContactsService();
 
-    @PostMapping
-    public void saveFiles(@RequestPart(value = "files") MultipartFile[] files,
-                          @RequestParam(value = "contact") String contactJson) throws IOException {
 
+    @PostMapping
+    public void saveContact(@RequestParam(value = "files") MultipartFile[] files,
+                            @RequestParam(value = "contact") String contactJson,
+                            @RequestParam(value = "avatar") MultipartFile avatar) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         Contact contact = mapper.readValue(contactJson, Contact.class);
-        service.createContact(contact);
-
-
-        File uploadDir = new File("D:\\file");
-        if(!uploadDir.exists()){
-            uploadDir.mkdir();
-        }
-
-        for (MultipartFile file: files) {
-            file.transferTo(new File(uploadDir + File.separator + file.getOriginalFilename()));
-        }
+        service.createContact(contact, files, avatar);
     }
 
     @GetMapping("/{contactId}")
@@ -42,9 +31,16 @@ public class ContactController {
         return service.getContactById(contactId);
     }
 
-    @PutMapping()
-    public void updateContactById(@RequestBody Contact contact){
-        service.updateContact(contact);
+
+
+    @PostMapping("/update")
+    public void updateContactById(@RequestParam(value = "files") MultipartFile[] files,
+                                  @RequestParam(value = "contact") String contactJson,
+                                  @RequestParam(value = "avatar")MultipartFile avatar) throws IOException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        Contact contact = mapper.readValue(contactJson, Contact.class);
+        service.updateContact(contact, files, avatar);
     }
 
 }

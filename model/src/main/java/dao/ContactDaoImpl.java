@@ -48,7 +48,7 @@ public class ContactDaoImpl implements ContactDao {
             statement.setString(1, contact.getFirstName());
             statement.setString(2, contact.getLastName());
             statement.setString(3, contact.getMiddleName());
-            statement.setString(4, contact.getBirthDate());
+            statement.setString(4, contact.getBirthDate().equals("")? "0000-00-00" : contact.getBirthDate());
             statement.setString(5, contact.getSex());
             statement.setString(6, contact.getCitizenship());
             statement.setString(7, contact.getFamilyStatus());
@@ -59,6 +59,7 @@ public class ContactDaoImpl implements ContactDao {
             statement.setString(12, contact.getCity());
             statement.setString(13, contact.getAddress());
             statement.setInt(14, contact.getZipCode());
+            statement.setString(15, contact.getAvatar());
             statement.executeUpdate();
             rs = statement.getGeneratedKeys();
             while (rs.next()) {
@@ -95,6 +96,7 @@ public class ContactDaoImpl implements ContactDao {
                 contact.setCity(rs.getString("city"));
                 contact.setAddress(rs.getString("address"));
                 contact.setZipCode(rs.getInt("zip_code"));
+                contact.setAvatar(rs.getString("avatar"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,7 +119,7 @@ public class ContactDaoImpl implements ContactDao {
             statement.setString(1, contact.getFirstName());
             statement.setString(2, contact.getLastName());
             statement.setString(3, contact.getMiddleName());
-            statement.setString(4, contact.getBirthDate());
+            statement.setString(4, contact.getBirthDate().equals("")? "0000-00-00" : contact.getBirthDate());
             statement.setString(5, contact.getSex());
             statement.setString(6, contact.getCitizenship());
             statement.setString(7, contact.getFamilyStatus());
@@ -128,7 +130,8 @@ public class ContactDaoImpl implements ContactDao {
             statement.setString(12, contact.getCity());
             statement.setString(13, contact.getAddress());
             statement.setInt(14, contact.getZipCode());
-            statement.setLong(15, contact.getContactId());
+            statement.setString(15, contact.getAvatar());
+            statement.setLong(16, contact.getContactId());
             statement.executeUpdate();
 
         } catch (Exception e) {
@@ -280,9 +283,41 @@ public class ContactDaoImpl implements ContactDao {
             }
         }
 
-
         return sql;
     }
+
+    public List<ContactDto> getContactsById(List<Long> contactIdList){
+        List<ContactDto> contacts = new ArrayList<>();
+        ResultSet rs = null;
+
+        StringBuilder params = new StringBuilder();
+        for (int i = 0; i < contactIdList.size() - 1; i++) {
+            params.append("?,");
+        }
+        params.append("?");
+
+        String sql = ContactsSql.READ_CONTACTS_BY_ID + "(" + params.toString() + ") AND deleted IS NULL"  ;
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < contactIdList.size(); i++) {
+                statement.setLong(i + 1, contactIdList.get(i));
+            }
+            rs = statement.executeQuery();
+            contacts = fillContactDto(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return contacts;
+
+    }
+
 
     private List<ContactDto> fillContactDto(ResultSet rs){
         List<ContactDto> contacts = new ArrayList<>();
@@ -296,6 +331,7 @@ public class ContactDaoImpl implements ContactDao {
                 contact.setMiddleName(rs.getString("middle_name"));
                 contact.setBirthDate(rs.getString("birth_date"));
                 contact.setJob(rs.getString("job"));
+                contact.setEmail(rs.getString("email"));
                 contact.setCountry(rs.getString("country"));
                 contact.setCity(rs.getString("city"));
                 contact.setAddress(rs.getString("address"));

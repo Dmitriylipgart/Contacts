@@ -14,5 +14,5 @@ public interface ContactDao{
     Contact getById(long id);
     void update(Contact contact);
     void delete(List<Long> id);
-
+    List<ContactDto> getContactsById(List<Long> contactIdList);
 }

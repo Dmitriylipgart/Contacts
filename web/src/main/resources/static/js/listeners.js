@@ -1,3 +1,4 @@
+var avatarInput = document.querySelector(".popupAvatar #avatarFile");
 var deleteAttachmentFromTableButton = document.querySelector(".deleteAttachment");
 var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
 var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
@@ -10,16 +11,30 @@ var logo = document.querySelector(".logo");
 var phoneAddButton = document.querySelector(".send.formButton");
 var searchButton = document.querySelector(".searchForm .simpleButton");
 var attachmentInput = document.querySelector(".popupAttachment #file");
+var closeAvatarForm = document.querySelector(".popupAvatarClose");
+var showEmailButton = document.querySelector(".emailBtn");
+var selectTemplate = document.forms.emailForm.emailTemplate;
 
 
-deleteAttachmentFromTableButton.addEventListener("click", deleteAttachmentFromTable);
+selectTemplate.addEventListener("change", fillEmailTextarea);
+
+
 attachmentInput.addEventListener("change", displayFileName);
+deleteAttachmentFromTableButton.addEventListener("click", deleteAttachmentFromTable);
+avatarInput.addEventListener("change", displayAvatarFileName);
 popupPhoneAddButton.addEventListener("click", addPhoneToTable);
-
 popupAttachmentAddButton.addEventListener("click", addAttachmentToTable);
 saveContactButton.addEventListener("click", addContact);
 updateContactButton.addEventListener("click", updateContact);
 deletePhoneFromTableButton.addEventListener("click", deletePhoneFromTable);
+showEmailButton.addEventListener("click", showEmailForm);
+
+closeAvatarForm.addEventListener("click", function () {
+    var avatarForm = document.forms.avatarForm;
+    avatarForm.reset();
+});
+
+
 
 newContactButton.addEventListener("click", function () {
     saveContactButton.setAttribute("style", "display: block");
@@ -84,5 +99,10 @@ function displayFileName() {
     fileNameInput.value = attachmentForm.file.files[0].name;
 }
 
-
+function displayAvatarFileName() {
+    console.log("av")
+    var avatarForm = document.forms.avatarForm;
+    var avatarFileNameInput = document.querySelector(".popupAvatar #avatarName");
+    avatarFileNameInput.value = avatarForm.avatarFile.files[0].name;
+}
 

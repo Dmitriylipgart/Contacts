@@ -3,8 +3,6 @@ package ds;
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 
-
-
 public class MySqlDS {
 
     public DataSource getDataSource() {

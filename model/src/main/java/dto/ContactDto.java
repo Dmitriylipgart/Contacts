@@ -11,6 +11,7 @@ public class ContactDto {
     private String country;
     private String city;
     private String address;
+    private String email;
 
     public ContactDto() {
     }
@@ -85,5 +86,13 @@ public class ContactDto {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

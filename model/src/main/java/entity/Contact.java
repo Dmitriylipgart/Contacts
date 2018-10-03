@@ -19,6 +19,7 @@ public class Contact {
     private String city;
     private String address;
     private int zipCode;
+    private String avatar;
     private List<Phone> phones;
     private List<Attachment> attachments;
 
@@ -157,5 +158,13 @@ public class Contact {
 
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

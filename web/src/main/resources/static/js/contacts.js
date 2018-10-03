@@ -1,5 +1,6 @@
 window.onload = init;
 
+
 var contactsTable = document.querySelector(".contactsTable");
 var Page = {
     contactId: 0,
@@ -31,7 +32,7 @@ var Page = {
     }
 };
 
-// var attachments = [];
+
 var attachmentFiles = [];
 
 function init() {
@@ -67,10 +68,13 @@ function showContactForm() {
 }
 
 function showNoRecordsMessage() {
-    var message = document.createElement("h3");
-    message.innerHTML = "Нет Контактов";
-    document.querySelector(".wrapper").insertBefore(message, contactsTable);
-    contactsTable.setAttribute("style", "display: none");
+    var message = document.querySelector("h3");
+    message.setAttribute("style", "display: block");
+}
+
+function hideNoRecordsMessage() {
+    var message = document.querySelector("h3");
+    message.setAttribute("style", "display: none");
 }
 
 function clearContactTable() {
@@ -113,6 +117,7 @@ function showContactListByParams(page) {
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
+            hideNoRecordsMessage();
             showPagination(recordsCount, "showContactListByParams");
             fetch('/contacts/search?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow, options).then(json).then(showContactTable);
         }
@@ -136,6 +141,7 @@ function showContactList(page) {
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
+            hideNoRecordsMessage();
             showPagination(recordsCount, "showContactList");
             fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(showContactTable);
         }
@@ -323,6 +329,14 @@ function getContactFromForm() {
     contact.city = contactForm.city.value;
     contact.address = contactForm.address.value;
     contact.zipCode = contactForm.zipCode.value;
+    var avatar = document.forms.avatarForm.avatarFile.files[0];
+    if(avatar){
+        contact.avatar = avatar.name;
+    }
+    console.log(contact.avatar);
+    if(!contact.avatar){
+        contact.avatar = Page.avatar? Page.avatar: "";
+    }
     var phoneTableRows = document.querySelector(".phones").rows;
     for (var i = 1; i < phoneTableRows.length; i++) {
         var phone = {};
@@ -353,6 +367,10 @@ function addContact() {
     attachmentFiles.forEach(function (file) {
         formdata.append("files", file);
     });
+    var avatar = document.forms.avatarForm.avatarFile.files[0];
+    if(avatar){
+        formdata.append("avatar", avatar);
+    }
 
     var options = {
         method: 'post',
@@ -363,6 +381,8 @@ function addContact() {
         showContactList(1);
     });
 }
+
+
 
 function showContact(contactId) {
     console.log(contactId);
@@ -403,19 +423,32 @@ function fillContactForm(contact) {
         addAttachmentToTable(attachments[i]);
         console.log(attachments[i]);
     }
-
+    if(contact.avatar){
+        Page.avatar = contact.avatar;
+        var contactPhoto = document.querySelector(".contactPhoto");
+        contactPhoto.setAttribute("style", "background: url('/files/" + Page.contactId + "/avatar/" + Page.avatar
+                                    + "') center center/contain;");
+    }
 }
 
 function updateContact() {
     var contact = getContactFromForm();
     contact.contactId = Page.contactId;
-    console.log(contact.contactId);
+    var formdata = new FormData();
+    formdata.append("contact", JSON.stringify(contact));
+    attachmentFiles.forEach(function (file) {
+        formdata.append("files", file);
+    });
+    var avatar = document.forms.avatarForm.avatarFile.files[0];
+    if(avatar){
+        formdata.append("avatar", avatar);
+    }
     var options = {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(contact)
+        method: 'post',
+        body: formdata
     };
-    fetch('/contact', options).then(status).then(function () {
+
+    fetch('/contact/update', options).then(status).then(function () {
         showContactList(Page.currentPage);
     });
 }
@@ -492,7 +525,6 @@ function addAttachmentToTable(attachment) {
     td4.setAttribute("name", "attachmentComment");
     var today = moment();
     if (attachment instanceof MouseEvent) {
-        console.log("me");
         td2.innerHTML = fileNameInput.value;
         td3.innerHTML = today.format('DD-MM-YYYY');
         td4.innerHTML = attachmentForm.attachmentComment.value;
@@ -506,11 +538,6 @@ function addAttachmentToTable(attachment) {
     tr.appendChild(td3);
     tr.appendChild(td4);
     attachmentTable.appendChild(tr);
-    // var attachment ={};
-    // attachment.fileName = fileNameInput.value;
-    // attachment.comment = attachmentForm.attachmentComment.value;
-    // attachment.date = td3.innerHTML;
-    // attachments.push(attachment);
     attachmentFiles.push(attachmentForm.file.files[0]);
     document.querySelector(".popupAttachmentOpen").checked = false;
     attachmentForm.reset();
@@ -527,10 +554,40 @@ function deleteAttachmentFromTable() {
                 attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
             }
         });
-        // attachments.forEach(function (elem) {
-        //     if(elem.fileName === fileName){
-        //         attachments.splice(attachments.indexOf(elem), 1);
-        //     }
-        // })
+    });
+}
+
+function showEmailForm() {
+    var elements = contactsTable.querySelectorAll("input:checked");
+    var contactIdList = [];
+    elements.forEach(function (elem) {
+        contactIdList.push(elem.value);
+    });
+    var options = {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(contactIdList)
+    };
+    fetch('/email', options).then(status).then(json).then(function (data) {
+        showEmailAddresses(data);
+    });
+}
+
+
+function showEmailAddresses(contacts) {
+    var contactAddressField = document.forms.emailForm.emailAddress;
+    var contactAddressList =[];
+    contacts.forEach(function (contact) {
+        contactAddressList.push(contact.email);
+    });
+    contactAddressField.value = contactAddressList.join(", ");
+}
+
+function fillEmailTextarea(event) {
+    var templateName = event.target.value;
+    fetch('/email?template=' + templateName).then(status).then(function (response) {
+        return response.text().then(function (text) {
+            document.forms.emailForm.emailText.value = text;
+        });
     });
 }

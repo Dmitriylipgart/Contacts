@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <!--<meta http-equiv="Cache-Control" content="private">-->
     <script src="js/moment.min.js"></script>
 </head>
 <body>
@@ -16,10 +15,12 @@
     <div class="logo"><h1>Contacts</h1></div>
     <div class="menu">
         <div class="button newContactBtn">Новый контакт</div>
+        <label for="popupEmailOpen" class="button emailBtn">Email</label>
         <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
         <label for="searchButton" class="button"><i class="fas fa-search"></i></label>
     </div>
 </header>
+
 <input type="checkbox" id="searchButton" class="searchButton">
 <form name="searchForm" class="searchForm">
     <div class="search flex">
@@ -63,7 +64,8 @@
     </div>
 
     <div class="search flex">
-        <div><label for="citizenshipSearch">Гражданство</label><input type="text" name="citizenship" id="citizenshipSearch"></div>
+        <div><label for="citizenshipSearch">Гражданство</label><input type="text" name="citizenship"
+                                                                      id="citizenshipSearch"></div>
         <div><label for="countryIdSearch">Страна</label><input type="text" name="country" id="countryIdSearch"></div>
         <div><label for="citySearch">Город</label><input type="text" name="city" id="citySearch"></div>
         <div><label for="addressSearch">Адрес</label><input type="text" name="address" id="addressSearch"></div>
@@ -72,7 +74,6 @@
     </div>
 </form>
 
-
 <div class="wrapper">
     <div class="radio-group">
         <input type="radio" id="option-one" value="10" name="selector" checked>
@@ -80,13 +81,72 @@
         <input type="radio" id="option-two" value="20" name="selector">
         <label for="option-two">20</label>
     </div>
-
+    <h3>Нет контактов</h3>
     <table class="contactsTable" style="display: block"></table>
 </div>
 
+
+<input type="checkbox" style="display: none" id="popupEmailOpen" class="popupEmailOpen">
+<label class="popupOverlay popupEmailOverlay" for="popupEmailOpen"></label>
+<form class="popup popupEmail" name="emailForm">
+    <div class="flex flexColumn">
+        <div class="flex">
+            <label for="emailAddress">Кому</label>
+            <input type="text" name="emailAddress" id="emailAddress">
+        </div>
+        <div class="flex">
+                <label for="emailHeader">Тема</label>
+                <input type="text" name="emailHeader" id="emailHeader">
+        </div>
+
+        <div class="flex">
+            <label for="emailTemplate">Шаблон</label>
+            <select name="emailTemplate" id="emailTemplate">
+                <option value="">Нет</option>
+                <option value="newYear">С новым Годом!</option>
+                <option value="debt">Напоминание</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="emailText">Текст письма</label>
+            <textarea type="text" name="emailText" id="emailText">
+            </textarea>
+        </div>
+    </div>
+    <div class="popupFooter">
+        <label for="popupEmailOpen" class="button formButton addButton">Отправить</label>
+        <label for="popupEmailOpen" class="button delete formButton popupEmailClose"> Закрыть</label>
+    </div>
+</form>
+
 <div style="display: none" class="contactFormWrapper">
+
+    <input type="checkbox" style="display: none" id="popupAvatarOpen" class="popupAvatarOpen">
+    <label class="popupOverlay popupAvatarOverlay" for="popupAvatarOpen"></label>
+    <form class="popup popupAvatar" name="avatarForm">
+        <div class="flex">
+            <div>
+                <label for="avatarName">Имя файла</label>
+                <input type="text" name="avatarName" id="avatarName">
+            </div>
+            <div>
+                <input type="file" id="avatarFile" name="avatarFile" style="display: none">
+                <label for="avatarFile" class="button simpleButton">Найти</label>
+            </div>
+        </div>
+        <div class="popupFooter">
+            <label for="popupAvatarOpen" class="button formButton addButton">Добавить</label>
+            <label for="popupAvatarOpen" class="button delete formButton popupAvatarClose"> Закрыть </label>
+        </div>
+    </form>
+
     <form name="contactForm" class="contactForm">
-        <div class="contactPhoto"><i class="fas fa-user"></i></div>
+
+        <label for="popupAvatarOpen">
+            <div class="contactPhoto"></div>
+        </label>
+
         <div class="flex flexColumn">
             <div>
                 <label for="lastName">Фамилия</label>

@@ -84,7 +84,7 @@ input{
 }
 
 h3 {
-    display: block;
+    display: none;
     margin: 0 auto;
 }
 
@@ -237,20 +237,23 @@ label {
     height: 35px;
 
 }
+
+
+
+.contactPhoto:hover i{
+    font-size: 6rem;
+}
+.contactPhoto, .contactFormWrapper input, select,.popup input {
+    border: solid 1px #898989;
+    background: rgba(253, 255, 244, 1);
+}
+
 .contactPhoto {
     width: 20%;
     height: 160px;
     float: left;
     margin: 40px 0 10px 30px;
     border-radius: 3px;
-}
-.contactPhoto:hover i{
-    font-size: 6rem;
-}
-
-.contactPhoto, .contactFormWrapper input, select,.popup input {
-    border: solid 1px #898989;
-    background: rgba(253, 255, 244, 1);
 }
 
 .contactPhoto i{
@@ -344,6 +347,7 @@ label {
     color: #fff;
     font-size: 1.3rem;
 }
+
 .popupFooter .button{
     width: 25%;
     height: 30px;
@@ -351,16 +355,23 @@ label {
     margin: 0 10px;
 }
 
-.popupAttachment .simpleButton{
+.popupAttachment .simpleButton, .popupAvatar .simpleButton{
     width: 90%;
     height: 35px;
     line-height: 30px;
     margin-bottom: 0;
+    background-color: #2381a5;
+}
+
+.popupAttachment .simpleButton:hover, .popupAvatar .simpleButton:hover{
+    background-color: #1f5c7c;
 }
 
 .attachmentAddButton{
     background-color: #08714c;
 }
+
+
 
 .popup {
     position: fixed;
@@ -411,6 +422,20 @@ label.popupOverlay {
     top: 20%;
 }
 
+.popupAvatarOpen:checked ~ label.popupAvatarOverlay {
+    display: block;
+    opacity: 1;
+}
+
+.popupAvatarOpen:checked ~ .popupAvatar {
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: 20%;
+}
+
+
 .popupAttachmentOpen:checked ~ label.popupAttachmentOverlay {
     display: block;
     opacity: 1;
@@ -423,6 +448,41 @@ label.popupOverlay {
     transform: translate(-50%, 0);
     top: 20%;
 }
+
+.popupEmailOpen:checked ~ label.popupEmailOverlay {
+    display: block;
+    opacity: 1;
+}
+
+.popupEmailOpen:checked ~ .popupEmail{
+    -webkit-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: 20%;
+}
+
+.popupEmail .flex{
+     width: 80%;
+     align-items: center;
+     justify-content: space-between;
+ }
+
+.popupEmail .flex div{
+    flex-basis: 80%;
+}
+
+.popupEmail .flex input{
+    width: 80%;
+    height: 1.5rem;
+}
+
+.popupEmail textarea{
+    width: 80%;
+    height: 140px;
+}
+
+
 
 .popupAttachment input[type="file"]{
     display: none;

@@ -1,12 +1,10 @@
 package com.itechart.web.Controllers;
 
-
 import dao.ContactDaoImpl;
 import dto.ContactDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import services.ContactsService;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +38,8 @@ public class ContactsController {
     public void deleteContacts(@RequestBody List<Long> contactIdList){
         service.delete(contactIdList);
     }
+
+
 
     @PostMapping("/search")
     public List<ContactDto> searchContacts(@RequestBody HashMap<String, String> params,
