@@ -57,7 +57,8 @@ public class AttachmentDaoImpl implements AttachmentDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

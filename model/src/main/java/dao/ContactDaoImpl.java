@@ -40,7 +40,7 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     public long create(Contact contact) {
-        ResultSet rs;
+        ResultSet rs = null;
         long contactId = 0;
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ContactsSql.CREATE_CONTACT_SQL, Statement.RETURN_GENERATED_KEYS)
@@ -67,7 +67,13 @@ public class ContactDaoImpl implements ContactDao {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+        try {
+            if (rs != null) rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
         return contactId;
     }
 
@@ -177,7 +183,8 @@ public class ContactDaoImpl implements ContactDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -197,7 +204,8 @@ public class ContactDaoImpl implements ContactDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -227,7 +235,8 @@ public class ContactDaoImpl implements ContactDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -329,7 +338,8 @@ public class ContactDaoImpl implements ContactDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

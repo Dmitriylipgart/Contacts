@@ -1,5 +1,5 @@
 window.onload = init;
-
+window.Promise = ES6Promise;
 
 var contactsTable = document.querySelector(".contactsTable");
 var Page = {
@@ -57,6 +57,8 @@ function showContactForm() {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
     document.forms.contactForm.reset();
+    document.querySelector(".menuSearchButton").setAttribute("style", "display: none");
+    document.querySelector(".emailBtn").setAttribute("style", "display: none");
     clearPhonesTable();
     clearAttachmentsTable();
     attachmentFiles = [];
@@ -131,6 +133,8 @@ function showContactList(page) {
     if (document.querySelector("h3")) {
         document.querySelector("h3").setAttribute("style", "display: none");
     }
+    document.querySelector(".menuSearchButton").setAttribute("style", "display: block");
+    document.querySelector(".emailBtn").setAttribute("style", "display: block");
     document.querySelector(".radio-group").setAttribute("style", "display: block");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: none");
     document.querySelector(".newContactBtn").setAttribute("style", "display: block");

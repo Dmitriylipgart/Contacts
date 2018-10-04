@@ -54,7 +54,8 @@ public class PhoneDaoImpl implements PhoneDao {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();
+                if (rs != null)
+                    rs.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }

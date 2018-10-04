@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Contact</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.1/es6-promise.min.js"></script>
+    <script src="https://cdn.rawgit.com/camsong/fetch-ie8/master/fetch.js"></script>
+    <script src="js/contacts.js" defer></script>
+    <script src="js/listeners.js" defer></script>
     <link rel="stylesheet" href="css/contact.css">
     <link href="https://fonts.googleapis.com/css?family=Caveat|Courgette|Kalam:400,700|Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
@@ -17,7 +21,7 @@
         <div class="button newContactBtn">Новый контакт</div>
         <label for="popupEmailOpen" class="button emailBtn">Email</label>
         <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
-        <label for="searchButton" class="button"><i class="fas fa-search"></i></label>
+        <label for="searchButton" class="button menuSearchButton"><i class="fas fa-search"></i></label>
     </div>
 </header>
 
@@ -89,31 +93,37 @@
 <input type="checkbox" style="display: none" id="popupEmailOpen" class="popupEmailOpen">
 <label class="popupOverlay popupEmailOverlay" for="popupEmailOpen"></label>
 <form class="popup popupEmail" name="emailForm">
-    <div class="flex flexColumn">
-        <div class="flex">
-            <label for="emailAddress">Кому</label>
-            <input type="text" name="emailAddress" id="emailAddress">
-        </div>
-        <div class="flex">
+
+
+    <div class="emailWrapper">
+        <div class="flex flexColumn">
+            <div class="flex">
+                <label for="emailAddress">Кому</label>
+                <input type="text" name="emailAddress" id="emailAddress">
+            </div>
+            <div class="flex">
                 <label for="emailHeader">Тема</label>
                 <input type="text" name="emailHeader" id="emailHeader">
-        </div>
+            </div>
 
-        <div class="flex">
-            <label for="emailTemplate">Шаблон</label>
-            <select name="emailTemplate" id="emailTemplate">
-                <option value="">Нет</option>
-                <option value="newYear">С новым Годом!</option>
-                <option value="debt">Напоминание</option>
-            </select>
-        </div>
+            <div class="flex">
+                <label for="emailTemplate">Шаблон</label>
+                <select name="emailTemplate" id="emailTemplate">
+                    <option value="">Нет</option>
+                    <option value="newYear">С новым Годом!</option>
+                    <option value="debt">Напоминание</option>
+                </select>
+            </div>
 
-        <div>
-            <label for="emailText">Текст письма</label>
-            <textarea type="text" name="emailText" id="emailText">
+            <div>
+                <label for="emailText">Текст письма</label>
+                <textarea type="text" name="emailText" id="emailText">
             </textarea>
+            </div>
         </div>
+
     </div>
+
     <div class="popupFooter">
         <label for="popupEmailOpen" class="button formButton addButton">Отправить</label>
         <label for="popupEmailOpen" class="button delete formButton popupEmailClose"> Закрыть</label>
@@ -230,7 +240,7 @@
     <label for="popupPhoneOpen" class="button send formButton">
         <span class="circle"></span><span class="text">Добавить</span></label>
 
-    <label for="popupPhoneOpen" class="button update formButton">
+    <label for="popupPhoneOpen" class="button update formButton phoneUpdate">
         <span class="circle"></span><span class="text">Редактировать</span>
     </label>
 
@@ -329,7 +339,6 @@
     <div class="button updateContact simpleButton">Редактировать</div>
 </div>
 
-<script src="js/contacts.js"></script>
-<script src="js/listeners.js"></script>
+
 </body>
 </html>

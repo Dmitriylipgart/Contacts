@@ -17,8 +17,8 @@ public class WebApplication {
 
 		SpringApplication.run(WebApplication.class, args);
 
-		TestShedule testShedule = new TestShedule();
-		testShedule.startBirthdayShedule();
+//		TestShedule testShedule = new TestShedule();
+//		testShedule.startBirthdayShedule();
 
 //		Path currentRelativePath = Paths.get("");
 //		String s = currentRelativePath.toAbsolutePath().toString();

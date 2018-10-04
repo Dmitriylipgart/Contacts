@@ -1,6 +1,9 @@
 * {
     margin: 0;
 }
+html, body{
+    height:100%;
+}
 
 body {
     background: url('../images/bigbg3.jpg') center center no-repeat fixed;
@@ -201,9 +204,13 @@ table th {
 .flex.flexColumn {
     flex-direction: column;
     width: 60%;
+    min-height: 200px;
+    flex: 1;
 }
 .flex.flexColumn div{
     width: 100%;
+    min-height: 80px;
+    flex: 1;
 }
 
 .flex {
@@ -212,6 +219,8 @@ table th {
     justify-content: space-around;
     margin: 20px auto;
     align-items: flex-end;
+    flex: 1;
+
 }
 
 .flex div {
@@ -268,6 +277,10 @@ label {
 
 .contactFormWrapper input:focus, select:focus {
     background: rgba(255, 255, 255, 1);
+}
+
+.disabled{
+    pointer-events: none;
 }
 
 .button {
@@ -462,14 +475,20 @@ label.popupOverlay {
     top: 20%;
 }
 
+.popupEmail{
+    min-height: 550px;
+}
 .popupEmail .flex{
      width: 80%;
      align-items: center;
      justify-content: space-between;
+     flex: 1;
+     min-height: 50px;
  }
 
+
 .popupEmail .flex div{
-    flex-basis: 80%;
+    /*flex-basis: 80%;*/
 }
 
 .popupEmail .flex input{
@@ -481,8 +500,6 @@ label.popupOverlay {
     width: 80%;
     height: 140px;
 }
-
-
 
 .popupAttachment input[type="file"]{
     display: none;

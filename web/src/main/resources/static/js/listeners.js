@@ -6,7 +6,7 @@ var saveContactButton = document.querySelector(".saveContact");
 var updateContactButton = document.querySelector(".updateContact");
 var deletePhoneFromTableButton = document.querySelector(".deletePhone");
 var newContactButton = document.querySelector(".newContactBtn");
-var updatePhoneButton = document.querySelector(".update.formButton");
+var updatePhoneButton = document.querySelector(".phoneUpdate");
 var logo = document.querySelector(".logo");
 var phoneAddButton = document.querySelector(".send.formButton");
 var searchButton = document.querySelector(".searchForm .simpleButton");
@@ -46,6 +46,7 @@ newContactButton.addEventListener("click", function () {
 });
 
 updatePhoneButton.addEventListener("click", fillPhoneForm);
+
 logo.addEventListener("click", function () {
     showContactList(1);
 });
@@ -78,20 +79,16 @@ contactsTable.addEventListener("click", function (event) {
 });
 
 function disableCheck(event) {
+
     if (event.target.tagName = "input") {
         var phoneTable = document.querySelector(".phones tbody");
-        var elements = phoneTable.querySelectorAll("input");
         var checkedElements = phoneTable.querySelectorAll("input:checked");
-        if (checkedElements.length < 1) {
-            elements.forEach(function (elem) {
-                elem.disabled = false;
-            });
+
+        if (checkedElements.length !== 1) {
+            updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate disabled");
         } else {
-            elements.forEach(function (elem) {
-                if (!elem.checked) {
-                    elem.disabled = true;
-                }
-            });
+            updatePhoneButton.removeAttribute("class");
+            updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate");
         }
     }
 }
