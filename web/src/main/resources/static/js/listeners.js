@@ -72,7 +72,7 @@ function addCheckEventListener() {
 
 contactsTable.addEventListener("click", function (event) {
     var target = event.target;
-    if (target.className != "contactNameAnchor") {
+    if (target.className !== "contactNameAnchor") {
         return;
     }
     showContact(target.previousElementSibling.firstChild.value);
