@@ -45,6 +45,7 @@ public class ContactDaoImpl implements ContactDao {
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(ContactsSql.CREATE_CONTACT_SQL, Statement.RETURN_GENERATED_KEYS)
         ) {
+            //todo mapper
             statement.setString(1, contact.getFirstName());
             statement.setString(2, contact.getLastName());
             statement.setString(3, contact.getMiddleName());
@@ -320,6 +321,7 @@ public class ContactDaoImpl implements ContactDao {
         ResultSet rs = null;
 
         StringBuilder params = new StringBuilder();
+        //todo
         for (int i = 0; i < contactIdList.size() - 1; i++) {
             params.append("?,");
         }
@@ -335,12 +337,14 @@ public class ContactDaoImpl implements ContactDao {
             rs = statement.executeQuery();
             contacts = fillContactDto(rs);
         } catch (Exception e) {
+            //todo throw
             e.printStackTrace();
         } finally {
             try {
                 if (rs != null)
                     rs.close();
             } catch (SQLException e) {
+                //todo logger
                 e.printStackTrace();
             }
         }
@@ -368,6 +372,7 @@ public class ContactDaoImpl implements ContactDao {
                 contacts.add(contact);
             }
         } catch (SQLException e) {
+            //todo throw
             e.printStackTrace();
         }
 

@@ -29,7 +29,6 @@ public class PhoneDaoImpl implements PhoneDao {
                 statement.setString(4, phone.getPhoneComment());
                 statement.executeUpdate();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

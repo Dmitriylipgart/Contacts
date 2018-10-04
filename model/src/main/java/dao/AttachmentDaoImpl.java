@@ -15,7 +15,7 @@ import java.util.List;
 
 public class AttachmentDaoImpl implements AttachmentDao {
 
-    DataSource dataSource = new MySqlDS().getDataSource();
+    private DataSource dataSource = new MySqlDS().getDataSource();
 
 
     @Override
@@ -32,7 +32,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -54,12 +54,13 @@ public class AttachmentDaoImpl implements AttachmentDao {
                 attachments.add(attachment);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (rs != null)
                     rs.close();
             } catch (SQLException e) {
+                //todo logger
                 e.printStackTrace();
             }
         }
@@ -77,6 +78,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
     @Override
     public void delete(List<Long> contactIdList) {
         StringBuilder params = new StringBuilder();
+        //todo e.g. join
         for (int i = 0; i < contactIdList.size() - 1; i++) {
             params.append("?,");
         }
@@ -91,6 +93,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
             }
             statement.executeUpdate();
         } catch (Exception e) {
+            //todo throw
             e.printStackTrace();
         }
     }

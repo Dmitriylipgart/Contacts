@@ -9,6 +9,12 @@ public class Phone {
     public Phone() {
     }
 
+    public Phone(String phoneNumber, String phoneDescription, String phoneComment) {
+        this.phoneNumber = phoneNumber;
+        this.phoneDescription = phoneDescription;
+        this.phoneComment = phoneComment;
+    }
+
     public String getPhoneNumber() {return phoneNumber;}
 
     public void setPhoneNumber(String phoneNumber) {

@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/contacts")
 public class ContactsController {
+
     ContactDaoImpl contactDao = new ContactDaoImpl();
     ContactsService service = new ContactsService();
 
