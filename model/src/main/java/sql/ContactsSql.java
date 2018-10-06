@@ -14,7 +14,7 @@ public class ContactsSql {
             + " WHERE contact_id = ?";
 
     public static final String READ_ALL_CONTACTS_BY_LIMIT = "SELECT * from contacts WHERE deleted IS NULL ORDER by contact_id LIMIT ?,?;";
-    public static final String READ_ALL_CONTACTS = "SELECT * from contacts WHERE deleted IS NULL";
+    public static final String READ_ALL_CONTACTS_BY_DATE = "SELECT * from contacts WHERE deleted IS NULL AND birth_date LIKE ?";
     public static final String READ_CONTACT_BY_ID = "SELECT * FROM contacts WHERE contact_id = ? AND deleted IS NULL";
     public static final String READ_CONTACTS_BY_ID = "SELECT * FROM contacts WHERE contact_id IN";
     public static final String DELETE_CONTACT_BY_ID = "UPDATE contacts SET deleted = 1 WHERE contact_id IN";

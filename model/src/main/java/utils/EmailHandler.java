@@ -1,5 +1,6 @@
 package utils;
 
+import com.sun.mail.util.MailSSLSocketFactory;
 import dao.ContactDao;
 import dao.ContactDaoImpl;
 import dto.ContactDto;
@@ -10,6 +11,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.stringtemplate.v4.ST;
 
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 
@@ -30,6 +32,8 @@ public class EmailHandler {
     }
 
     private void sendEmailToContacts(List<ContactDto> contacts, String template, String header){
+
+
         for (ContactDto contact: contacts) {
             try {
                 ST message = new ST(template);

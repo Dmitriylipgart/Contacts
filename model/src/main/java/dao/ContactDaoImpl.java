@@ -150,11 +150,7 @@ public class ContactDaoImpl implements ContactDao {
     @Override
     public void delete(List<Long> contactIdList) {
 
-        StringBuilder params = new StringBuilder();
-        for (int i = 0; i < contactIdList.size() - 1; i++) {
-            params.append("?,");
-        }
-        params.append("?");
+        String params = String.join(", ", Collections.nCopies(contactIdList.size(), "?"));
 
         String sql = ContactsSql.DELETE_CONTACT_BY_ID + "(" + params.toString() + ")";
 
@@ -193,12 +189,13 @@ public class ContactDaoImpl implements ContactDao {
         return contacts;
     }
 
-    public List<ContactDto> readAll() {
+    public List<ContactDto> readAllByDate(String today) {
 
         List<ContactDto> contacts = new ArrayList<>();
         ResultSet rs = null;
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS)) {
+             PreparedStatement statement = connection.prepareStatement(ContactsSql.READ_ALL_CONTACTS_BY_DATE)) {
+            statement.setString(1, "_____"+ today);
             rs = statement.executeQuery();
             contacts = fillContactDto(rs);
         } catch (Exception e) {
@@ -221,6 +218,7 @@ public class ContactDaoImpl implements ContactDao {
 
         sql = getSqlForParams(sql, params);
         ResultSet rs = null;
+
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PhoneDaoImpl implements PhoneDao {
@@ -73,11 +74,7 @@ public class PhoneDaoImpl implements PhoneDao {
     @Override
     public void delete(List<Long> contactIdList) {
 
-        StringBuilder params = new StringBuilder();
-        for (int i = 0; i < contactIdList.size() - 1; i++) {
-            params.append("?,");
-        }
-        params.append("?");
+        String params = String.join(", ", Collections.nCopies(contactIdList.size(), "?"));
 
         String sql = ContactsSql.DELETE_PHONE_BY_CONTACT_ID + "(" + params.toString() + ")";
 

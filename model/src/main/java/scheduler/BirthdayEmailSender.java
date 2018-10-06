@@ -27,24 +27,12 @@ public class BirthdayEmailSender implements Job {
         System.out.println("job");
         String header = "Happy BirthDay!!!";
         DateFormat dateFormat = new SimpleDateFormat("MM-dd");
-        DateFormat dateFormatForContact = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String today = dateFormat.format(date);
 
         String message = stringTemplateHandler.getTemplateByName("birthday");
-        List<ContactDto> contacts = contactDao.readAll();
-        List<ContactDto> contactsToSend = new ArrayList<>();
-        for (ContactDto contact : contacts) {
+        List<ContactDto> contactsToSend = contactDao.readAllByDate(today);
 
-            try {
-                Date birthdate = dateFormatForContact.parse(contact.getBirthDate());
-                if (today.equals(dateFormat.format(birthdate))) {
-                    contactsToSend.add(contact);
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
         if (contactsToSend.size() > 0) {
             emailHandler.sendSheduelEmail(contactsToSend, message, header);
         }
