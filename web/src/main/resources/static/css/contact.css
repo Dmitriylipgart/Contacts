@@ -228,11 +228,10 @@ table th {
     margin: 0 5px;
 }
 
-label {
+label:not(.button) {
     font-size: 1em;
     text-shadow: 1px 1px 8px #363636;
     padding-top: 10px;
-
 }
 
 .contactFormWrapper input {
@@ -299,9 +298,6 @@ label {
     margin-left: 3px;
     float: right;
     height: 24px;
-}
-
-.formButton {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -356,7 +352,7 @@ label {
     margin: 10px auto;
 }
 
-.simpleButton:hover{
+.simpleButton:hover, .popupFooter .button:hover{
     background-color: #08714c;
     color: #fff;
     font-size: 1.3rem;
@@ -368,23 +364,23 @@ label {
     margin: 10px;
 }
 
+.popupFooter .close:hover, .close:hover{
+    background-color: #ff4624;
+}
+
+.simpleButton{
+    background-color: #7cc0e5;
+}
 .popupAttachment .simpleButton, .popupAvatar .simpleButton{
     width: 90%;
     height: 35px;
-    line-height: 30px;
+    line-height: 35px;
     margin-bottom: 0;
-    background-color: #2381a5;
 }
 
 .popupAttachment .simpleButton:hover, .popupAvatar .simpleButton:hover{
     background-color: #1f5c7c;
 }
-
-.addButton{
-    background-color: #08714c;
-}
-
-
 
 .popup {
     position: fixed;

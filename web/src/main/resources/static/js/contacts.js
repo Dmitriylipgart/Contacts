@@ -57,6 +57,7 @@ function showContactForm() {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
     document.forms.contactForm.reset();
+
     document.querySelector(".menuSearchButton").setAttribute("style", "display: none");
     document.querySelector(".emailBtn").setAttribute("style", "display: none");
     clearPhonesTable();
@@ -65,8 +66,8 @@ function showContactForm() {
     document.querySelector(".radio-group").setAttribute("style", "display: none");
     contactsTable.setAttribute("style", "display: none");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
-    document.querySelector(".newContactBtn").setAttribute("style", "display: none");
-    document.querySelector(".delContactBtn").setAttribute("style", "display: none");
+    newContactButton.setAttribute("style", "display: none");
+    deleteContactButton.setAttribute("style", "display: none");
 }
 
 function showNoRecordsMessage() {
@@ -137,8 +138,8 @@ function showContactList(page) {
     document.querySelector(".emailBtn").setAttribute("style", "display: block");
     document.querySelector(".radio-group").setAttribute("style", "display: block");
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: none");
-    document.querySelector(".newContactBtn").setAttribute("style", "display: block");
-    document.querySelector(".delContactBtn").setAttribute("style", "display: block");
+    document.querySelector(".newContactButton").setAttribute("style", "display: block");
+    document.querySelector(".deleteContactButton").setAttribute("style", "display: block");
 
     fetch('/contacts/count').then(json).then(function (data) {
         recordsCount = data;

@@ -20,7 +20,7 @@
     <div class="menu">
         <div class="button newContactButton">Новый контакт</div>
         <label for="popupEmailOpen" class="button emailBtn">Email</label>
-        <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
+        <div class="button deleteContactButton">Удалить</div>
         <label for="searchButton" class="button menuSearchButton"><i class="fas fa-search"></i></label>
     </div>
 </header>
@@ -94,7 +94,6 @@
 <label class="popupOverlay popupEmailOverlay" for="popupEmailOpen"></label>
 <form class="popup popupEmail" name="emailForm">
 
-
     <div class="emailWrapper">
         <div class="flex flexColumn">
             <div class="flex">
@@ -123,8 +122,8 @@
     </div>
 
     <div class="popupFooter">
-        <label for="popupEmailOpen" class="button">Отправить</label>
-        <label for="popupEmailOpen" class="button close popupEmailClose"> Закрыть</label>
+        <label for="popupEmailOpen" class="button sendEmailButton">Отправить</label>
+        <label for="popupEmailOpen" class="button close popupEmailClose">Закрыть</label>
     </div>
 </form>
 
@@ -145,7 +144,7 @@
         </div>
         <div class="popupFooter">
             <label for="popupAvatarOpen" class="button addButton">Добавить</label>
-            <label for="popupAvatarOpen" class="button popupAvatarClose"> Закрыть </label>
+            <label for="popupAvatarOpen" class="button close popupAvatarClose"> Закрыть </label>
         </div>
     </form>
 
@@ -334,7 +333,7 @@
         </tr>
     </table>
     <div class="flex">
-        <div class="button simpleButton">Закрыть</div>
+        <div class="button simpleButton close closeContactForm">Закрыть</div>
         <div class="button saveContact simpleButton">Сохранить</div>
         <div class="button updateContact simpleButton">Сохранить</div>
     </div>

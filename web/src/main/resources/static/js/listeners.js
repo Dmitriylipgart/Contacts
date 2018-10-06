@@ -1,4 +1,5 @@
 var newContactButton = document.querySelector(".newContactButton");
+var deleteContactButton = document.querySelector(".deleteContactButton");
 var avatarInput = document.querySelector(".popupAvatar #avatarFile");
 var deleteAttachmentFromTableButton = document.querySelector(".deleteAttachment");
 var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
@@ -14,18 +15,21 @@ var attachmentInput = document.querySelector(".popupAttachment #file");
 var closeAvatarForm = document.querySelector(".popupAvatarClose");
 var showEmailButton = document.querySelector(".emailBtn");
 var selectTemplate = document.forms.emailForm.emailTemplate;
-var sendEmailButton = document.querySelector(".popupEmail .addButton");
+var sendEmailButton = document.querySelector(".sendEmailButton");
+var closeContactFormButton = document.querySelector(".closeContactForm");
 
 logo.addEventListener("click", function () {
    showContactList(1);
 });
 
+closeContactFormButton.addEventListener("click", function(){
+    showContactList(1);
+});
+
+deleteContactButton.addEventListener("click", deleteContacts);
 newContactButton.addEventListener("click", newContactOpen);
-
 sendEmailButton.addEventListener("click", sendEmail);
-
 selectTemplate.addEventListener("change", fillEmailTextarea);
-
 attachmentInput.addEventListener("change", displayFileName);
 deleteAttachmentFromTableButton.addEventListener("click", deleteAttachmentFromTable);
 avatarInput.addEventListener("change", displayAvatarFileName);
@@ -93,7 +97,6 @@ function displayFileName() {
 }
 
 function displayAvatarFileName() {
-    console.log("av")
     var avatarForm = document.forms.avatarForm;
     var avatarFileNameInput = document.querySelector(".popupAvatar #avatarName");
     avatarFileNameInput.value = avatarForm.avatarFile.files[0].name;
