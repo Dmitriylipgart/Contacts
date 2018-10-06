@@ -18,7 +18,7 @@
 <header>
     <div class="logo"><h1>Contacts</h1></div>
     <div class="menu">
-        <div class="button newContactBtn">Новый контакт</div>
+        <div class="button newContactButton">Новый контакт</div>
         <label for="popupEmailOpen" class="button emailBtn">Email</label>
         <div class="button delContactBtn" onclick="deleteContacts()">Удалить</div>
         <label for="searchButton" class="button menuSearchButton"><i class="fas fa-search"></i></label>
@@ -123,8 +123,8 @@
     </div>
 
     <div class="popupFooter">
-        <label for="popupEmailOpen" class="button formButton addButton">Отправить</label>
-        <label for="popupEmailOpen" class="button delete formButton popupEmailClose"> Закрыть</label>
+        <label for="popupEmailOpen" class="button">Отправить</label>
+        <label for="popupEmailOpen" class="button close popupEmailClose"> Закрыть</label>
     </div>
 </form>
 
@@ -144,15 +144,15 @@
             </div>
         </div>
         <div class="popupFooter">
-            <label for="popupAvatarOpen" class="button formButton addButton">Добавить</label>
-            <label for="popupAvatarOpen" class="button delete formButton popupAvatarClose"> Закрыть </label>
+            <label for="popupAvatarOpen" class="button addButton">Добавить</label>
+            <label for="popupAvatarOpen" class="button popupAvatarClose"> Закрыть </label>
         </div>
     </form>
 
     <form name="contactForm" class="contactForm">
 
         <label for="popupAvatarOpen">
-            <div class="contactPhoto"></div>
+            <div class="contactPhoto"><i class="fas fa-user"></i></div>
         </label>
 
         <div class="flex flexColumn">
@@ -278,8 +278,8 @@
         </div>
 
         <div class="popupFooter">
-            <div class="button formButton addButton"> Добавить</div>
-            <label for="popupPhoneOpen" class="button delete formButton"> Закрыть </label>
+            <div class="button addButton"> Добавить</div>
+            <label for="popupPhoneOpen" class="button close"> Закрыть </label>
         </div>
     </form>
 
@@ -320,8 +320,8 @@
             </div>
         </div>
         <div class="popupFooter">
-            <div class="button formButton addButton attachmentAddButton">Добавить</div>
-            <label for="popupAttachmentOpen" class="button delete formButton"> Закрыть </label>
+            <div class="button attachmentAddButton">Добавить</div>
+            <label for="popupAttachmentOpen" class="button close"> Закрыть </label>
         </div>
     </form>
     <table class="attachments">
@@ -333,8 +333,12 @@
             <th></th>
         </tr>
     </table>
-    <div class="button saveContact simpleButton">Сохранить</div>
-    <div class="button updateContact simpleButton">Редактировать</div>
+    <div class="flex">
+        <div class="button simpleButton">Закрыть</div>
+        <div class="button saveContact simpleButton">Сохранить</div>
+        <div class="button updateContact simpleButton">Сохранить</div>
+    </div>
+
 </div>
 
 

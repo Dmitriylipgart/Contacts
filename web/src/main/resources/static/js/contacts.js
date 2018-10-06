@@ -426,11 +426,14 @@ function fillContactForm(contact) {
     for (var i = 0; i < attachments.length; i++) {
         addAttachmentToTable(attachments[i]);
     }
+    var contactPhoto = document.querySelector(".contactPhoto");
     if(contact.avatar){
         Page.avatar = contact.avatar;
-        var contactPhoto = document.querySelector(".contactPhoto");
+        contactPhoto.firstElementChild.setAttribute("style", "display:none");
         contactPhoto.setAttribute("style", "background: url('/files/" + Page.contactId + "/avatar/" + Page.avatar
                                     + "') center center/contain;");
+    }else {
+        contactPhoto.firstElementChild.setAttribute("style", "display: inline");
     }
 }
 

@@ -1,3 +1,4 @@
+var newContactButton = document.querySelector(".newContactButton");
 var avatarInput = document.querySelector(".popupAvatar #avatarFile");
 var deleteAttachmentFromTableButton = document.querySelector(".deleteAttachment");
 var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
@@ -5,7 +6,6 @@ var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
 var saveContactButton = document.querySelector(".saveContact");
 var updateContactButton = document.querySelector(".updateContact");
 var deletePhoneFromTableButton = document.querySelector(".deletePhone");
-var newContactButton = document.querySelector(".newContactBtn");
 var updatePhoneButton = document.querySelector(".phoneUpdate");
 var logo = document.querySelector(".logo");
 var phoneAddButton = document.querySelector(".send.formButton");
@@ -16,11 +16,15 @@ var showEmailButton = document.querySelector(".emailBtn");
 var selectTemplate = document.forms.emailForm.emailTemplate;
 var sendEmailButton = document.querySelector(".popupEmail .addButton");
 
+logo.addEventListener("click", function () {
+   showContactList(1);
+});
+
+newContactButton.addEventListener("click", newContactOpen);
+
 sendEmailButton.addEventListener("click", sendEmail);
 
-
 selectTemplate.addEventListener("change", fillEmailTextarea);
-
 
 attachmentInput.addEventListener("change", displayFileName);
 deleteAttachmentFromTableButton.addEventListener("click", deleteAttachmentFromTable);
@@ -37,19 +41,8 @@ closeAvatarForm.addEventListener("click", function () {
     avatarForm.reset();
 });
 
-
-
-newContactButton.addEventListener("click", function () {
-    saveContactButton.setAttribute("style", "display: block");
-    updateContactButton.setAttribute("style", "display: none");
-    showContactForm();
-});
-
 updatePhoneButton.addEventListener("click", fillPhoneForm);
 
-logo.addEventListener("click", function () {
-    showContactList(1);
-});
 
 phoneAddButton.addEventListener("click", function () {
     document.forms.phoneForm.reset();
@@ -106,3 +99,8 @@ function displayAvatarFileName() {
     avatarFileNameInput.value = avatarForm.avatarFile.files[0].name;
 }
 
+function newContactOpen(){
+    saveContactButton.setAttribute("style", "display: block");
+    updateContactButton.setAttribute("style", "display: none");
+    showContactForm();
+}

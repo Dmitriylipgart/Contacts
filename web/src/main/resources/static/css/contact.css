@@ -311,6 +311,7 @@ label {
     text-shadow: none;
 }
 
+
 .formButton .circle {
     background-color: #08714c;
     height: 1rem;
@@ -362,10 +363,9 @@ label {
 }
 
 .popupFooter .button{
-    width: 25%;
-    height: 30px;
-    line-height: 30px;
-    margin: 0 10px;
+    float: right;
+    display: inline-block;
+    margin: 10px;
 }
 
 .popupAttachment .simpleButton, .popupAvatar .simpleButton{
