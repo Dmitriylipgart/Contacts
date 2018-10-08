@@ -1,5 +1,8 @@
 package com.itechart.web.Controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itechart.model.dto.AttachmentDto;
+import com.itechart.model.entity.Contact;
+import com.itechart.model.services.ContactsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.annotation.MultipartConfig;

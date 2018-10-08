@@ -1,10 +1,9 @@
 package com.itechart.web.Controllers;
-
-import dao.ContactDaoImpl;
-import dto.ContactDto;
+import com.itechart.model.dao.ContactDaoImpl;
+import com.itechart.model.dto.ContactDto;
+import com.itechart.model.services.ContactsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import services.ContactsService;
 import java.util.HashMap;
 import java.util.List;
 

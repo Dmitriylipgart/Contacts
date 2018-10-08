@@ -1,11 +1,11 @@
 package com.itechart.web.Controllers;
-
-import dao.ContactDaoImpl;
-import dto.ContactDto;
-import dto.EmailDto;
+import com.itechart.model.dao.ContactDaoImpl;
+import com.itechart.model.dto.ContactDto;
+import com.itechart.model.dto.EmailDto;
+import com.itechart.model.services.ContactsService;
+import com.itechart.model.services.EmailService;
 import org.springframework.web.bind.annotation.*;
-import services.ContactsService;
-import services.EmailService;
+
 
 import java.io.IOException;
 import java.util.List;
