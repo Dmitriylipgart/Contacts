@@ -324,7 +324,6 @@ function getContactFromForm() {
     contact.lastName = contactForm.lastName.value;
     contact.middleName = contactForm.middleName.value;
     contact.birthDate = contactForm.birthDate.value;
-    console.log(contact.birthDate);
     contact.sex = contactForm.sex.value;
     contact.citizenship = contactForm.citizenship.value;
     contact.familyStatus = contactForm.familyStatus.value;
@@ -339,7 +338,6 @@ function getContactFromForm() {
     if(avatar){
         contact.avatar = avatar.name;
     }
-    console.log(contact.avatar);
     if(!contact.avatar){
         contact.avatar = Page.avatar? Page.avatar: "";
     }
@@ -354,7 +352,7 @@ function getContactFromForm() {
     var attachmentTableRows = document.querySelector(".attachments").rows;
     for (var i = 1; i < attachmentTableRows.length; i++) {
         var attachment = {};
-        attachment.fileName = attachmentTableRows[i].cells[1].innerHTML;
+        attachment.fileName = attachmentTableRows[i].cells[1].firstChild.innerHTML;
         var date = attachmentTableRows[i].cells[2].innerHTML;
         attachment.date = moment(date, 'DD-MM-YYYY').format('YYYY-MM-DD');
         attachment.comment = attachmentTableRows[i].cells[3].innerHTML;
@@ -447,14 +445,10 @@ function updateContact() {
 
     attachmentFiles.forEach(function (file) {
         formdata.append("files", file);
-        console.log(file);
     });
-
     if(attachmentFilesToDelete.length > 0){
         formdata.append("filesToDelete", JSON.stringify(attachmentFilesToDelete));
     }
-
-
     var avatar = document.forms.avatarForm.avatarFile.files[0];
     if(avatar){
         formdata.append("avatar", avatar);
@@ -463,8 +457,6 @@ function updateContact() {
         method: 'post',
         body: formdata
     };
-
-    console.log(formdata);
 
     fetch('contact/update', options).then(status).then(function () {
         showContactList(Page.currentPage);
@@ -545,7 +537,8 @@ function addAttachmentToTable(attachment) {
     td4.setAttribute("name", "attachmentComment");
     var today = moment();
     if (attachment instanceof MouseEvent) {
-        td2.innerHTML = fileNameInput.value;
+        a.innerHTML = fileNameInput.value;
+        td2.appendChild(a);
         td3.innerHTML = today.format('DD-MM-YYYY');
         td4.innerHTML = attachmentForm.attachmentComment.value;
         attachmentFiles.push(attachmentForm.file.files[0]);
@@ -570,12 +563,8 @@ function deleteAttachmentFromTable() {
     var attachmentTable = document.querySelector(".attachments tbody");
     var elements = attachmentTable.querySelectorAll("input:checked");
     elements.forEach(function (element) {
-        var fileName = element.parentNode.parentNode.children[1].innerHTML;
-        console.log(fileName);
-        console.log(element.value);
+        var fileName = element.parentNode.parentNode.children[1].firstChild.innerHTML;
         if(element.value === "undefined"){
-            console.log(element.value);
-            console.log(fileName + "jk")
             attachmentFiles.forEach(function (file) {
                 if(file.name === fileName){
                     attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
@@ -583,8 +572,6 @@ function deleteAttachmentFromTable() {
             });
         }
         else {
-            console.log(element.value);
-            console.log(fileName)
             var attachment = {};
             attachment.attachmentId = element.value;
             attachment.fileName = fileName;
@@ -650,5 +637,4 @@ function sendEmail(){
 
     console.log(email);
     fetch('email', options).then(status);
-
 }

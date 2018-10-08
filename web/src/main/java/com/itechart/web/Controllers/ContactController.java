@@ -43,8 +43,14 @@ public class ContactController {
 
         ObjectMapper mapper = new ObjectMapper();
         Contact contact = mapper.readValue(contactJson, Contact.class);
-        AttachmentDto[] attachmentToDeleteList = mapper.readValue(attachmentJson, AttachmentDto[].class);
-        service.updateContact(contact, files, avatar, attachmentToDeleteList);
+
+        if(attachmentJson != null){
+            AttachmentDto[] attachmentToDeleteList = mapper.readValue(attachmentJson, AttachmentDto[].class);
+            service.updateContact(contact, files, avatar, attachmentToDeleteList);
+        } else{
+            service.updateContact(contact, files, avatar, new AttachmentDto[0]);
+        }
+
     }
 
 }
