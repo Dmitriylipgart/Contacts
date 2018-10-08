@@ -114,16 +114,16 @@ function startSearch() {
 function showContactListByParams(page) {
     Page.search = true;
     Page.currentPage = page;
-    console.log(Page.currentPage);
+
     var options = getSearchParams();
-    fetch('/contacts/search/count', options).then(json).then(function (data) {
+    fetch('contacts/search/count', options).then(json).then(function (data) {
         var recordsCount = data;
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
             hideNoRecordsMessage();
             showPagination(recordsCount, "showContactListByParams");
-            fetch('/contacts/search?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow, options).then(json).then(showContactTable);
+            fetch('contacts/search?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow, options).then(json).then(showContactTable);
         }
     });
 }
@@ -142,14 +142,14 @@ function showContactList(page) {
     document.querySelector(".newContactButton").setAttribute("style", "display: block");
     document.querySelector(".deleteContactButton").setAttribute("style", "display: block");
 
-    fetch('/contacts/count').then(json).then(function (data) {
+    fetch('contacts/count').then(json).then(function (data) {
         recordsCount = data;
         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
             hideNoRecordsMessage();
             showPagination(recordsCount, "showContactList");
-            fetch('/contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(showContactTable);
+            fetch('contacts?page=' + Page.currentPage + '&' + 'size=' + Page.recordsToShow).then(json).then(showContactTable);
         }
     });
 }
@@ -383,7 +383,7 @@ function addContact() {
         body: formdata
     };
 
-    fetch('/contact', options).then(status).then(function () {
+    fetch('contact', options).then(status).then(function () {
         showContactList(1);
     });
 }
@@ -393,7 +393,7 @@ function addContact() {
 function showContact(contactId) {
 
     Page.contactId = contactId;
-    fetch('/contact/' + contactId).then(json).then(function (data) {
+    fetch('contact/' + contactId).then(json).then(function (data) {
         fillContactForm(data);
     });
     saveContactButton.setAttribute("style", "display: none");
@@ -432,7 +432,7 @@ function fillContactForm(contact) {
     if(contact.avatar){
         Page.avatar = contact.avatar;
         contactPhoto.firstElementChild.setAttribute("style", "display:none");
-        contactPhoto.setAttribute("style", "background: url('/files/" + Page.contactId + "/avatar/" + Page.avatar
+        contactPhoto.setAttribute("style", "background: url('files/" + Page.contactId + "/avatar/" + Page.avatar
                                     + "') center center/contain;");
     }else {
         contactPhoto.firstElementChild.setAttribute("style", "display: inline");
@@ -466,7 +466,7 @@ function updateContact() {
 
     console.log(formdata);
 
-    fetch('/contact/update', options).then(status).then(function () {
+    fetch('contact/update', options).then(status).then(function () {
         showContactList(Page.currentPage);
     });
 }
@@ -482,7 +482,7 @@ function deleteContacts() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(contactIdList)
     };
-    fetch('/contacts', options).then(status).then(function () {
+    fetch('contacts', options).then(status).then(function () {
         showContactList(Page.currentPage);
     });
 }
@@ -531,6 +531,7 @@ function addAttachmentToTable(attachment) {
     var tr = document.createElement("tr");
     var input = document.createElement("input");
     var td1 = document.createElement("td");
+    var a = document.createElement("a");
     td1.setAttribute("class", "check");
     input.setAttribute("type", "checkbox");
     input.setAttribute("value", attachment.attachmentId);
@@ -551,7 +552,10 @@ function addAttachmentToTable(attachment) {
         document.querySelector(".popupAttachmentOpen").checked = false;
         attachmentForm.reset();
     } else {
-        td2.innerHTML = attachment.fileName;
+        a.setAttribute("href", "files/" + Page.contactId + "/" + attachment.fileName);
+        a.setAttribute("download", "");
+        a.innerHTML = attachment.fileName;
+        td2.appendChild(a);
         td3.innerHTML = moment(attachment.date,'YYYY-MM-DD').format('DD-MM-YYYY');
         td4.innerHTML = attachment.comment;
     }
@@ -602,7 +606,7 @@ function showEmailForm() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(contactIdList)
     };
-    fetch('/email/address', options).then(status).then(json).then(function (data) {
+    fetch('email/address', options).then(status).then(json).then(function (data) {
         showEmailAddresses(data);
     });
 }
@@ -619,7 +623,7 @@ function showEmailAddresses(contacts) {
 
 function fillEmailTextarea(event) {
     var templateName = event.target.value;
-    fetch('/email?template=' + templateName).then(status).then(function (response) {
+    fetch('email?template=' + templateName).then(status).then(function (response) {
         return response.text().then(function (text) {
             document.forms.emailForm.emailText.value = text;
         });
@@ -645,6 +649,6 @@ function sendEmail(){
     };
 
     console.log(email);
-    fetch('/email', options).then(status);
+    fetch('email', options).then(status);
 
 }

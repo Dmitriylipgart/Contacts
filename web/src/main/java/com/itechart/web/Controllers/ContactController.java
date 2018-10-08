@@ -11,6 +11,7 @@ import java.io.IOException;
 
 
 @RestController
+//@RequestMapping("/contactsLipgart/contact")
 @RequestMapping("/contact")
 @MultipartConfig
 public class ContactController {

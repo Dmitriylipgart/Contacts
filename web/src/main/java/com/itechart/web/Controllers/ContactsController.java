@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
+//@RequestMapping("/contactsLipgart/contacts")
 @RequestMapping("/contacts")
 public class ContactsController {
 

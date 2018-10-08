@@ -4,17 +4,19 @@ import org.quartz.SchedulerException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.itechart.model.scheduler.TestShedule;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 
 @SpringBootApplication
-public class WebApplication {
+public class WebApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) throws SchedulerException {
 
 		SpringApplication.run(WebApplication.class, args);
 
-		TestShedule testShedule = new TestShedule();
-		testShedule.startBirthdayShedule();
+//		TestShedule testShedule = new TestShedule();
+//		testShedule.startBirthdayShedule();
 
 //		Path currentRelativePath = Paths.get("");
 //		String s = currentRelativePath.toAbsolutePath().toString();
@@ -26,4 +28,8 @@ public class WebApplication {
 
 	}
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(WebApplication.class);
+	}
 }

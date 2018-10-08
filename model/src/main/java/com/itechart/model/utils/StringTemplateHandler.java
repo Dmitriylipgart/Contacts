@@ -5,7 +5,7 @@ import java.io.IOException;
 
 
 public class StringTemplateHandler {
-    private String absoulutePath = this.getClass().getClassLoader().getResource("").getPath();
+    private String absoulutePath = this.getClass().getClassLoader().getResource("").getPath().replace("%20", " ");
     private String templateFolder = "static/templates/";
 
     public String getTemplateByName(String templateName){

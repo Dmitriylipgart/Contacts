@@ -8,13 +8,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <groupId>com.itechart</groupId>
     <artifactId>model</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>model</name>
-
-    <dependencies>
-    </dependencies>
-
+    <properties>
+        <start-class>com.itechart.web.WebApplication</start-class>
+    </properties>
 </project>
