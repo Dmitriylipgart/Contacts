@@ -1,12 +1,16 @@
 package com.itechart.web.Controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.AttachmentDto;
+import entity.Attachment;
 import entity.Contact;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import services.ContactsService;
+
 import javax.servlet.annotation.MultipartConfig;
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -28,20 +32,21 @@ public class ContactController {
     }
 
     @GetMapping("/{contactId}")
-    public Contact getContactById(@PathVariable Long contactId){
+    public Contact getContactById(@PathVariable Long contactId) {
         return service.getContactById(contactId);
     }
-
 
 
     @PostMapping("/update")
     public void updateContactById(@RequestParam(value = "files", required = false) MultipartFile[] files,
                                   @RequestParam(value = "contact") String contactJson,
-                                  @RequestParam(value = "avatar", required = false) MultipartFile avatar) throws IOException {
+                                  @RequestParam(value = "avatar", required = false) MultipartFile avatar,
+                                  @RequestParam(value = "filesToDelete", required = false) String attachmentJson) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         Contact contact = mapper.readValue(contactJson, Contact.class);
-        service.updateContact(contact, files, avatar);
+        AttachmentDto[] attachmentToDeleteList = mapper.readValue(attachmentJson, AttachmentDto[].class);
+        service.updateContact(contact, files, avatar, attachmentToDeleteList);
     }
 
 }

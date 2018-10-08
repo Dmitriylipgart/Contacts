@@ -357,7 +357,7 @@ public class ContactDaoImpl implements ContactDao {
         try {
             while (rs.next()) {
                 ContactDto contact = new ContactDto();
-                contact.setContactId(rs.getInt("contact_id"));
+                contact.setContactId(rs.getLong("contact_id"));
                 contact.setFirstName(rs.getString("first_name"));
                 contact.setLastName(rs.getString("last_name"));
                 contact.setMiddleName(rs.getString("middle_name"));

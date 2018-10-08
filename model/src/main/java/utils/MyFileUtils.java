@@ -1,5 +1,7 @@
 package utils;
 
+import dto.AttachmentDto;
+import entity.Attachment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -8,13 +10,13 @@ import java.io.IOException;
 
 public class MyFileUtils {
 
-    private String uploadPath = System.getProperty("user.home") + File.separator + "files";
+    private final String uploadPath = System.getProperty("user.home") + File.separator + "files" + File.separator;
 
 
     public void saveFiles(MultipartFile[] files, Long contactId) {
 
         if(files.length > 0){
-            File uploadDir = new File(uploadPath + File.separator + contactId);
+            File uploadDir = new File(uploadPath + contactId);
             if(!uploadDir.exists()){
                 uploadDir.mkdirs();
             }
@@ -31,7 +33,7 @@ public class MyFileUtils {
     public void saveAvatar(MultipartFile avatar, Long contactId)  {
 
         if(avatar != null){
-            File uploadDir = new File(uploadPath + File.separator + contactId + File.separator + "avatar");
+            File uploadDir = new File(uploadPath + contactId + File.separator + "avatar");
             if(!uploadDir.exists()){
                 uploadDir.mkdirs();
             }
@@ -43,6 +45,15 @@ public class MyFileUtils {
             }
         }
 
+    }
+
+    public void deleteFiles(AttachmentDto[] attachments, Long contactId){
+        for (AttachmentDto attachment: attachments) {
+            File file = new File(uploadPath + contactId + File.separator + attachment.getFileName());
+            if(file.exists()){
+                file.delete();
+            }
+        }
     }
 
 }

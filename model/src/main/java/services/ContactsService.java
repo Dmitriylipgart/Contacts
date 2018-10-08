@@ -1,6 +1,7 @@
 package services;
 
 import dao.*;
+import dto.AttachmentDto;
 import dto.ContactDto;
 import entity.Attachment;
 import entity.Contact;
@@ -46,10 +47,11 @@ public class ContactsService {
         return contactDao.getContactsById(contactIdList);
     }
 
-    public void updateContact(Contact contact, MultipartFile[] files, MultipartFile avatar) {
+    public void updateContact(Contact contact, MultipartFile[] files, MultipartFile avatar, AttachmentDto[] attachmentToDeleteList) {
         contactDao.update(contact);
         phoneDao.update(contact.getPhones(), contact.getContactId());
         attachmentDao.update(contact.getAttachments(), contact.getContactId());
+        myFileUtils.deleteFiles(attachmentToDeleteList, contact.getContactId());
         myFileUtils.saveFiles(files, contact.getContactId());
         myFileUtils.saveAvatar(avatar, contact.getContactId());
     }

@@ -33,6 +33,7 @@ public class ContactsSql {
             + "(contact_id, attachment_filename, attachment_comment, attachment_date)"
             + "VALUES (?,?,?,?)";
     public static final String DELETE_ATTACHMENT_BY_CONTACT_ID = "UPDATE attachments SET deleted = 1 WHERE contact_id IN";
+    public static final String DELETE_ATTACHMENT_BY_ATTACHMENT_ID = "UPDATE attachments SET deleted = 1 WHERE attachment_id IN";
     public static final String READ_ALL_ATTACHMENTS_BY_CONTACT_ID = "SELECT * FROM attachments WHERE contact_id = ? AND deleted IS NULL";
 
 

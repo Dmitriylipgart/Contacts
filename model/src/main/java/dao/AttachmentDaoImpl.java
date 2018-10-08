@@ -49,6 +49,7 @@ public class AttachmentDaoImpl implements AttachmentDao {
             rs = statement.executeQuery();
             while (rs.next()) {
                 Attachment attachment = new Attachment();
+                attachment.setAttachmentId(rs.getLong("attachment_id"));
                 attachment.setFileName(rs.getString("attachment_filename"));
                 attachment.setComment(rs.getString("attachment_comment"));
                 attachment.setDate(rs.getString("attachment_date"));
@@ -94,4 +95,22 @@ public class AttachmentDaoImpl implements AttachmentDao {
             e.printStackTrace();
         }
     }
+    public void deleteByAttachmentId(Attachment[] attachments){
+
+        String params = String.join(", ", Collections.nCopies(attachments.length, "?"));
+
+        String sql = ContactsSql.DELETE_ATTACHMENT_BY_ATTACHMENT_ID + "(" + params.toString() + ")";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            for (int i = 0; i < attachments.length; i++) {
+                statement.setLong(i + 1, attachments[i].getAttachmentId());
+            }
+            statement.executeUpdate();
+        } catch (Exception e) {
+            //todo throw
+            e.printStackTrace();
+        }
+    }
+
 }

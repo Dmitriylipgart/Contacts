@@ -2,6 +2,7 @@ package entity;
 
 
 public class Attachment {
+    private Long attachmentId;
     private String fileName;
     private String comment;
     private String date;
@@ -40,5 +41,13 @@ public class Attachment {
 
     public void setContactId(Long contactId) {
         this.contactId = contactId;
+    }
+
+    public Long getAttachmentId() {
+        return attachmentId;
+    }
+
+    public void setAttachmentId(Long attachmentId) {
+        this.attachmentId = attachmentId;
     }
 }

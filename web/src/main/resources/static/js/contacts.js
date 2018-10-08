@@ -34,6 +34,7 @@ var Page = {
 
 
 var attachmentFiles = [];
+var attachmentFilesToDelete = [];
 
 function init() {
     showContactTableHeader();
@@ -390,7 +391,7 @@ function addContact() {
 
 
 function showContact(contactId) {
-    console.log(contactId);
+
     Page.contactId = contactId;
     fetch('/contact/' + contactId).then(json).then(function (data) {
         fillContactForm(data);
@@ -398,7 +399,7 @@ function showContact(contactId) {
     saveContactButton.setAttribute("style", "display: none");
     updateContactButton.setAttribute("style", "display: block");
     showContactForm();
-    addCheckEventListener();
+    // addCheckEventListener();
 }
 
 function fillContactForm(contact) {
@@ -446,7 +447,14 @@ function updateContact() {
 
     attachmentFiles.forEach(function (file) {
         formdata.append("files", file);
+        console.log(file);
     });
+
+    if(attachmentFilesToDelete.length > 0){
+        formdata.append("filesToDelete", JSON.stringify(attachmentFilesToDelete));
+    }
+
+
     var avatar = document.forms.avatarForm.avatarFile.files[0];
     if(avatar){
         formdata.append("avatar", avatar);
@@ -525,6 +533,7 @@ function addAttachmentToTable(attachment) {
     var td1 = document.createElement("td");
     td1.setAttribute("class", "check");
     input.setAttribute("type", "checkbox");
+    input.setAttribute("value", attachment.attachmentId);
     td1.appendChild(input);
     tr.appendChild(td1);
     var td2 = document.createElement("td");
@@ -538,6 +547,9 @@ function addAttachmentToTable(attachment) {
         td2.innerHTML = fileNameInput.value;
         td3.innerHTML = today.format('DD-MM-YYYY');
         td4.innerHTML = attachmentForm.attachmentComment.value;
+        attachmentFiles.push(attachmentForm.file.files[0]);
+        document.querySelector(".popupAttachmentOpen").checked = false;
+        attachmentForm.reset();
     } else {
         td2.innerHTML = attachment.fileName;
         td3.innerHTML = moment(attachment.date,'YYYY-MM-DD').format('DD-MM-YYYY');
@@ -547,9 +559,7 @@ function addAttachmentToTable(attachment) {
     tr.appendChild(td3);
     tr.appendChild(td4);
     attachmentTable.appendChild(tr);
-    attachmentFiles.push(attachmentForm.file.files[0]);
-    document.querySelector(".popupAttachmentOpen").checked = false;
-    attachmentForm.reset();
+
 }
 
 function deleteAttachmentFromTable() {
@@ -557,13 +567,28 @@ function deleteAttachmentFromTable() {
     var elements = attachmentTable.querySelectorAll("input:checked");
     elements.forEach(function (element) {
         var fileName = element.parentNode.parentNode.children[1].innerHTML;
+        console.log(fileName);
+        console.log(element.value);
+        if(element.value === "undefined"){
+            console.log(element.value);
+            console.log(fileName + "jk")
+            attachmentFiles.forEach(function (file) {
+                if(file.name === fileName){
+                    attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
+                }
+            });
+        }
+        else {
+            console.log(element.value);
+            console.log(fileName)
+            var attachment = {};
+            attachment.attachmentId = element.value;
+            attachment.fileName = fileName;
+            attachmentFilesToDelete.push(attachment);
+        }
         attachmentTable.removeChild(element.parentNode.parentNode);
-        attachmentFiles.forEach(function (file) {
-            if(file.name === fileName){
-                attachmentFiles.splice(attachmentFiles.indexOf(file), 1);
-            }
-        });
     });
+
 }
 
 function showEmailForm() {

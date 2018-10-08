@@ -62,10 +62,10 @@ phoneAddButton.addEventListener("click", function () {
 
 searchButton.addEventListener("click", startSearch);
 
-function addCheckEventListener() {
-    var phoneTable = document.querySelector(".phones tbody");
-    phoneTable.addEventListener("click", disableCheck)
-}
+// function addCheckEventListener() {
+//     var phoneTable = document.querySelector(".phones tbody");
+//     phoneTable.addEventListener("click", disableCheck)
+// }
 
 contactsTable.addEventListener("click", function (event) {
     var target = event.target;
@@ -75,20 +75,23 @@ contactsTable.addEventListener("click", function (event) {
     showContact(target.previousElementSibling.firstChild.value);
 });
 
-function disableCheck(event) {
+// function disableCheck(event) {
+//
+//     if (event.target.tagName = "input") {
+//         var phoneTable = document.querySelector(".phones tbody");
+//         var checkedElements = phoneTable.querySelectorAll("input:checked");
+//
+//         if (checkedElements.length !== 1) {
+//             updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate disabled");
+//         } else {
+//             updatePhoneButton.removeAttribute("class");
+//             updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate");
+//         }
+//     }
+// }
 
-    if (event.target.tagName = "input") {
-        var phoneTable = document.querySelector(".phones tbody");
-        var checkedElements = phoneTable.querySelectorAll("input:checked");
 
-        if (checkedElements.length !== 1) {
-            updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate disabled");
-        } else {
-            updatePhoneButton.removeAttribute("class");
-            updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate");
-        }
-    }
-}
+
 
 function displayFileName() {
     var attachmentForm = document.forms.attachmentForm;
