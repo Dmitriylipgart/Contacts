@@ -2,6 +2,8 @@ package com.itechart.model.utils;
 
 
 import com.itechart.model.dto.AttachmentDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -11,7 +13,7 @@ import java.io.IOException;
 public class MyFileUtils {
 
     private final String uploadPath = System.getProperty("user.home") + File.separator + "files" + File.separator;
-
+    private static final Logger LOGGER = LogManager.getLogger(MyFileUtils.class.getName());
 
     public void saveFiles(MultipartFile[] files, Long contactId) {
 
@@ -23,6 +25,7 @@ public class MyFileUtils {
 
             for (MultipartFile file: files) {
                 try {
+                    LOGGER.debug(uploadDir + File.separator + file.getOriginalFilename());
                     file.transferTo(new File(uploadDir + File.separator + file.getOriginalFilename()));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -38,6 +41,8 @@ public class MyFileUtils {
                 uploadDir.mkdirs();
             }
             try {
+                LOGGER.debug(uploadDir  + File.separator
+                        + avatar.getOriginalFilename());
                 avatar.transferTo(new File(uploadDir  + File.separator
                                   + avatar.getOriginalFilename()));
             } catch (IOException e) {
