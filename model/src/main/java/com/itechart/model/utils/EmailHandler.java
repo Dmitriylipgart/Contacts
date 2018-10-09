@@ -40,6 +40,7 @@ public class EmailHandler {
                 message.add("middleName", contact.getMiddleName());
                 String emailText = message.render();
                 Email email = new SimpleEmail();
+                email.setCharset("utf-8");
                 email.setHostName("smtp.mail.ru");
                 email.setSmtpPort(465);
                 email.setAuthentication("itechertlab@mail.ru", "12345678Itl");

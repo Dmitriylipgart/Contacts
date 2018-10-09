@@ -183,7 +183,11 @@ function showContactTable(data) {
             var td4 = document.createElement("td");
             var td5 = document.createElement("td");
             td2.innerHTML = lastName + " " + firstName + " " + middleName;
+            if(birthDate != "0000-00-00"){
             td3.innerHTML = moment(birthDate, 'YYYY-MM-DD').format('DD-MM-YYYY');
+            }else{
+            td3.innerHTML = "";
+            }
             td4.innerHTML = job;
             td5.innerHTML = country + ", " + city + ", " + address;
             tr.appendChild(td1);
@@ -386,8 +390,6 @@ function addContact() {
     });
 }
 
-
-
 function showContact(contactId) {
 
     Page.contactId = contactId;
@@ -427,6 +429,7 @@ function fillContactForm(contact) {
         addAttachmentToTable(attachments[i]);
     }
     var contactPhoto = document.querySelector(".contactPhoto");
+
     if(contact.avatar){
         Page.avatar = contact.avatar;
         contactPhoto.firstElementChild.setAttribute("style", "display:none");

@@ -11,7 +11,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class WebApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) throws SchedulerException {
+	public static void main(String[] args) {
 
 		SpringApplication.run(WebApplication.class, args);
 
