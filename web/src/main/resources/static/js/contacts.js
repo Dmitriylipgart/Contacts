@@ -72,6 +72,14 @@ function showContactForm() {
     document.querySelector(".contactFormWrapper").setAttribute("style", "display: block");
     newContactButton.setAttribute("style", "display: none");
     deleteContactButton.setAttribute("style", "display: none");
+    updatePhoneButton.setAttribute("style", "display: none");
+    deletePhoneFromTableButton.setAttribute("style", "display: none");
+    updateAttachmentButton.setAttribute("style", "display: none");
+    deleteAttachmentFromTableButton.setAttribute("style", "display: none");
+    var phoneTable = document.querySelector(".phones tbody");
+    var attachmentTable = document.querySelector(".attachments tbody");
+    phoneTable.addEventListener("click", disablePhonesButtons);
+    attachmentTable.addEventListener("click", disableAttachmentButtons);
 }
 
 function showNoRecordsMessage() {
@@ -270,13 +278,11 @@ function showContactTableHeader() {
 
 function addPhoneToTable(phone) {
     var phoneTable = document.querySelector(".phones tbody");
-    if (phoneTable.querySelectorAll("input:checked").length > 0) {
-        var tr = phoneTable.querySelector("input:checked").parentNode.parentNode;
-        tr.parentNode.removeChild(tr);
-        phoneTable.querySelectorAll("input").forEach(function (elem) {
-            elem.disabled = false;
-        });
-    }
+
+    // if (phoneTable.querySelectorAll("input:checked").length > 0) {
+    //     var tr = phoneTable.querySelector("input:checked").parentNode.parentNode;
+    //     tr.parentNode.removeChild(tr);
+    // }
     var phoneForm = document.forms.phoneForm;
     var tr = document.createElement("tr");
     var input = document.createElement("input");

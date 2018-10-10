@@ -35,6 +35,12 @@ h2 {
     float: left;
     margin: 12px;
 }
+h3{
+    display: none;
+    margin: 0 auto;
+    font-size: 2rem;
+    color: white;
+}
 
 input{
     font-size: 18px;
@@ -81,15 +87,12 @@ input{
     display: none;
 }
 
+
 .wrapper {
     width: 80%;
     margin: 40px auto 0;
 }
 
-h3 {
-    display: none;
-    margin: 0 auto;
-}
 
 .contactsTable {
     font-size: 16px;
@@ -152,9 +155,17 @@ table th {
     font-size: 1rem;
 }
 
+
+/******Pagination*******************/
+
+.recordListAnchors{
+    margin: 20px auto;
+}
+
 .anchor {
     cursor: pointer;
-    padding: 5px;
+    padding: 5px 7px;
+    margin: 5px;
     color: white;
     text-decoration: none;
 }
@@ -164,10 +175,12 @@ table th {
     border-radius: 3px;
 }
 
-.currentPageAnchor:hover{
+.currentPageAnchor:hover, .anchor:hover{
     color: #343434;
     background-color: white;
+    border-radius: 3px;
 }
+
 
 .phones, .attachments{
     position: relative;

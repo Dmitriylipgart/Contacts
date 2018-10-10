@@ -2,6 +2,7 @@ var newContactButton = document.querySelector(".newContactButton");
 var deleteContactButton = document.querySelector(".deleteContactButton");
 var avatarInput = document.querySelector(".popupAvatar #avatarFile");
 var deleteAttachmentFromTableButton = document.querySelector(".deleteAttachment");
+var updateAttachmentButton = document.querySelector(".updateAttachment");
 var popupAttachmentAddButton = document.querySelector(".attachmentAddButton");
 var popupPhoneAddButton = document.querySelector(".popupPhone .addButton");
 var saveContactButton = document.querySelector(".saveContact");
@@ -62,11 +63,6 @@ phoneAddButton.addEventListener("click", function () {
 
 searchButton.addEventListener("click", startSearch);
 
-// function addCheckEventListener() {
-//     var phoneTable = document.querySelector(".phones tbody");
-//     phoneTable.addEventListener("click", disableCheck)
-// }
-
 contactsTable.addEventListener("click", function (event) {
     var target = event.target;
     if (target.className !== "contactNameAnchor") {
@@ -75,20 +71,47 @@ contactsTable.addEventListener("click", function (event) {
     showContact(target.previousElementSibling.firstChild.value);
 });
 
-// function disableCheck(event) {
-//
-//     if (event.target.tagName = "input") {
-//         var phoneTable = document.querySelector(".phones tbody");
-//         var checkedElements = phoneTable.querySelectorAll("input:checked");
-//
-//         if (checkedElements.length !== 1) {
-//             updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate disabled");
-//         } else {
-//             updatePhoneButton.removeAttribute("class");
-//             updatePhoneButton.setAttribute("class", "button update formButton phoneUpdate");
-//         }
-//     }
-// }
+
+function disablePhonesButtons(event) {
+
+    if (event.target.tagName = "input") {
+        // var phoneTable = document.querySelector(".phones tbody");
+
+        var phoneTable = event.currentTarget;
+        console.log(phoneTable);
+        var checkedElements = phoneTable.querySelectorAll("input:checked");
+
+        if (checkedElements.length == 1) {
+            updatePhoneButton.setAttribute("style", "display: flex");
+            deletePhoneFromTableButton.setAttribute("style", "display: flex");
+        } else if (checkedElements.length > 1) {
+            updatePhoneButton.setAttribute("style", "display: none");
+            deletePhoneFromTableButton.setAttribute("style", "display: flex");
+        } else{
+            updatePhoneButton.setAttribute("style", "display: none");
+            deletePhoneFromTableButton.setAttribute("style", "display: none");
+        }
+    }
+}
+function disableAttachmentButtons(event) {
+
+    if (event.target.tagName = "input") {
+        // var phoneTable = document.querySelector(".phones tbody");
+        var attachmentTable = event.currentTarget;
+        var checkedElements = attachmentTable.querySelectorAll("input:checked");
+
+        if (checkedElements.length == 1) {
+            updateAttachmentButton.setAttribute("style", "display: flex");
+            deleteAttachmentFromTableButton.setAttribute("style", "display: flex");
+        } else if (checkedElements.length > 1) {
+            updateAttachmentButton.setAttribute("style", "display: none");
+            deleteAttachmentFromTableButton.setAttribute("style", "display: flex");
+        } else{
+            updateAttachmentButton.setAttribute("style", "display: none");
+            deleteAttachmentFromTableButton.setAttribute("style", "display: none");
+        }
+    }
+}
 
 
 
