@@ -23,7 +23,7 @@ logo.addEventListener("click", function () {
 });
 
 closeContactFormButton.addEventListener("click", function(){
-    showContactList(1);
+    showContactList(Page.currentPage);
 });
 
 deleteContactButton.addEventListener("click", deleteContacts);

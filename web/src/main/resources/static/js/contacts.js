@@ -58,6 +58,9 @@ function showContactForm() {
         document.querySelector(".recordListAnchors").setAttribute("style", "display: none");
     }
     document.forms.contactForm.reset();
+    var contactPhoto = document.querySelector(".contactPhoto");
+    contactPhoto.removeAttribute("style");
+    contactPhoto.firstElementChild.setAttribute("style", "display: inline-block");
 
     document.querySelector(".menuSearchButton").setAttribute("style", "display: none");
     document.querySelector(".emailBtn").setAttribute("style", "display: none");
@@ -144,7 +147,7 @@ function showContactList(page) {
 
     fetch('contacts/count').then(json).then(function (data) {
         recordsCount = data;
-        if (recordsCount < 1) {
+         if (recordsCount < 1) {
             showNoRecordsMessage();
         } else {
             hideNoRecordsMessage();
@@ -155,11 +158,16 @@ function showContactList(page) {
 }
 
 function showContactTable(data) {
-    contactsTable.setAttribute("style", "display: block");
     clearContactTable();
-    if(data.length < 1){
+
+    if (data.length < 1 && Page.currentPage > 1) {
+        Page.currentPage -= 1;
+        showContactList(Page.currentPage);
+    }
+    else if(data.length < 1){
         showNoRecordsMessage();
     }else{
+        contactsTable.setAttribute("style", "display: block");
         for (var i = 0; i < data.length; i++) {
             var tr = document.createElement("tr");
             var lastName = data[i].lastName;
@@ -321,6 +329,7 @@ function deletePhoneFromTable() {
 
 function getContactFromForm() {
     var contactForm = document.forms.contactForm;
+
     var phones = [];
     var attachments =[];
     var contact = {};
@@ -368,7 +377,9 @@ function getContactFromForm() {
     return contact;
 }
 function addContact() {
-
+    if(!validate()){
+        return;
+    }
     var contact = getContactFromForm();
     var formdata = new FormData();
     formdata.append("contact", JSON.stringify(contact));
@@ -386,6 +397,7 @@ function addContact() {
     };
 
     fetch('contact', options).then(status).then(function () {
+        resetValidationError();
         showContactList(1);
     });
 }
@@ -399,7 +411,6 @@ function showContact(contactId) {
     saveContactButton.setAttribute("style", "display: none");
     updateContactButton.setAttribute("style", "display: block");
     showContactForm();
-    // addCheckEventListener();
 }
 
 function fillContactForm(contact) {
@@ -431,12 +442,13 @@ function fillContactForm(contact) {
     var contactPhoto = document.querySelector(".contactPhoto");
 
     if(contact.avatar){
-        Page.avatar = contact.avatar;
+        console.log(contact.avatar);
+        // Page.avatar = contact.avatar;
         contactPhoto.firstElementChild.setAttribute("style", "display:none");
-        contactPhoto.setAttribute("style", "background: url('files/" + Page.contactId + "/avatar/" + Page.avatar
+        contactPhoto.setAttribute("style", "background: url('files/" + Page.contactId + "/avatar/" + contact.avatar
                                     + "') center center/contain;");
     }else {
-        contactPhoto.firstElementChild.setAttribute("style", "display: inline");
+        contactPhoto.firstElementChild.setAttribute("style", "display: inline-block");
     }
 }
 

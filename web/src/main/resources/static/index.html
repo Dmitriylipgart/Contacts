@@ -7,6 +7,7 @@
     <script src="https://cdn.rawgit.com/camsong/fetch-ie8/master/fetch.js"></script>
     <script src="js/contacts.js" charset="utf-8" defer></script>
     <script src="js/listeners.js" charset="utf-8" defer></script>
+    <script src="js/validate.js" charset="utf-8" defer></script>
     <link rel="stylesheet" href="css/contact.css">
     <link href="https://fonts.googleapis.com/css?family=Caveat|Courgette|Kalam:400,700|Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Open+Sans|Roboto" rel="stylesheet">
@@ -158,14 +159,17 @@
             <div>
                 <label for="lastName">Фамилия</label>
                 <input type="text" name="lastName" id="lastName" required placeholder=" ">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="firstName">Имя</label>
                 <input type="text" name="firstName" id="firstName" required placeholder=" ">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="middleName">Отчество</label>
                 <input type="text" name="middleName" id="middleName">
+                <div class="errorMessage"></div>
             </div>
 
         </div>
@@ -174,6 +178,7 @@
             <div>
                 <label for="birthDate">Дата Рождения</label>
                 <input type="date" id="birthDate" name="birthDate">
+                <div class="errorMessage"></div>
             </div>
 
             <div class="sex">
@@ -182,10 +187,12 @@
                     <option value="male">Мужской</option>
                     <option value="female">Женский</option>
                 </select>
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="citizenship">Гражданство</label>
                 <input type="text" name="citizenship" id="citizenship">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label>Семейное положение</label>
@@ -193,39 +200,47 @@
                     <option value="married">Состоит в браке</option>
                     <option value="single">Не состоит в браке</option>
                 </select>
+                <div class="errorMessage"></div>
             </div>
         </div>
 
         <div class="flex">
             <div>
                 <label for="url">Сайт</label>
-                <input type="url" name="webSite" id="url">
+                <input name="webSite" id="url" pattern="^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="email">E-mail</label>
                 <input type="email" name="email" id="email" placeholder=" " pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="job">Место работы</label>
                 <input type="text" name="job" id="job">
+                <div class="errorMessage"></div>
             </div>
         </div>
         <div class="flex">
             <div>
                 <label for="country">Страна</label>
                 <input type="text" name="country" id="country">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="city">Город</label>
                 <input type="text" name="city" id="city">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="address">Улица/Дом/Квартира</label>
                 <input type="text" name="address" id="address">
+                <div class="errorMessage"></div>
             </div>
             <div>
                 <label for="index">Индекс</label>
                 <input type="text" name="zipCode" id="index">
+                <div class="errorMessage"></div>
             </div>
         </div>
     </form>

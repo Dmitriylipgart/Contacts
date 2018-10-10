@@ -207,7 +207,7 @@ table th {
     min-height: 200px;
     flex: 1;
 }
-.flex.flexColumn div{
+.flex.flexColumn > div{
     width: 100%;
     min-height: 80px;
     flex: 1;
@@ -281,6 +281,8 @@ label:not(.button) {
 .disabled{
     pointer-events: none;
 }
+
+
 
 .button {
     cursor: pointer;
@@ -534,12 +536,20 @@ input[type=radio]:checked + label {
     border-radius: 3px;
 }
 
+
 @media only screen and (max-width: 1024px) {
     .contactForm {
         width: 90%;
     }
 }
 
+
 input:invalid:not(:focus):not(:placeholder-shown){
     border: 1px solid #d9322d;
+}
+
+.errorMessage{
+    height: 20px;
+    overflow: hidden;
+    color: #d9322d;
 }
