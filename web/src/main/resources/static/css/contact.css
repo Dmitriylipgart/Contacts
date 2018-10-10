@@ -154,9 +154,19 @@ table th {
 
 .anchor {
     cursor: pointer;
-    margin: 0 5px;
+    padding: 5px;
     color: white;
     text-decoration: none;
+}
+
+.currentPageAnchor{
+    border: solid 1px white;
+    border-radius: 3px;
+}
+
+.currentPageAnchor:hover{
+    color: #343434;
+    background-color: white;
 }
 
 .phones, .attachments{

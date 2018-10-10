@@ -229,9 +229,12 @@ function showPagination(recordsCount, showFunction) {
     anchorsDiv.appendChild(first);
     for (var i = 0; i < pagination.length; i++) {
         var anchor = document.createElement('a');
-        anchor.setAttribute('onclick', showFunction + '(' + pagination[i] + ')');
         anchor.setAttribute('class', 'anchor');
+        anchor.setAttribute('onclick', showFunction + '(' + pagination[i] + ')');
         anchor.innerHTML = pagination[i];
+        if(pagination[i] == Page.currentPage){
+            anchor.classList.add('currentPageAnchor');
+        }
         anchorsDiv.appendChild(anchor);
     }
     var last = document.createElement('a');
